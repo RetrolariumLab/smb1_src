@@ -1,309 +1,319 @@
-;-------------------------------------------------------------------------------------
+; -------------------------------------------------------------------------------------
 
 AreaDataOfsLoopback:
-      .byte $12, $36, $0e, $0e, $0e, $32, $32, $32, $0a, $26, $40
+    .byte $12, $36, $0e, $0e, $0e, $32, $32, $32, $0a, $26, $40
 
-;-------------------------------------------------------------------------------------
+; -------------------------------------------------------------------------------------
 
 LoadAreaPointer:
-             jsr FindAreaPointer  ;find it and store it here
-             sta AreaPointer
-GetAreaType: and #%01100000       ;mask out all but d6 and d5
-             asl
-             rol
-             rol
-             rol                  ;make %0xx00000 into %000000xx
-             sta AreaType         ;save 2 MSB as area type
-             rts
+    JSR FindAreaPointer  ; find it and store it here
+    STA AreaPointer
+GetAreaType:
+    AND #%01100000  ; mask out all but d6 and d5
+    ASL
+    ROL
+    ROL
+    ROL  ; make %0xx00000 into %000000xx
+    STA AreaType  ; save 2 MSB as area type
+    RTS
 
 FindAreaPointer:
-      ldy WorldNumber        ;load offset from world variable
-      lda WorldAddrOffsets,y
-      clc                    ;add area number used to find data
-      adc AreaNumber
-      tay
-      lda AreaAddrOffsets,y  ;from there we have our area pointer
-      rts
-
+    LDY WorldNumber  ; load offset from world variable
+    LDA WorldAddrOffsets,y
+    CLC  ; add area number used to find data
+    ADC AreaNumber
+    TAY
+    LDA AreaAddrOffsets,y  ; from there we have our area pointer
+    RTS
 
 GetAreaDataAddrs:
-            lda AreaPointer          ;use 2 MSB for Y
-            jsr GetAreaType
-            tay
-            lda AreaPointer          ;mask out all but 5 LSB
-            and #%00011111
-            sta AreaAddrsLOffset     ;save as low offset
-            lda EnemyAddrHOffsets,y  ;load base value with 2 altered MSB,
-            clc                      ;then add base value to 5 LSB, result
-            adc AreaAddrsLOffset     ;becomes offset for level data
-            tay
-            lda EnemyDataAddrLow,y   ;use offset to load pointer
-            sta EnemyDataLow
-            lda EnemyDataAddrHigh,y
-            sta EnemyDataHigh
-            ldy AreaType             ;use area type as offset
-            lda AreaDataHOffsets,y   ;do the same thing but with different base value
-            clc
-            adc AreaAddrsLOffset
-            tay
-            lda AreaDataAddrLow,y    ;use this offset to load another pointer
-            sta AreaDataLow
-            lda AreaDataAddrHigh,y
-            sta AreaDataHigh
-            ldy #$00                 ;load first byte of header
-            lda (AreaData),y
-            pha                      ;save it to the stack for now
-            and #%00000111           ;save 3 LSB for foreground scenery or bg color control
-            cmp #$04
-            bcc StoreFore
-            sta BackgroundColorCtrl  ;if 4 or greater, save value here as bg color control
-            lda #$00
-StoreFore:  sta ForegroundScenery    ;if less, save value here as foreground scenery
-            pla                      ;pull byte from stack and push it back
-            pha
-            and #%00111000           ;save player entrance control bits
-            lsr                      ;shift bits over to LSBs
-            lsr
-            lsr
-            sta PlayerEntranceCtrl       ;save value here as player entrance control
-            pla                      ;pull byte again but do not push it back
-            and #%11000000           ;save 2 MSB for game timer setting
-            clc
-            rol                      ;rotate bits over to LSBs
-            rol
-            rol
-            sta GameTimerSetting     ;save value here as game timer setting
-            iny
-            lda (AreaData),y         ;load second byte of header
-            pha                      ;save to stack
-            and #%00001111           ;mask out all but lower nybble
-            sta TerrainControl
-            pla                      ;pull and push byte to copy it to A
-            pha
-            and #%00110000           ;save 2 MSB for background scenery type
-            lsr
-            lsr                      ;shift bits to LSBs
-            lsr
-            lsr
-            sta BackgroundScenery    ;save as background scenery
-            pla
-            and #%11000000
-            clc
-            rol                      ;rotate bits over to LSBs
-            rol
-            rol
-            cmp #%00000011           ;if set to 3, store here
-            bne StoreStyle           ;and nullify other value
-            sta CloudTypeOverride    ;otherwise store value in other place
-            lda #$00
-StoreStyle: sta AreaStyle
-            lda AreaDataLow          ;increment area data address by 2 bytes
-            clc
-            adc #$02
-            sta AreaDataLow
-            lda AreaDataHigh
-            adc #$00
-            sta AreaDataHigh
-            rts
+    LDA AreaPointer  ; use 2 MSB for Y
+    JSR GetAreaType
+    TAY
+    LDA AreaPointer  ; mask out all but 5 LSB
+    AND #%00011111
+    STA AreaAddrsLOffset  ; save as low offset
+    LDA EnemyAddrHOffsets,y  ; load base value with 2 altered MSB,
+    CLC  ; then add base value to 5 LSB, result
+    ADC AreaAddrsLOffset  ; becomes offset for level data
+    TAY
+    LDA EnemyDataAddrLow,y  ; use offset to load pointer
+    STA EnemyDataLow
+    LDA EnemyDataAddrHigh,y
+    STA EnemyDataHigh
+    LDY AreaType  ; use area type as offset
+    LDA AreaDataHOffsets,y  ; do the same thing but with different base value
+    CLC
+    ADC AreaAddrsLOffset
+    TAY
+    LDA AreaDataAddrLow,y  ; use this offset to load another pointer
+    STA AreaDataLow
+    LDA AreaDataAddrHigh,y
+    STA AreaDataHigh
+    LDY #$00  ; load first byte of header
+    LDA (AreaData),y
+    PHA  ; save it to the stack for now
+    AND #%00000111  ; save 3 LSB for foreground scenery or bg color control
+    CMP #$04
+    BCC StoreFore
+    STA BackgroundColorCtrl  ; if 4 or greater, save value here as bg color control
+    LDA #$00
+StoreFore:
+    STA ForegroundScenery  ; if less, save value here as foreground scenery
+    PLA  ; pull byte from stack and push it back
+    PHA
+    AND #%00111000  ; save player entrance control bits
+    LSR  ; shift bits over to LSBs
+    LSR
+    LSR
+    STA PlayerEntranceCtrl  ; save value here as player entrance control
+    PLA  ; pull byte again but do not push it back
+    AND #%11000000  ; save 2 MSB for game timer setting
+    CLC
+    ROL  ; rotate bits over to LSBs
+    ROL
+    ROL
+    STA GameTimerSetting  ; save value here as game timer setting
+    INY
+    LDA (AreaData),y  ; load second byte of header
+    PHA  ; save to stack
+    AND #%00001111  ; mask out all but lower nybble
+    STA TerrainControl
+    PLA  ; pull and push byte to copy it to A
+    PHA
+    AND #%00110000  ; save 2 MSB for background scenery type
+    LSR
+    LSR  ; shift bits to LSBs
+    LSR
+    LSR
+    STA BackgroundScenery  ; save as background scenery
+    PLA
+    AND #%11000000
+    CLC
+    ROL  ; rotate bits over to LSBs
+    ROL
+    ROL
+    CMP #%00000011  ; if set to 3, store here
+    BNE StoreStyle  ; and nullify other value
+    STA CloudTypeOverride  ; otherwise store value in other place
+    LDA #$00
+StoreStyle:
+    STA AreaStyle
+    LDA AreaDataLow  ; increment area data address by 2 bytes
+    CLC
+    ADC #$02
+    STA AreaDataLow
+    LDA AreaDataHigh
+    ADC #$00
+    STA AreaDataHigh
+    RTS
 
-;-------------------------------------------------------------------------------------
-;GAME LEVELS DATA
+; -------------------------------------------------------------------------------------
+; GAME LEVELS DATA
 
 WorldAddrOffsets:
-      .byte World1Areas-AreaAddrOffsets, World2Areas-AreaAddrOffsets
-      .byte World3Areas-AreaAddrOffsets, World4Areas-AreaAddrOffsets
-      .byte World5Areas-AreaAddrOffsets, World6Areas-AreaAddrOffsets
-      .byte World7Areas-AreaAddrOffsets, World8Areas-AreaAddrOffsets
+    .byte World1Areas-AreaAddrOffsets, World2Areas-AreaAddrOffsets
+    .byte World3Areas-AreaAddrOffsets, World4Areas-AreaAddrOffsets
+    .byte World5Areas-AreaAddrOffsets, World6Areas-AreaAddrOffsets
+    .byte World7Areas-AreaAddrOffsets, World8Areas-AreaAddrOffsets
 
 AreaAddrOffsets:
-World1Areas: .byte $25, $29, $c0, $26, $60
-World2Areas: .byte $28, $29, $01, $27, $62
-World3Areas: .byte $24, $35, $20, $63
-World4Areas: .byte $22, $29, $41, $2c, $61
-World5Areas: .byte $2a, $31, $26, $62
-World6Areas: .byte $2e, $23, $2d, $60
-World7Areas: .byte $33, $29, $01, $27, $64
-World8Areas: .byte $30, $32, $21, $65
+World1Areas:
+    .byte $25, $29, $c0, $26, $60
+World2Areas:
+    .byte $28, $29, $01, $27, $62
+World3Areas:
+    .byte $24, $35, $20, $63
+World4Areas:
+    .byte $22, $29, $41, $2c, $61
+World5Areas:
+    .byte $2a, $31, $26, $62
+World6Areas:
+    .byte $2e, $23, $2d, $60
+World7Areas:
+    .byte $33, $29, $01, $27, $64
+World8Areas:
+    .byte $30, $32, $21, $65
 
-;bonus area data offsets, included here for comparison purposes
-;underground bonus area  - c2
-;cloud area 1 (day)      - 2b
-;cloud area 2 (night)    - 34
-;water area (5-2/6-2)    - 00
-;water area (8-4)        - 02
-;warp zone area (4-2)    - 2f
+; bonus area data offsets, included here for comparison purposes
+; underground bonus area  - c2
+; cloud area 1 (day)      - 2b
+; cloud area 2 (night)    - 34
+; water area (5-2/6-2)    - 00
+; water area (8-4)        - 02
+; warp zone area (4-2)    - 2f
 
 EnemyAddrHOffsets:
-      .byte $1f, $06, $1c, $00
+    .byte $1f, $06, $1c, $00
 
 EnemyDataAddrLow:
-      .byte <E_CastleArea1, <E_CastleArea2, <E_CastleArea3, <E_CastleArea4, <E_CastleArea5, <E_CastleArea6
-      .byte <E_GroundArea1, <E_GroundArea2, <E_GroundArea3, <E_GroundArea4, <E_GroundArea5, <E_GroundArea6
-      .byte <E_GroundArea7, <E_GroundArea8, <E_GroundArea9, <E_GroundArea10, <E_GroundArea11, <E_GroundArea12
-      .byte <E_GroundArea13, <E_GroundArea14, <E_GroundArea15, <E_GroundArea16, <E_GroundArea17, <E_GroundArea18
-      .byte <E_GroundArea19, <E_GroundArea20, <E_GroundArea21, <E_GroundArea22, <E_UndergroundArea1
-      .byte <E_UndergroundArea2, <E_UndergroundArea3, <E_WaterArea1, <E_WaterArea2, <E_WaterArea3
+    .byte <E_CastleArea1, <E_CastleArea2, <E_CastleArea3, <E_CastleArea4, <E_CastleArea5, <E_CastleArea6
+    .byte <E_GroundArea1, <E_GroundArea2, <E_GroundArea3, <E_GroundArea4, <E_GroundArea5, <E_GroundArea6
+    .byte <E_GroundArea7, <E_GroundArea8, <E_GroundArea9, <E_GroundArea10, <E_GroundArea11, <E_GroundArea12
+    .byte <E_GroundArea13, <E_GroundArea14, <E_GroundArea15, <E_GroundArea16, <E_GroundArea17, <E_GroundArea18
+    .byte <E_GroundArea19, <E_GroundArea20, <E_GroundArea21, <E_GroundArea22, <E_UndergroundArea1
+    .byte <E_UndergroundArea2, <E_UndergroundArea3, <E_WaterArea1, <E_WaterArea2, <E_WaterArea3
 
 EnemyDataAddrHigh:
-      .byte >E_CastleArea1, >E_CastleArea2, >E_CastleArea3, >E_CastleArea4, >E_CastleArea5, >E_CastleArea6
-      .byte >E_GroundArea1, >E_GroundArea2, >E_GroundArea3, >E_GroundArea4, >E_GroundArea5, >E_GroundArea6
-      .byte >E_GroundArea7, >E_GroundArea8, >E_GroundArea9, >E_GroundArea10, >E_GroundArea11, >E_GroundArea12
-      .byte >E_GroundArea13, >E_GroundArea14, >E_GroundArea15, >E_GroundArea16, >E_GroundArea17, >E_GroundArea18
-      .byte >E_GroundArea19, >E_GroundArea20, >E_GroundArea21, >E_GroundArea22, >E_UndergroundArea1
-      .byte >E_UndergroundArea2, >E_UndergroundArea3, >E_WaterArea1, >E_WaterArea2, >E_WaterArea3
+    .byte >E_CastleArea1, >E_CastleArea2, >E_CastleArea3, >E_CastleArea4, >E_CastleArea5, >E_CastleArea6
+    .byte >E_GroundArea1, >E_GroundArea2, >E_GroundArea3, >E_GroundArea4, >E_GroundArea5, >E_GroundArea6
+    .byte >E_GroundArea7, >E_GroundArea8, >E_GroundArea9, >E_GroundArea10, >E_GroundArea11, >E_GroundArea12
+    .byte >E_GroundArea13, >E_GroundArea14, >E_GroundArea15, >E_GroundArea16, >E_GroundArea17, >E_GroundArea18
+    .byte >E_GroundArea19, >E_GroundArea20, >E_GroundArea21, >E_GroundArea22, >E_UndergroundArea1
+    .byte >E_UndergroundArea2, >E_UndergroundArea3, >E_WaterArea1, >E_WaterArea2, >E_WaterArea3
 
 AreaDataHOffsets:
-      .byte $00, $03, $19, $1c
+    .byte $00, $03, $19, $1c
 
 AreaDataAddrLow:
-      .byte <L_WaterArea1, <L_WaterArea2, <L_WaterArea3, <L_GroundArea1, <L_GroundArea2, <L_GroundArea3
-      .byte <L_GroundArea4, <L_GroundArea5, <L_GroundArea6, <L_GroundArea7, <L_GroundArea8, <L_GroundArea9
-      .byte <L_GroundArea10, <L_GroundArea11, <L_GroundArea12, <L_GroundArea13, <L_GroundArea14, <L_GroundArea15
-      .byte <L_GroundArea16, <L_GroundArea17, <L_GroundArea18, <L_GroundArea19, <L_GroundArea20, <L_GroundArea21
-      .byte <L_GroundArea22, <L_UndergroundArea1, <L_UndergroundArea2, <L_UndergroundArea3, <L_CastleArea1
-      .byte <L_CastleArea2, <L_CastleArea3, <L_CastleArea4, <L_CastleArea5, <L_CastleArea6
+    .byte <L_WaterArea1, <L_WaterArea2, <L_WaterArea3, <L_GroundArea1, <L_GroundArea2, <L_GroundArea3
+    .byte <L_GroundArea4, <L_GroundArea5, <L_GroundArea6, <L_GroundArea7, <L_GroundArea8, <L_GroundArea9
+    .byte <L_GroundArea10, <L_GroundArea11, <L_GroundArea12, <L_GroundArea13, <L_GroundArea14, <L_GroundArea15
+    .byte <L_GroundArea16, <L_GroundArea17, <L_GroundArea18, <L_GroundArea19, <L_GroundArea20, <L_GroundArea21
+    .byte <L_GroundArea22, <L_UndergroundArea1, <L_UndergroundArea2, <L_UndergroundArea3, <L_CastleArea1
+    .byte <L_CastleArea2, <L_CastleArea3, <L_CastleArea4, <L_CastleArea5, <L_CastleArea6
 
 AreaDataAddrHigh:
-      .byte >L_WaterArea1, >L_WaterArea2, >L_WaterArea3, >L_GroundArea1, >L_GroundArea2, >L_GroundArea3
-      .byte >L_GroundArea4, >L_GroundArea5, >L_GroundArea6, >L_GroundArea7, >L_GroundArea8, >L_GroundArea9
-      .byte >L_GroundArea10, >L_GroundArea11, >L_GroundArea12, >L_GroundArea13, >L_GroundArea14, >L_GroundArea15
-      .byte >L_GroundArea16, >L_GroundArea17, >L_GroundArea18, >L_GroundArea19, >L_GroundArea20, >L_GroundArea21
-      .byte >L_GroundArea22, >L_UndergroundArea1, >L_UndergroundArea2, >L_UndergroundArea3, >L_CastleArea1
-      .byte >L_CastleArea2, >L_CastleArea3, >L_CastleArea4, >L_CastleArea5, >L_CastleArea6
+    .byte >L_WaterArea1, >L_WaterArea2, >L_WaterArea3, >L_GroundArea1, >L_GroundArea2, >L_GroundArea3
+    .byte >L_GroundArea4, >L_GroundArea5, >L_GroundArea6, >L_GroundArea7, >L_GroundArea8, >L_GroundArea9
+    .byte >L_GroundArea10, >L_GroundArea11, >L_GroundArea12, >L_GroundArea13, >L_GroundArea14, >L_GroundArea15
+    .byte >L_GroundArea16, >L_GroundArea17, >L_GroundArea18, >L_GroundArea19, >L_GroundArea20, >L_GroundArea21
+    .byte >L_GroundArea22, >L_UndergroundArea1, >L_UndergroundArea2, >L_UndergroundArea3, >L_CastleArea1
+    .byte >L_CastleArea2, >L_CastleArea3, >L_CastleArea4, >L_CastleArea5, >L_CastleArea6
 
-;ENEMY OBJECT DATA
+; ENEMY OBJECT DATA
 
-;level 1-4/6-4
+; level 1-4/6-4
 E_CastleArea1:
-      .incbin "ju_prg.bin", $1d70, $027
+    .incbin "ju_prg.bin", $1d70, $027
 
-;level 4-4
+; level 4-4
 E_CastleArea2:
-      .incbin "ju_prg.bin", $1d97, $019
+    .incbin "ju_prg.bin", $1d97, $019
 
-;level 2-4/5-4
+; level 2-4/5-4
 E_CastleArea3:
-      .incbin "ju_prg.bin", $1db0, $02f
+    .incbin "ju_prg.bin", $1db0, $02f
 
-;level 3-4
+; level 3-4
 E_CastleArea4:
-      .incbin "ju_prg.bin", $1ddf, $02b
+    .incbin "ju_prg.bin", $1ddf, $02b
 
-;level 7-4
+; level 7-4
 E_CastleArea5:
-      .incbin "ju_prg.bin", $1e0a, $015
+    .incbin "ju_prg.bin", $1e0a, $015
 
-;level 8-4
+; level 8-4
 E_CastleArea6:
-      .incbin "ju_prg.bin", $1e1f, $03a
+    .incbin "ju_prg.bin", $1e1f, $03a
 
-;level 3-3
+; level 3-3
 E_GroundArea1:
-      .incbin "ju_prg.bin", $1e59, $025
+    .incbin "ju_prg.bin", $1e59, $025
 
-;level 8-3
+; level 8-3
 E_GroundArea2:
-      .incbin "ju_prg.bin", $1e7e, $01d
+    .incbin "ju_prg.bin", $1e7e, $01d
 
-;level 4-1
+; level 4-1
 E_GroundArea3:
-      .incbin "ju_prg.bin", $1e9b, $00e
+    .incbin "ju_prg.bin", $1e9b, $00e
 
-;level 6-2
+; level 6-2
 E_GroundArea4:
-      .incbin "ju_prg.bin", $1ea9, $027
+    .incbin "ju_prg.bin", $1ea9, $027
 
-;level 3-1
+; level 3-1
 E_GroundArea5:
-      .incbin "ju_prg.bin", $1ed0, $031
+    .incbin "ju_prg.bin", $1ed0, $031
 
-;level 1-1
+; level 1-1
 E_GroundArea6:
-      .incbin "ju_prg.bin", $1f01, $01e
+    .incbin "ju_prg.bin", $1f01, $01e
 
-;level 1-3/5-3
+; level 1-3/5-3
 E_GroundArea7:
-      .incbin "ju_prg.bin", $1f1f, $01d
+    .incbin "ju_prg.bin", $1f1f, $01d
 
-;level 2-3/7-3
+; level 2-3/7-3
 E_GroundArea8:
-      .incbin "ju_prg.bin", $1f3c, $015
+    .incbin "ju_prg.bin", $1f3c, $015
 
-;level 2-1
+; level 2-1
 E_GroundArea9:
-      .incbin "ju_prg.bin", $1f51, $02a
-;end of data terminator here is also used by pipe intro area
+    .incbin "ju_prg.bin", $1f51, $02a
+; end of data terminator here is also used by pipe intro area
 E_GroundArea10:
-      .byte $ff
+    .byte $ff
 
-;level 5-1
+; level 5-1
 E_GroundArea11:
-      .incbin "ju_prg.bin", $1f7c, $024
+    .incbin "ju_prg.bin", $1f7c, $024
 
-;cloud level used in levels 2-1 and 5-2
+; cloud level used in levels 2-1 and 5-2
 E_GroundArea12:
-      .incbin "ju_prg.bin", $1fa0, $009
+    .incbin "ju_prg.bin", $1fa0, $009
 
-;level 4-3
+; level 4-3
 E_GroundArea13:
-      .incbin "ju_prg.bin", $1fa9, $025
+    .incbin "ju_prg.bin", $1fa9, $025
 
-;level 6-3
+; level 6-3
 E_GroundArea14:
-      .incbin "ju_prg.bin", $1fce, $023
+    .incbin "ju_prg.bin", $1fce, $023
 
-;level 6-1
+; level 6-1
 E_GroundArea15:
-      .incbin "ju_prg.bin", $1ff1, $009
+    .incbin "ju_prg.bin", $1ff1, $009
 
-;warp zone area used in level 4-2
+; warp zone area used in level 4-2
 E_GroundArea16:
-      .byte $ff
+    .byte $ff
 
-;level 8-1
+; level 8-1
 E_GroundArea17:
-      .incbin "ju_prg.bin", $1ffb, $03a
+    .incbin "ju_prg.bin", $1ffb, $03a
 
-;level 5-2
+; level 5-2
 E_GroundArea18:
-      .incbin "ju_prg.bin", $2035, $02b
+    .incbin "ju_prg.bin", $2035, $02b
 
-;level 8-2
+; level 8-2
 E_GroundArea19:
-      .incbin "ju_prg.bin", $2060, $02e
+    .incbin "ju_prg.bin", $2060, $02e
 
-;level 7-1
+; level 7-1
 E_GroundArea20:
-      .incbin "ju_prg.bin", $208e, $01c
+    .incbin "ju_prg.bin", $208e, $01c
 
-;cloud level used in levels 3-1 and 6-2
+; cloud level used in levels 3-1 and 6-2
 E_GroundArea21:
-      .incbin "ju_prg.bin", $20aa, $009
+    .incbin "ju_prg.bin", $20aa, $009
 
-;level 3-2
+; level 3-2
 E_GroundArea22:
-      .incbin "ju_prg.bin", $20b3, $025
+    .incbin "ju_prg.bin", $20b3, $025
 
-;level 1-2
+; level 1-2
 E_UndergroundArea1:
-      .incbin "ju_prg.bin", $20d8, $02d
+    .incbin "ju_prg.bin", $20d8, $02d
 
-;level 4-2
+; level 4-2
 E_UndergroundArea2:
-      .incbin "ju_prg.bin", $2105, $02e
+    .incbin "ju_prg.bin", $2105, $02e
 
-;underground bonus rooms area used in many levels
+; underground bonus rooms area used in many levels
 E_UndergroundArea3:
-      .incbin "ju_prg.bin", $2133, $02d
+    .incbin "ju_prg.bin", $2133, $02d
 
-;water area used in levels 5-2 and 6-2
+; water area used in levels 5-2 and 6-2
 E_WaterArea1:
-      .incbin "ju_prg.bin", $2160, $011
+    .incbin "ju_prg.bin", $2160, $011
 
-;level 2-2/7-2
+; level 2-2/7-2
 E_WaterArea2:
-      .incbin "ju_prg.bin", $2171, $02a
+    .incbin "ju_prg.bin", $2171, $02a
 
-;water area used in level 8-4
+; water area used in level 8-4
 E_WaterArea3:
-      .incbin "ju_prg.bin", $219b, $014
+    .incbin "ju_prg.bin", $219b, $014
