@@ -1,6 +1,6 @@
 ; -------------------------------------------------------------------------------------
 
-AreaDataOfsLoopback:
+tbl_area_object_loopback_offsets:
     .byte $12, $36, $0e, $0e, $0e, $32, $32, $32, $0a, $26, $40
 
 ; -------------------------------------------------------------------------------------
@@ -19,46 +19,46 @@ sub_get_area_type:
 
 sub_find_area_pointer:
     LDY ram_world_number  ; load offset from world variable
-    LDA WorldAddrOffsets,y
+    LDA tbl_world_area_pointer_offsets,y
     CLC  ; add area number used to find data
     ADC ram_area_number
     TAY
-    LDA AreaAddrOffsets,y  ; from there we have our area pointer
+    LDA tbl_area_pointers,y  ; from there we have our area pointer
     RTS
 
-sub_get_area_data_addrs:
+sub_get_area_data_addresses:
     LDA ram_area_pointer  ; use 2 MSB for Y
     JSR sub_get_area_type
     TAY
     LDA ram_area_pointer  ; mask out all but 5 LSB
     AND #%00011111
     STA ram_area_addrs_l_offset  ; save as low offset
-    LDA EnemyAddrHOffsets,y  ; load base value with 2 altered MSB,
+    LDA tbl_enemy_data_offsets_by_area_type,y  ; load base value with 2 altered MSB,
     CLC  ; then add base value to 5 LSB, result
     ADC ram_area_addrs_l_offset  ; becomes offset for level data
     TAY
-    LDA EnemyDataAddrLow,y  ; use offset to load pointer
+    LDA tbl_enemy_data_ptr_lo,y  ; use offset to load pointer
     STA ram_enemy_data_low
-    LDA EnemyDataAddrHigh,y
+    LDA tbl_enemy_data_ptr_hi,y
     STA ram_enemy_data_high
     LDY ram_area_type  ; use area type as offset
-    LDA AreaDataHOffsets,y  ; do the same thing but with different base value
+    LDA tbl_area_object_data_offsets_by_area_type,y  ; do the same thing but with different base value
     CLC
     ADC ram_area_addrs_l_offset
     TAY
-    LDA AreaDataAddrLow,y  ; use this offset to load another pointer
+    LDA tbl_area_object_data_ptr_lo,y  ; use this offset to load another pointer
     STA ram_area_data_low
-    LDA AreaDataAddrHigh,y
+    LDA tbl_area_object_data_ptr_hi,y
     STA ram_area_data_high
     LDY #$00  ; load first byte of header
     LDA (ram_area_data),y
     PHA  ; save it to the stack for now
     AND #%00000111  ; save 3 LSB for foreground scenery or bg color control
     CMP #$04
-    BCC StoreFore
+    BCC bra_store_foreground_scenery
     STA ram_background_color_ctrl  ; if 4 or greater, save value here as bg color control
     LDA #$00
-StoreFore:
+bra_store_foreground_scenery:
     STA ram_foreground_scenery  ; if less, save value here as foreground scenery
     PLA  ; pull byte from stack and push it back
     PHA
@@ -94,10 +94,10 @@ StoreFore:
     ROL
     ROL
     CMP #%00000011  ; if set to 3, store here
-    BNE StoreStyle  ; and nullify other value
+    BNE bra_store_area_style  ; and nullify other value
     STA ram_cloud_type_override  ; otherwise store value in other place
     LDA #$00
-StoreStyle:
+bra_store_area_style:
     STA ram_area_style
     LDA ram_area_data_low  ; increment area data address by 2 bytes
     CLC
@@ -111,28 +111,28 @@ StoreStyle:
 ; -------------------------------------------------------------------------------------
 ; GAME LEVELS DATA
 
-WorldAddrOffsets:
-    .byte World1Areas-AreaAddrOffsets, World2Areas-AreaAddrOffsets
-    .byte World3Areas-AreaAddrOffsets, World4Areas-AreaAddrOffsets
-    .byte World5Areas-AreaAddrOffsets, World6Areas-AreaAddrOffsets
-    .byte World7Areas-AreaAddrOffsets, World8Areas-AreaAddrOffsets
+tbl_world_area_pointer_offsets:
+    .byte off_world_1_area_pointers-tbl_area_pointers, off_world_2_area_pointers-tbl_area_pointers
+    .byte off_world_3_area_pointers-tbl_area_pointers, off_world_4_area_pointers-tbl_area_pointers
+    .byte off_world_5_area_pointers-tbl_area_pointers, off_world_6_area_pointers-tbl_area_pointers
+    .byte off_world_7_area_pointers-tbl_area_pointers, off_world_8_area_pointers-tbl_area_pointers
 
-AreaAddrOffsets:
-World1Areas:
+tbl_area_pointers:
+off_world_1_area_pointers:
     .byte $25, $29, $c0, $26, $60
-World2Areas:
+off_world_2_area_pointers:
     .byte $28, $29, $01, $27, $62
-World3Areas:
+off_world_3_area_pointers:
     .byte $24, $35, $20, $63
-World4Areas:
+off_world_4_area_pointers:
     .byte $22, $29, $41, $2c, $61
-World5Areas:
+off_world_5_area_pointers:
     .byte $2a, $31, $26, $62
-World6Areas:
+off_world_6_area_pointers:
     .byte $2e, $23, $2d, $60
-World7Areas:
+off_world_7_area_pointers:
     .byte $33, $29, $01, $27, $64
-World8Areas:
+off_world_8_area_pointers:
     .byte $30, $32, $21, $65
 
 ; bonus area data offsets, included here for comparison purposes
@@ -143,177 +143,177 @@ World8Areas:
 ; water area (8-4)        - 02
 ; warp zone area (4-2)    - 2f
 
-EnemyAddrHOffsets:
+tbl_enemy_data_offsets_by_area_type:
     .byte $1f, $06, $1c, $00
 
-EnemyDataAddrLow:
-    .byte <E_CastleArea1, <E_CastleArea2, <E_CastleArea3, <E_CastleArea4, <E_CastleArea5, <E_CastleArea6
-    .byte <E_GroundArea1, <E_GroundArea2, <E_GroundArea3, <E_GroundArea4, <E_GroundArea5, <E_GroundArea6
-    .byte <E_GroundArea7, <E_GroundArea8, <E_GroundArea9, <E_GroundArea10, <E_GroundArea11, <E_GroundArea12
-    .byte <E_GroundArea13, <E_GroundArea14, <E_GroundArea15, <E_GroundArea16, <E_GroundArea17, <E_GroundArea18
-    .byte <E_GroundArea19, <E_GroundArea20, <E_GroundArea21, <E_GroundArea22, <E_UndergroundArea1
-    .byte <E_UndergroundArea2, <E_UndergroundArea3, <E_WaterArea1, <E_WaterArea2, <E_WaterArea3
+tbl_enemy_data_ptr_lo:
+    .byte <off_castle_area_1_enemies, <off_castle_area_2_enemies, <off_castle_area_3_enemies, <off_castle_area_4_enemies, <off_castle_area_5_enemies, <off_castle_area_6_enemies
+    .byte <off_ground_area_1_enemies, <off_ground_area_2_enemies, <off_ground_area_3_enemies, <off_ground_area_4_enemies, <off_ground_area_5_enemies, <off_ground_area_6_enemies
+    .byte <off_ground_area_7_enemies, <off_ground_area_8_enemies, <off_ground_area_9_enemies, <off_ground_area_10_enemies, <off_ground_area_11_enemies, <off_ground_area_12_enemies
+    .byte <off_ground_area_13_enemies, <off_ground_area_14_enemies, <off_ground_area_15_enemies, <off_ground_area_16_enemies, <off_ground_area_17_enemies, <off_ground_area_18_enemies
+    .byte <off_ground_area_19_enemies, <off_ground_area_20_enemies, <off_ground_area_21_enemies, <off_ground_area_22_enemies, <off_underground_area_1_enemies
+    .byte <off_underground_area_2_enemies, <off_underground_area_3_enemies, <off_water_area_1_enemies, <off_water_area_2_enemies, <off_water_area_3_enemies
 
-EnemyDataAddrHigh:
-    .byte >E_CastleArea1, >E_CastleArea2, >E_CastleArea3, >E_CastleArea4, >E_CastleArea5, >E_CastleArea6
-    .byte >E_GroundArea1, >E_GroundArea2, >E_GroundArea3, >E_GroundArea4, >E_GroundArea5, >E_GroundArea6
-    .byte >E_GroundArea7, >E_GroundArea8, >E_GroundArea9, >E_GroundArea10, >E_GroundArea11, >E_GroundArea12
-    .byte >E_GroundArea13, >E_GroundArea14, >E_GroundArea15, >E_GroundArea16, >E_GroundArea17, >E_GroundArea18
-    .byte >E_GroundArea19, >E_GroundArea20, >E_GroundArea21, >E_GroundArea22, >E_UndergroundArea1
-    .byte >E_UndergroundArea2, >E_UndergroundArea3, >E_WaterArea1, >E_WaterArea2, >E_WaterArea3
+tbl_enemy_data_ptr_hi:
+    .byte >off_castle_area_1_enemies, >off_castle_area_2_enemies, >off_castle_area_3_enemies, >off_castle_area_4_enemies, >off_castle_area_5_enemies, >off_castle_area_6_enemies
+    .byte >off_ground_area_1_enemies, >off_ground_area_2_enemies, >off_ground_area_3_enemies, >off_ground_area_4_enemies, >off_ground_area_5_enemies, >off_ground_area_6_enemies
+    .byte >off_ground_area_7_enemies, >off_ground_area_8_enemies, >off_ground_area_9_enemies, >off_ground_area_10_enemies, >off_ground_area_11_enemies, >off_ground_area_12_enemies
+    .byte >off_ground_area_13_enemies, >off_ground_area_14_enemies, >off_ground_area_15_enemies, >off_ground_area_16_enemies, >off_ground_area_17_enemies, >off_ground_area_18_enemies
+    .byte >off_ground_area_19_enemies, >off_ground_area_20_enemies, >off_ground_area_21_enemies, >off_ground_area_22_enemies, >off_underground_area_1_enemies
+    .byte >off_underground_area_2_enemies, >off_underground_area_3_enemies, >off_water_area_1_enemies, >off_water_area_2_enemies, >off_water_area_3_enemies
 
-AreaDataHOffsets:
+tbl_area_object_data_offsets_by_area_type:
     .byte $00, $03, $19, $1c
 
-AreaDataAddrLow:
-    .byte <L_WaterArea1, <L_WaterArea2, <L_WaterArea3, <L_GroundArea1, <L_GroundArea2, <L_GroundArea3
-    .byte <L_GroundArea4, <L_GroundArea5, <L_GroundArea6, <L_GroundArea7, <L_GroundArea8, <L_GroundArea9
-    .byte <L_GroundArea10, <L_GroundArea11, <L_GroundArea12, <L_GroundArea13, <L_GroundArea14, <L_GroundArea15
-    .byte <L_GroundArea16, <L_GroundArea17, <L_GroundArea18, <L_GroundArea19, <L_GroundArea20, <L_GroundArea21
-    .byte <L_GroundArea22, <L_UndergroundArea1, <L_UndergroundArea2, <L_UndergroundArea3, <L_CastleArea1
-    .byte <L_CastleArea2, <L_CastleArea3, <L_CastleArea4, <L_CastleArea5, <L_CastleArea6
+tbl_area_object_data_ptr_lo:
+    .byte <off_water_area_1_objects, <off_water_area_2_objects, <off_water_area_3_objects, <off_ground_area_1_objects, <off_ground_area_2_objects, <off_ground_area_3_objects
+    .byte <off_ground_area_4_objects, <off_ground_area_5_objects, <off_ground_area_6_objects, <off_ground_area_7_objects, <off_ground_area_8_objects, <off_ground_area_9_objects
+    .byte <off_ground_area_10_objects, <off_ground_area_11_objects, <off_ground_area_12_objects, <off_ground_area_13_objects, <off_ground_area_14_objects, <off_ground_area_15_objects
+    .byte <off_ground_area_16_objects, <off_ground_area_17_objects, <off_ground_area_18_objects, <off_ground_area_19_objects, <off_ground_area_20_objects, <off_ground_area_21_objects
+    .byte <off_ground_area_22_objects, <off_underground_area_1_objects, <off_underground_area_2_objects, <off_underground_area_3_objects, <off_castle_area_1_objects
+    .byte <off_castle_area_2_objects, <off_castle_area_3_objects, <off_castle_area_4_objects, <off_castle_area_5_objects, <off_castle_area_6_objects
 
-AreaDataAddrHigh:
-    .byte >L_WaterArea1, >L_WaterArea2, >L_WaterArea3, >L_GroundArea1, >L_GroundArea2, >L_GroundArea3
-    .byte >L_GroundArea4, >L_GroundArea5, >L_GroundArea6, >L_GroundArea7, >L_GroundArea8, >L_GroundArea9
-    .byte >L_GroundArea10, >L_GroundArea11, >L_GroundArea12, >L_GroundArea13, >L_GroundArea14, >L_GroundArea15
-    .byte >L_GroundArea16, >L_GroundArea17, >L_GroundArea18, >L_GroundArea19, >L_GroundArea20, >L_GroundArea21
-    .byte >L_GroundArea22, >L_UndergroundArea1, >L_UndergroundArea2, >L_UndergroundArea3, >L_CastleArea1
-    .byte >L_CastleArea2, >L_CastleArea3, >L_CastleArea4, >L_CastleArea5, >L_CastleArea6
+tbl_area_object_data_ptr_hi:
+    .byte >off_water_area_1_objects, >off_water_area_2_objects, >off_water_area_3_objects, >off_ground_area_1_objects, >off_ground_area_2_objects, >off_ground_area_3_objects
+    .byte >off_ground_area_4_objects, >off_ground_area_5_objects, >off_ground_area_6_objects, >off_ground_area_7_objects, >off_ground_area_8_objects, >off_ground_area_9_objects
+    .byte >off_ground_area_10_objects, >off_ground_area_11_objects, >off_ground_area_12_objects, >off_ground_area_13_objects, >off_ground_area_14_objects, >off_ground_area_15_objects
+    .byte >off_ground_area_16_objects, >off_ground_area_17_objects, >off_ground_area_18_objects, >off_ground_area_19_objects, >off_ground_area_20_objects, >off_ground_area_21_objects
+    .byte >off_ground_area_22_objects, >off_underground_area_1_objects, >off_underground_area_2_objects, >off_underground_area_3_objects, >off_castle_area_1_objects
+    .byte >off_castle_area_2_objects, >off_castle_area_3_objects, >off_castle_area_4_objects, >off_castle_area_5_objects, >off_castle_area_6_objects
 
 ; ENEMY OBJECT DATA
 
 ; level 1-4/6-4
-E_CastleArea1:
+off_castle_area_1_enemies:
     .incbin "ju_prg.bin", $1d70, $027
 
 ; level 4-4
-E_CastleArea2:
+off_castle_area_2_enemies:
     .incbin "ju_prg.bin", $1d97, $019
 
 ; level 2-4/5-4
-E_CastleArea3:
+off_castle_area_3_enemies:
     .incbin "ju_prg.bin", $1db0, $02f
 
 ; level 3-4
-E_CastleArea4:
+off_castle_area_4_enemies:
     .incbin "ju_prg.bin", $1ddf, $02b
 
 ; level 7-4
-E_CastleArea5:
+off_castle_area_5_enemies:
     .incbin "ju_prg.bin", $1e0a, $015
 
 ; level 8-4
-E_CastleArea6:
+off_castle_area_6_enemies:
     .incbin "ju_prg.bin", $1e1f, $03a
 
 ; level 3-3
-E_GroundArea1:
+off_ground_area_1_enemies:
     .incbin "ju_prg.bin", $1e59, $025
 
 ; level 8-3
-E_GroundArea2:
+off_ground_area_2_enemies:
     .incbin "ju_prg.bin", $1e7e, $01d
 
 ; level 4-1
-E_GroundArea3:
+off_ground_area_3_enemies:
     .incbin "ju_prg.bin", $1e9b, $00e
 
 ; level 6-2
-E_GroundArea4:
+off_ground_area_4_enemies:
     .incbin "ju_prg.bin", $1ea9, $027
 
 ; level 3-1
-E_GroundArea5:
+off_ground_area_5_enemies:
     .incbin "ju_prg.bin", $1ed0, $031
 
 ; level 1-1
-E_GroundArea6:
+off_ground_area_6_enemies:
     .incbin "ju_prg.bin", $1f01, $01e
 
 ; level 1-3/5-3
-E_GroundArea7:
+off_ground_area_7_enemies:
     .incbin "ju_prg.bin", $1f1f, $01d
 
 ; level 2-3/7-3
-E_GroundArea8:
+off_ground_area_8_enemies:
     .incbin "ju_prg.bin", $1f3c, $015
 
 ; level 2-1
-E_GroundArea9:
+off_ground_area_9_enemies:
     .incbin "ju_prg.bin", $1f51, $02a
 ; end of data terminator here is also used by pipe intro area
-E_GroundArea10:
+off_ground_area_10_enemies:
     .byte $ff
 
 ; level 5-1
-E_GroundArea11:
+off_ground_area_11_enemies:
     .incbin "ju_prg.bin", $1f7c, $024
 
 ; cloud level used in levels 2-1 and 5-2
-E_GroundArea12:
+off_ground_area_12_enemies:
     .incbin "ju_prg.bin", $1fa0, $009
 
 ; level 4-3
-E_GroundArea13:
+off_ground_area_13_enemies:
     .incbin "ju_prg.bin", $1fa9, $025
 
 ; level 6-3
-E_GroundArea14:
+off_ground_area_14_enemies:
     .incbin "ju_prg.bin", $1fce, $023
 
 ; level 6-1
-E_GroundArea15:
+off_ground_area_15_enemies:
     .incbin "ju_prg.bin", $1ff1, $009
 
 ; warp zone area used in level 4-2
-E_GroundArea16:
+off_ground_area_16_enemies:
     .byte $ff
 
 ; level 8-1
-E_GroundArea17:
+off_ground_area_17_enemies:
     .incbin "ju_prg.bin", $1ffb, $03a
 
 ; level 5-2
-E_GroundArea18:
+off_ground_area_18_enemies:
     .incbin "ju_prg.bin", $2035, $02b
 
 ; level 8-2
-E_GroundArea19:
+off_ground_area_19_enemies:
     .incbin "ju_prg.bin", $2060, $02e
 
 ; level 7-1
-E_GroundArea20:
+off_ground_area_20_enemies:
     .incbin "ju_prg.bin", $208e, $01c
 
 ; cloud level used in levels 3-1 and 6-2
-E_GroundArea21:
+off_ground_area_21_enemies:
     .incbin "ju_prg.bin", $20aa, $009
 
 ; level 3-2
-E_GroundArea22:
+off_ground_area_22_enemies:
     .incbin "ju_prg.bin", $20b3, $025
 
 ; level 1-2
-E_UndergroundArea1:
+off_underground_area_1_enemies:
     .incbin "ju_prg.bin", $20d8, $02d
 
 ; level 4-2
-E_UndergroundArea2:
+off_underground_area_2_enemies:
     .incbin "ju_prg.bin", $2105, $02e
 
 ; underground bonus rooms area used in many levels
-E_UndergroundArea3:
+off_underground_area_3_enemies:
     .incbin "ju_prg.bin", $2133, $02d
 
 ; water area used in levels 5-2 and 6-2
-E_WaterArea1:
+off_water_area_1_enemies:
     .incbin "ju_prg.bin", $2160, $011
 
 ; level 2-2/7-2
-E_WaterArea2:
+off_water_area_2_enemies:
     .incbin "ju_prg.bin", $2171, $02a
 
 ; water area used in level 8-4
-E_WaterArea3:
+off_water_area_3_enemies:
     .incbin "ju_prg.bin", $219b, $014
