@@ -170,21 +170,33 @@ loc_select_secondary_vram_buffer:
 ; $00 - used as temporary counter in sub_color_rotation
 
 tbl_rotating_palette_colors:
+.if con_revision_profile = con_revision_profile_vs
+    .byte $39, $39, $39, $07, $22, $07
+.else
     .byte $27, $27, $27, $17, $07, $17
+.endif
 
 tbl_blank_palette_packet:
     .incbin "ju_prg.bin", $09c9, $008
 
 ; used based on area type
 tbl_area_type_palette_3_colors:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0bd2, $010
+.else
     .incbin "ju_prg.bin", $09d1, $010
+.endif
 
 sub_color_rotation:
     LDA ram_frame_counter  ; get frame counter
     AND #$07  ; mask out all but three LSB
     BNE bra_exit_color_rotation  ; branch if not set to zero to do this every eighth frame
     LDX ram_vram_buffer1_offset  ; check vram buffer offset
+.if con_revision_profile = con_revision_profile_vs
+    CPX #$21
+.else
     CPX #$31
+.endif
     BCS bra_exit_color_rotation  ; if offset over 48 bytes, branch to leave
     TAY  ; otherwise use frame counter's 3 LSB as offset here
 bra_copy_blank_palette_packet:
@@ -377,28 +389,60 @@ off_palette_3_metatiles:
 ; VRAM BUFFER DATA FOR LOCATIONS IN PRG-ROM
 
 off_water_area_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0ea5, $024
+.else
     .incbin "ju_prg.bin", $0ca4, $024
+.endif
 
 off_ground_area_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0ec9, $024
+.else
     .incbin "ju_prg.bin", $0cc8, $024
+.endif
 
 off_underground_area_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0eed, $024
+.else
     .incbin "ju_prg.bin", $0cec, $024
+.endif
 
 off_castle_area_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0f11, $024
+.else
     .incbin "ju_prg.bin", $0d10, $024
+.endif
 
 off_day_snow_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0f35, $008
+.else
     .incbin "ju_prg.bin", $0d34, $008
+.endif
 
 off_night_snow_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0f3d, $008
+.else
     .incbin "ju_prg.bin", $0d3c, $008
+.endif
 
 off_mushroom_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0f45, $008
+.else
     .incbin "ju_prg.bin", $0d44, $008
+.endif
 
 off_bowser_palette_packet:
+.if con_revision_profile = con_revision_profile_vs
+    .incbin "vs_prg.bin", $0f4d, $008
+.else
     .incbin "ju_prg.bin", $0d4c, $008
+.endif
 
 off_mario_thanks_message:
 ; "THANK YOU MARIO!"
@@ -412,7 +456,45 @@ off_mushroom_retainer_saved_message:
 ; "BUT OUR PRINCESS IS IN"
     .incbin "ju_prg.bin", $0d7c, $02c
 ; "ANOTHER CASTLE!"
-
+.if con_revision_profile = con_revision_profile_vs
+off_vs_victory_attributes:
+    .incbin "vs_prg.bin", $0fa9, $009
+off_vs_victory_palette_packet:
+    .incbin "vs_prg.bin", $0fb2, $014
+off_vs_mario_thanks_message:
+; "THANK YOU MARIO!"
+    .incbin "vs_prg.bin", $0fc6, $018
+off_vs_luigi_thanks_message:
+; "THANK YOU LUIGI!"
+    .incbin "vs_prg.bin", $0fde, $018
+off_vs_peace_message:
+; "PEACE IS PAVED"
+    .incbin "vs_prg.bin", $0ff6, $016
+off_vs_kingdom_saved_message:
+; "WITH KINGDOM SAVED"
+    .incbin "vs_prg.bin", $100c, $016
+off_vs_mario_hurrah_message:
+; "HURRAH TO  MARIO"
+    .incbin "vs_prg.bin", $1022, $014
+off_vs_luigi_hurrah_message:
+; "HURRAH TO  LUIGI"
+    .incbin "vs_prg.bin", $1036, $014
+off_vs_only_hero_message:
+; "OUR ONLY HERO"
+    .incbin "vs_prg.bin", $104a, $011
+off_vs_trip_ending_message:
+; "THIS ENDS YOUR TRIP"
+    .incbin "vs_prg.bin", $105b, $017
+off_vs_friendship_message:
+; "OF A LONG FRIENDSHIP"
+    .incbin "vs_prg.bin", $1072, $018
+off_vs_bonus_points_message:
+; "100000 PTS.ADDED"
+    .incbin "vs_prg.bin", $108a, $018
+off_vs_players_left_message:
+; "FOR EACH PLAYER LEFT."
+    .incbin "vs_prg.bin", $10a2, $019
+.else
 off_princess_saved_message_1:
 ; "YOUR QUEST IS OVER."
     .incbin "ju_prg.bin", $0da8, $017
@@ -428,3 +510,4 @@ off_world_select_message_1:
 off_world_select_message_2:
 ; "TO SELECT A WORLD"
     .incbin "ju_prg.bin", $0def, $015
+.endif
