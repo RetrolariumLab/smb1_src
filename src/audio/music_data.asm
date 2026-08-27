@@ -47,7 +47,11 @@ off_music_header_star_cloud:
 off_music_header_end_of_level:
     .byte $20, <off_music_stream_end_of_level, >off_music_stream_end_of_level, $3d, $21
 unused_music_header_residual:
+.if con_revision_profile = con_revision_profile_pal
+    .byte $20, $c5, $fc, $3f, $1d
+.else
     .byte $20, $c4, $fc, $3f, $1d
+.endif
 off_music_header_underground:
     .byte $18, <off_music_stream_underground, >off_music_stream_underground, $00, $00
 off_music_header_silence:
@@ -218,17 +222,30 @@ off_music_stream_castle_clear:
 
 
 off_music_stream_victory:
-    .incbin "ju_prg.bin", $7ec8, $038
+    .incbin "ju_prg.bin", $7ec8, $035
 
 
 
 ; unused space
+.if con_revision_profile = con_revision_profile_pal
+    .byte $ff, $ff
+.else
+    .byte $ff, $ff, $ff
+.endif
 
 tbl_music_note_periods:
+.if con_revision_profile = con_revision_profile_pal
+    .incbin "pal_music_data.bin", $0547, $066
+.else
     .incbin "ju_prg.bin", $7f00, $066
+.endif
 
 tbl_music_note_lengths:
+.if con_revision_profile = con_revision_profile_pal
+    .incbin "pal_music_data.bin", $05ad, $030
+.else
     .incbin "ju_prg.bin", $7f66, $030
+.endif
 
 tbl_castle_clear_music_envelope:
     .byte $98, $99, $9a, $9b

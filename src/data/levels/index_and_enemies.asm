@@ -280,7 +280,12 @@ off_ground_area_18_enemies:
 
 ; level 8-2
 off_ground_area_19_enemies:
-    .incbin "ju_prg.bin", $2060, $02e
+.if con_revision_profile = con_revision_profile_pal
+    .incbin "pal_course_enemy_streams.bin", $02f0, $00a
+.else
+    .incbin "ju_prg.bin", $2060, $00a
+.endif
+    .incbin "ju_prg.bin", $206a, $024
 
 ; level 7-1
 off_ground_area_20_enemies:

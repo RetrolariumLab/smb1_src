@@ -126,16 +126,38 @@ off_underground_area_3_objects:
 
 ; water area used in levels 5-2 and 6-2
 off_water_area_1_objects:
-    .incbin "ju_prg.bin", $2e06, $03f
+    .incbin "ju_prg.bin", $2e06, $036
+.if con_revision_profile = con_revision_profile_pal
+    .byte $de, $0f, $e5, $09
+.else
+    .byte $e5, $09, $ee, $0f
+.endif
+    .byte $7d, $ca, $7d, $47
+    .byte $fd
 
 ; level 2-2/7-2
 off_water_area_2_objects:
-    .incbin "ju_prg.bin", $2e45, $07b
+    .incbin "ju_prg.bin", $2e45, $072
+.if con_revision_profile = con_revision_profile_pal
+    .byte $ce, $0f, $d5, $09
+.else
+    .byte $d5, $09, $de, $0f
+.endif
+    .byte $0d, $ca, $7d, $47
+    .byte $fd
 
 ; water area used in level 8-4
 off_water_area_3_objects:
-    .incbin "ju_prg.bin", $2ec0, $01c
+    .incbin "ju_prg.bin", $2ec0, $014
+.if con_revision_profile = con_revision_profile_pal
+    .byte $3e, $0f, $45, $09
+.else
+    .byte $45, $09, $4e, $0f
+.endif
+    .byte $ed, $47
+    .byte $fd
 
 ; -------------------------------------------------------------------------------------
 
 ; unused space
+    .byte $ff
