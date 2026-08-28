@@ -1,3 +1,9 @@
+.if con_revision_profile = con_revision_profile_pal
+    .define con_course_enemy_streams_asset "../../../assets/generated/revisions/pal/source/pal_course_enemy_streams.bin"
+.else
+    .define con_course_enemy_streams_asset "../../../assets/generated/source/base_course_enemy_streams.bin"
+.endif
+
 ; -------------------------------------------------------------------------------------
 
 tbl_area_object_loopback_offsets:
@@ -185,140 +191,136 @@ tbl_area_object_data_ptr_hi:
 
 ; level 1-4/6-4
 off_castle_area_1_enemies:
-    .incbin "ju_prg.bin", $1d70, $027
+    .incbin con_course_enemy_streams_asset, $000, $027
 
 ; level 4-4
 off_castle_area_2_enemies:
-    .incbin "ju_prg.bin", $1d97, $019
+    .incbin con_course_enemy_streams_asset, $027, $019
 
 ; level 2-4/5-4
 off_castle_area_3_enemies:
-    .incbin "ju_prg.bin", $1db0, $02f
+    .incbin con_course_enemy_streams_asset, $040, $02f
 
 ; level 3-4
 off_castle_area_4_enemies:
-    .incbin "ju_prg.bin", $1ddf, $02b
+    .incbin con_course_enemy_streams_asset, $06f, $02b
 
 ; level 7-4
 off_castle_area_5_enemies:
-    .incbin "ju_prg.bin", $1e0a, $015
+    .incbin con_course_enemy_streams_asset, $09a, $015
 
 ; level 8-4
 off_castle_area_6_enemies:
-    .incbin "ju_prg.bin", $1e1f, $03a
+    .incbin con_course_enemy_streams_asset, $0af, $03a
 
 ; level 3-3
 off_ground_area_1_enemies:
-    .incbin "ju_prg.bin", $1e59, $025
+    .incbin con_course_enemy_streams_asset, $0e9, $025
 
 ; level 8-3
 off_ground_area_2_enemies:
-    .incbin "ju_prg.bin", $1e7e, $01d
+    .incbin con_course_enemy_streams_asset, $10e, $01d
 
 ; level 4-1
 off_ground_area_3_enemies:
-    .incbin "ju_prg.bin", $1e9b, $00e
+    .incbin con_course_enemy_streams_asset, $12b, $00e
 
 ; level 6-2
 off_ground_area_4_enemies:
-    .incbin "ju_prg.bin", $1ea9, $027
+    .incbin con_course_enemy_streams_asset, $139, $027
 
 ; level 3-1
 off_ground_area_5_enemies:
-    .incbin "ju_prg.bin", $1ed0, $031
+    .incbin con_course_enemy_streams_asset, $160, $031
 
 ; level 1-1
 off_ground_area_6_enemies:
-    .incbin "ju_prg.bin", $1f01, $01e
+    .incbin con_course_enemy_streams_asset, $191, $01e
 
 ; level 1-3/5-3
 off_ground_area_7_enemies:
-    .incbin "ju_prg.bin", $1f1f, $01d
+    .incbin con_course_enemy_streams_asset, $1af, $01d
 
 ; level 2-3/7-3
 off_ground_area_8_enemies:
-    .incbin "ju_prg.bin", $1f3c, $015
+    .incbin con_course_enemy_streams_asset, $1cc, $015
 
 ; level 2-1
 off_ground_area_9_enemies:
-    .incbin "ju_prg.bin", $1f51, $02a
+    .incbin con_course_enemy_streams_asset, $1e1, $02a
+
 ; end of data terminator here is also used by pipe intro area
 off_ground_area_10_enemies:
-    .byte $ff
+    .incbin con_course_enemy_streams_asset, $20b, $001
 
 ; level 5-1
 off_ground_area_11_enemies:
-    .incbin "ju_prg.bin", $1f7c, $024
+    .incbin con_course_enemy_streams_asset, $20c, $024
 
 ; cloud level used in levels 2-1 and 5-2
 off_ground_area_12_enemies:
-    .incbin "ju_prg.bin", $1fa0, $009
+    .incbin con_course_enemy_streams_asset, $230, $009
 
 ; level 4-3
 off_ground_area_13_enemies:
-    .incbin "ju_prg.bin", $1fa9, $025
+    .incbin con_course_enemy_streams_asset, $239, $025
 
 ; level 6-3
 off_ground_area_14_enemies:
-    .incbin "ju_prg.bin", $1fce, $023
+    .incbin con_course_enemy_streams_asset, $25e, $023
 
 ; level 6-1
 off_ground_area_15_enemies:
-    .incbin "ju_prg.bin", $1ff1, $009
+    .incbin con_course_enemy_streams_asset, $281, $009
 
 ; warp zone area used in level 4-2
 off_ground_area_16_enemies:
-    .byte $ff
+    .incbin con_course_enemy_streams_asset, $28a, $001
 
 ; level 8-1
 off_ground_area_17_enemies:
-    .incbin "ju_prg.bin", $1ffb, $03a
+    .incbin con_course_enemy_streams_asset, $28b, $03a
 
 ; level 5-2
 off_ground_area_18_enemies:
-    .incbin "ju_prg.bin", $2035, $02b
+    .incbin con_course_enemy_streams_asset, $2c5, $02b
 
 ; level 8-2
 off_ground_area_19_enemies:
-.if con_revision_profile = con_revision_profile_pal
-    .incbin "pal_course_enemy_streams.bin", $02f0, $00a
-.else
-    .incbin "ju_prg.bin", $2060, $00a
-.endif
-    .incbin "ju_prg.bin", $206a, $024
+    .incbin con_course_enemy_streams_asset, $2f0, $02e
 
 ; level 7-1
 off_ground_area_20_enemies:
-    .incbin "ju_prg.bin", $208e, $01c
+    .incbin con_course_enemy_streams_asset, $31e, $01c
 
 ; cloud level used in levels 3-1 and 6-2
 off_ground_area_21_enemies:
-    .incbin "ju_prg.bin", $20aa, $009
+    .incbin con_course_enemy_streams_asset, $33a, $009
 
 ; level 3-2
 off_ground_area_22_enemies:
-    .incbin "ju_prg.bin", $20b3, $025
+    .incbin con_course_enemy_streams_asset, $343, $025
 
 ; level 1-2
 off_underground_area_1_enemies:
-    .incbin "ju_prg.bin", $20d8, $02d
+    .incbin con_course_enemy_streams_asset, $368, $02d
 
 ; level 4-2
 off_underground_area_2_enemies:
-    .incbin "ju_prg.bin", $2105, $02e
+    .incbin con_course_enemy_streams_asset, $395, $02e
 
 ; underground bonus rooms area used in many levels
 off_underground_area_3_enemies:
-    .incbin "ju_prg.bin", $2133, $02d
+    .incbin con_course_enemy_streams_asset, $3c3, $02d
 
 ; water area used in levels 5-2 and 6-2
 off_water_area_1_enemies:
-    .incbin "ju_prg.bin", $2160, $011
+    .incbin con_course_enemy_streams_asset, $3f0, $011
 
 ; level 2-2/7-2
 off_water_area_2_enemies:
-    .incbin "ju_prg.bin", $2171, $02a
+    .incbin con_course_enemy_streams_asset, $401, $02a
 
 ; water area used in level 8-4
 off_water_area_3_enemies:
-    .incbin "ju_prg.bin", $219b, $014
+    .incbin con_course_enemy_streams_asset, $42b, $014

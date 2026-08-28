@@ -1,163 +1,143 @@
+.if con_revision_profile = con_revision_profile_pal
+    .define con_course_area_streams_asset "../../../assets/generated/revisions/pal/source/pal_course_area_streams.bin"
+.else
+    .define con_course_area_streams_asset "../../../assets/generated/source/base_course_area_streams.bin"
+.endif
+
 ; AREA OBJECT DATA
 
 ; level 1-4/6-4
 off_castle_area_1_objects:
-    .incbin "ju_prg.bin", $21af, $061
+    .incbin con_course_area_streams_asset, $000, $061
 
 ; level 4-4
 off_castle_area_2_objects:
-    .incbin "ju_prg.bin", $2210, $07f
+    .incbin con_course_area_streams_asset, $061, $07f
 
 ; level 2-4/5-4
 off_castle_area_3_objects:
-    .incbin "ju_prg.bin", $228f, $073
+    .incbin con_course_area_streams_asset, $0e0, $073
 
 ; level 3-4
 off_castle_area_4_objects:
-    .incbin "ju_prg.bin", $2302, $06d
+    .incbin con_course_area_streams_asset, $153, $06d
 
 ; level 7-4
 off_castle_area_5_objects:
-    .incbin "ju_prg.bin", $236f, $08b
+    .incbin con_course_area_streams_asset, $1c0, $08b
 
 ; level 8-4
 off_castle_area_6_objects:
-    .incbin "ju_prg.bin", $23fa, $071
+    .incbin con_course_area_streams_asset, $24b, $071
 
 ; level 3-3
 off_ground_area_1_objects:
-    .incbin "ju_prg.bin", $246b, $063
+    .incbin con_course_area_streams_asset, $2bc, $063
 
 ; level 8-3
 off_ground_area_2_objects:
-    .incbin "ju_prg.bin", $24ce, $069
+    .incbin con_course_area_streams_asset, $31f, $069
 
 ; level 4-1
 off_ground_area_3_objects:
-    .incbin "ju_prg.bin", $2537, $053
+    .incbin con_course_area_streams_asset, $388, $053
 
 ; level 6-2
 off_ground_area_4_objects:
-    .incbin "ju_prg.bin", $258a, $08f
+    .incbin con_course_area_streams_asset, $3db, $08f
 
 ; level 3-1
 off_ground_area_5_objects:
-    .incbin "ju_prg.bin", $2619, $075
+    .incbin con_course_area_streams_asset, $46a, $075
 
 ; level 1-1
 off_ground_area_6_objects:
-    .incbin "ju_prg.bin", $268e, $065
+    .incbin con_course_area_streams_asset, $4df, $065
 
 ; level 1-3/5-3
 off_ground_area_7_objects:
-    .incbin "ju_prg.bin", $26f3, $055
+    .incbin con_course_area_streams_asset, $544, $055
 
 ; level 2-3/7-3
 off_ground_area_8_objects:
-    .incbin "ju_prg.bin", $2748, $085
+    .incbin con_course_area_streams_asset, $599, $085
 
 ; level 2-1
 off_ground_area_9_objects:
-    .incbin "ju_prg.bin", $27cd, $065
+    .incbin con_course_area_streams_asset, $61e, $065
 
 ; pipe intro area
 off_ground_area_10_objects:
-    .incbin "ju_prg.bin", $2832, $009
+    .incbin con_course_area_streams_asset, $683, $009
 
 ; level 5-1
 off_ground_area_11_objects:
-    .incbin "ju_prg.bin", $283b, $03f
+    .incbin con_course_area_streams_asset, $68c, $03f
 
 ; cloud level used in levels 2-1 and 5-2
 off_ground_area_12_objects:
-    .incbin "ju_prg.bin", $287a, $015
+    .incbin con_course_area_streams_asset, $6cb, $015
 
 ; level 4-3
 off_ground_area_13_objects:
-    .incbin "ju_prg.bin", $288f, $067
+    .incbin con_course_area_streams_asset, $6e0, $067
 
 ; level 6-3
 off_ground_area_14_objects:
-    .incbin "ju_prg.bin", $28f6, $065
+    .incbin con_course_area_streams_asset, $747, $065
 
 ; level 6-1
 off_ground_area_15_objects:
-    .incbin "ju_prg.bin", $295b, $073
+    .incbin con_course_area_streams_asset, $7ac, $073
 
 ; warp zone area used in level 4-2
 off_ground_area_16_objects:
-    .incbin "ju_prg.bin", $29ce, $031
+    .incbin con_course_area_streams_asset, $81f, $031
 
 ; level 8-1
 off_ground_area_17_objects:
-    .incbin "ju_prg.bin", $29ff, $093
+    .incbin con_course_area_streams_asset, $850, $093
 
 ; level 5-2
 off_ground_area_18_objects:
-    .incbin "ju_prg.bin", $2a92, $073
+    .incbin con_course_area_streams_asset, $8e3, $073
 
 ; level 8-2
 off_ground_area_19_objects:
-    .incbin "ju_prg.bin", $2b05, $079
+    .incbin con_course_area_streams_asset, $956, $079
 
 ; level 7-1
 off_ground_area_20_objects:
-    .incbin "ju_prg.bin", $2b7e, $059
+    .incbin con_course_area_streams_asset, $9cf, $059
 
 ; cloud level used in levels 3-1 and 6-2
 off_ground_area_21_objects:
-    .incbin "ju_prg.bin", $2bd7, $02b
+    .incbin con_course_area_streams_asset, $a28, $02b
 
 ; level 3-2
 off_ground_area_22_objects:
-    .incbin "ju_prg.bin", $2c02, $033
+    .incbin con_course_area_streams_asset, $a53, $033
 
 ; level 1-2
 off_underground_area_1_objects:
-    .incbin "ju_prg.bin", $2c35, $0a3
+    .incbin con_course_area_streams_asset, $a86, $0a3
 
 ; level 4-2
 off_underground_area_2_objects:
-    .incbin "ju_prg.bin", $2cd8, $0a1
+    .incbin con_course_area_streams_asset, $b29, $0a1
 
 ; underground bonus rooms area used in many levels
 off_underground_area_3_objects:
-    .incbin "ju_prg.bin", $2d79, $08d
+    .incbin con_course_area_streams_asset, $bca, $08d
 
 ; water area used in levels 5-2 and 6-2
 off_water_area_1_objects:
-    .incbin "ju_prg.bin", $2e06, $036
-.if con_revision_profile = con_revision_profile_pal
-    .byte $de, $0f, $e5, $09
-.else
-    .byte $e5, $09, $ee, $0f
-.endif
-    .byte $7d, $ca, $7d, $47
-    .byte $fd
+    .incbin con_course_area_streams_asset, $c57, $03f
 
 ; level 2-2/7-2
 off_water_area_2_objects:
-    .incbin "ju_prg.bin", $2e45, $072
-.if con_revision_profile = con_revision_profile_pal
-    .byte $ce, $0f, $d5, $09
-.else
-    .byte $d5, $09, $de, $0f
-.endif
-    .byte $0d, $ca, $7d, $47
-    .byte $fd
+    .incbin con_course_area_streams_asset, $c96, $07b
 
 ; water area used in level 8-4
 off_water_area_3_objects:
-    .incbin "ju_prg.bin", $2ec0, $014
-.if con_revision_profile = con_revision_profile_pal
-    .byte $3e, $0f, $45, $09
-.else
-    .byte $45, $09, $4e, $0f
-.endif
-    .byte $ed, $47
-    .byte $fd
-
-; -------------------------------------------------------------------------------------
-
-; unused space
-    .byte $ff
+    .incbin con_course_area_streams_asset, $d11, $01c
