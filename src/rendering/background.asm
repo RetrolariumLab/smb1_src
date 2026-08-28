@@ -237,34 +237,7 @@ bra_copy_area_palette_colors:
 bra_exit_color_rotation:
     RTS  ; leave
 
-; -------------------------------------------------------------------------------------
-; $00 - temp store for offset control bit
-; $01 - temp vram buffer offset
-; $02 - temp store for vertical high nybble in block buffer routine
-; $03 - temp adder for high byte of name table address
-; $04, $05 - name table address low/high
-; $06, $07 - block buffer address low/high
-
-tbl_block_metatile_tiles:
-    .incbin "ju_prg.bin", $0a39, $014
-
-sub_remove_coin_axe:
-    LDY #$41  ; set low byte so offset points to $0341
-    LDA #$03  ; load offset for default blank metatile
-    LDX ram_area_type  ; check area type
-    BNE bra_write_blank_metatile  ; if not water type, use offset
-    LDA #$04  ; otherwise load offset for blank metatile used in water
-bra_write_blank_metatile:
-    JSR sub_put_block_metatile  ; do a sub to write blank metatile to vram buffer
-    LDA #$06
-    STA ram_vram_buffer_addr_ctrl  ; set vram address controller to $0341 and leave
-    RTS
-
-sub_replace_block_metatile:
-    JSR sub_write_block_metatile  ; write metatile to vram buffer to replace block object
-    INC ram_block_residual_counter  ; increment unused counter (residual code)
-    DEC ram_block_rep_flag,x  ; decrement flag (residual code)
-    RTS  ; leave
+.include "rendering/block_updates.asm"
 
 sub_destroy_block_metatile:
     LDA #$00  ; force blank metatile if branched/jumped to this point
@@ -274,12 +247,20 @@ sub_write_block_metatile:
     CMP #$00  ; check contents of A for blank metatile
     BEQ bra_select_block_metatile_tiles  ; branch if found (unconditional if branched from 8a6b)
     LDY #$00  ; load offset for brick metatile w/ line
+.if con_revision_profile = con_revision_profile_ann
+    CMP #con_ann_brick_with_coins_line_metatile
+.else
     CMP #$58
+.endif
     BEQ bra_select_block_metatile_tiles  ; use offset if metatile is brick with coins (w/ line)
     CMP #$51
     BEQ bra_select_block_metatile_tiles  ; use offset if metatile is breakable brick w/ line
     INY  ; increment offset for brick metatile w/o line
+.if con_revision_profile = con_revision_profile_ann
+    CMP #con_ann_brick_with_coins_metatile
+.else
     CMP #$5d
+.endif
     BEQ bra_select_block_metatile_tiles  ; use offset if metatile is brick with coins (w/o line)
     CMP #$52
     BEQ bra_select_block_metatile_tiles  ; use offset if metatile is breakable brick w/o line
@@ -368,7 +349,13 @@ off_palette_0_metatiles:
     .incbin "ju_prg.bin", $0b14, $098
 
 off_palette_1_metatiles:
-    .incbin "ju_prg.bin", $0bac, $05c
+    .incbin "ju_prg.bin", $0bac, $04c
+    .byte $45, $47, $45, $47  ; breakable brick (not used)
+.if con_revision_profile <> con_revision_profile_ann
+    .byte $b4, $b6, $b5, $b7  ; cracked rock terrain
+.endif
+    .byte $45, $47, $45, $47  ; brick with line (power-up)
+    .byte $45, $47, $45, $47  ; brick with line (vine)
     .byte $45, $47, $45, $47  ; brick with line (star)
     .byte $45, $47, $45, $47  ; brick with line (coins)
     .byte $45, $47, $45, $47  ; brick with line (1-up)
@@ -377,7 +364,14 @@ off_palette_1_metatiles:
     .byte $47, $47, $47, $47  ; brick (star)
     .byte $47, $47, $47, $47  ; brick (coins)
     .byte $47, $47, $47, $47  ; brick (1-up)
-    .incbin "ju_prg.bin", $0c28, $03c
+.if con_revision_profile = con_revision_profile_ann
+    .byte $24, $24, $24, $24  ; blank reserved by the later metatile layout
+.endif
+    .incbin "ju_prg.bin", $0c28, $02c
+.if con_revision_profile = con_revision_profile_ann
+    .byte $b4, $b6, $b5, $b7  ; normal floor in the later metatile layout
+.endif
+    .incbin "ju_prg.bin", $0c54, $010
 
 off_palette_2_metatiles:
     .incbin "ju_prg.bin", $0c64, $028
@@ -448,9 +442,11 @@ off_mario_thanks_message:
 ; "THANK YOU MARIO!"
     .incbin "ju_prg.bin", $0d54, $014
 
+.if con_revision_profile <> con_revision_profile_ann
 off_luigi_thanks_message:
 ; "THANK YOU LUIGI!"
     .incbin "ju_prg.bin", $0d68, $014
+.endif
 
 off_mushroom_retainer_saved_message:
 ; "BUT OUR PRINCESS IS IN"
@@ -494,7 +490,7 @@ off_vs_bonus_points_message:
 off_vs_players_left_message:
 ; "FOR EACH PLAYER LEFT."
     .incbin "vs_prg.bin", $10a2, $019
-.else
+.elseif con_revision_profile <> con_revision_profile_ann
 off_princess_saved_message_1:
 ; "YOUR QUEST IS OVER."
     .incbin "ju_prg.bin", $0da8, $017

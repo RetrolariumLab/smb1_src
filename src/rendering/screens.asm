@@ -1,9 +1,30 @@
 ; -------------------------------------------------------------------------------------
 
 handler_run_screen_task:
+.if con_revision_profile = con_revision_profile_ann
+handler_ann_score_display_end = handler_run_screen_task-1
+.endif
     LDA ram_screen_routine_task  ; run one of the following subroutines
     JSR sub_dispatch_inline_handler
 
+.if con_revision_profile = con_revision_profile_ann
+    .word handler_initialize_screen
+    .word handler_setup_intermediate_screen
+    .word handler_write_top_status_line
+    .word handler_write_bottom_status_line
+    .word handler_display_time_up_screen
+    .word handler_reset_sprites_after_screen_delay
+    .word handler_display_intermediate_screen
+    .word handler_ann_score_display_end
+    .word handler_reset_sprites_after_screen_delay
+    .word handler_render_initial_area_columns
+    .word handler_select_area_palette
+    .word handler_prepare_background_and_player_colors
+    .word handler_select_mushroom_area_palette
+    .word handler_prepare_ann_title_background
+    .word handler_ann_title_cursor
+    .word handler_ann_title_score
+.else
     .word handler_initialize_screen
     .word handler_setup_intermediate_screen
     .word handler_write_top_status_line
@@ -19,6 +40,7 @@ handler_run_screen_task:
     .word handler_copy_title_screen_from_chr
     .word handler_clear_title_buffers_and_draw_icon
     .word handler_write_title_top_score
+.endif
 
 ; -------------------------------------------------------------------------------------
 
@@ -46,7 +68,11 @@ handler_setup_intermediate_screen:
     STA ram_player_status  ; the intermediate lives display
     PLA  ; and once we're done, we return bg
     STA ram_background_color_ctrl  ; color ctrl and player status from stack
+.if con_revision_profile = con_revision_profile_ann
+    JMP bra_continue_ann_screen_tasks
+.else
     JMP loc_advance_screen_task  ; then move onto the next task
+.endif
 
 ; -------------------------------------------------------------------------------------
 
@@ -59,7 +85,11 @@ handler_select_area_palette:
 loc_store_vram_buffer_control_from_x:
     STX ram_vram_buffer_addr_ctrl  ; store offset into buffer control
 bra_advance_screen_task:
+.if con_revision_profile = con_revision_profile_ann
+    JMP bra_continue_ann_screen_tasks
+.else
     JMP loc_advance_screen_task  ; move onto next task
+.endif
 
 ; -------------------------------------------------------------------------------------
 ; $00 - used as temp counter in sub_get_player_colors
@@ -79,6 +109,8 @@ tbl_background_colors:
 tbl_player_palette_colors:
 .if con_revision_profile = con_revision_profile_vs
     .incbin "vs_prg.bin", $07b8, $00c
+.elseif con_revision_profile = con_revision_profile_ann
+    .incbin "NSMMAIN.bin", $05be, $008
 .else
     .incbin "ju_prg.bin", $05d7, $00c
 .endif
@@ -94,14 +126,20 @@ bra_prepare_player_colors:
 sub_get_player_colors:
     LDX ram_vram_buffer1_offset  ; get current buffer offset
     LDY #$00
+.if con_revision_profile <> con_revision_profile_ann
     LDA ram_current_player  ; check which player is on the screen
     BEQ bra_check_fiery_player_palette
     LDY #$04  ; load offset for luigi
+.endif
 bra_check_fiery_player_palette:
     LDA ram_player_status  ; check player status
     CMP #$02
     BNE bra_copy_player_palette_colors  ; if fiery, load alternate offset for fiery player
+.if con_revision_profile = con_revision_profile_ann
+    LDY #$04
+.else
     LDY #$08
+.endif
 bra_copy_player_palette_colors:
     LDA #$03  ; do four colors
     STA $00
@@ -144,14 +182,22 @@ handler_select_mushroom_area_palette:
 loc_store_vram_buffer_control_from_a:
     STA ram_vram_buffer_addr_ctrl
 bra_finish_alternate_palette_selection:
+.if con_revision_profile = con_revision_profile_ann
+    JMP bra_continue_ann_screen_tasks
+.else
     JMP loc_advance_screen_task  ; now onto the next task
+.endif
 
 ; -------------------------------------------------------------------------------------
 
 handler_write_top_status_line:
     LDA #$00  ; select main status bar
     JSR sub_write_game_text  ; output it
+.if con_revision_profile = con_revision_profile_ann
+    JMP bra_continue_ann_screen_tasks
+.else
     JMP loc_advance_screen_task  ; onto the next task
+.endif
 
 ; -------------------------------------------------------------------------------------
 
@@ -164,9 +210,13 @@ handler_write_bottom_status_line:
     STA ram_vram_buffer1+1,x
     LDA #$03  ; write length for it
     STA ram_vram_buffer1+2,x
+.if con_revision_profile = con_revision_profile_ann
+    JSR sub_calculate_ann_course_display_number
+.else
     LDY ram_world_number  ; first the world number
     INY
     TYA
+.endif
     STA ram_vram_buffer1+3,x
     LDA #$28  ; next the dash
     STA ram_vram_buffer1+4,x
@@ -180,11 +230,51 @@ handler_write_bottom_status_line:
     CLC
     ADC #$06
     STA ram_vram_buffer1_offset
+.if con_revision_profile = con_revision_profile_ann
+    JMP bra_continue_ann_screen_tasks
+.else
     JMP loc_advance_screen_task
+.endif
+
+; -------------------------------------------------------------------------------------
+
+.if con_revision_profile = con_revision_profile_ann
+sub_calculate_ann_course_display_number:
+    LDY ram_ann_course_number
+    LDA ram_ann_hard_mode
+    BEQ bra_finish_ann_course_number_conversion
+    TYA
+    AND #$03
+    CLC
+    ADC #$09
+    TAY
+bra_finish_ann_course_number_conversion:
+    INY
+    TYA
+    RTS
+.endif
 
 ; -------------------------------------------------------------------------------------
 
 handler_display_time_up_screen:
+.if con_revision_profile = con_revision_profile_ann
+    LDA ram_game_timer_expired_flag
+    BEQ bra_skip_ann_time_up_screen
+    LDA #$00
+    STA ram_game_timer_expired_flag
+    LDA #$02
+sub_output_ann_intermediate_screen:
+    JSR sub_write_game_text
+    JSR sub_reset_screen_timer
+    LDA #$00
+    STA ram_disable_screen_flag
+    RTS
+bra_skip_ann_time_up_screen:
+    INC ram_screen_routine_task
+bra_continue_ann_screen_tasks:
+    INC ram_screen_routine_task
+    RTS
+.else
     LDA ram_game_timer_expired_flag  ; if game timer not expired, increment task
     BEQ bra_skip_time_up_screen  ; control 2 tasks forward, otherwise, stay here
     LDA #$00
@@ -194,6 +284,7 @@ handler_display_time_up_screen:
 bra_skip_time_up_screen:
     INC ram_screen_routine_task  ; increment control task 2 tasks forward
     JMP loc_advance_screen_task
+.endif
 
 ; -------------------------------------------------------------------------------------
 
@@ -216,20 +307,35 @@ handler_display_intermediate_screen:
 bra_display_world_lives_screen:
     JSR sub_draw_player_intermediate  ; put player in appropriate place for
     LDA #$01  ; lives display, then output lives display to buffer
+.if con_revision_profile = con_revision_profile_ann
+    JSR sub_output_ann_intermediate_screen
+    JMP bra_continue_ann_screen_tasks
+.else
 loc_output_intermediate_screen:
     JSR sub_write_game_text
     JSR sub_reset_screen_timer
     LDA #$00
     STA ram_disable_screen_flag  ; reenable screen output
     RTS
+.endif
 bra_display_game_over_screen:
+.if con_revision_profile = con_revision_profile_ann
+    LDA #$03
+    JSR sub_write_game_text
+    JMP loc_finish_ann_title_screen
+.else
     LDA #$12  ; set screen timer
     STA ram_screen_timer
     LDA #$03  ; output game over screen to buffer
     JSR sub_write_game_text
     JMP loc_advance_operation_mode_task
+.endif
 bra_skip_intermediate_screen:
+.if con_revision_profile = con_revision_profile_ann
+    LDA #$09
+.else
     LDA #$08  ; set for specific task and leave
+.endif
     STA ram_screen_routine_task
     RTS
 
@@ -254,73 +360,74 @@ bra_queue_rendered_area_columns:
 ; $00 - vram buffer address table low
 ; $01 - vram buffer address table high
 
-.if con_revision_profile = con_revision_profile_vs
+.if con_revision_profile <> con_revision_profile_ann
+    .if con_revision_profile = con_revision_profile_vs
 tbl_vs_title_chr_addresses_high:
-    .byte $1e, $1a, $1a, $1a, $1b, $1b, $1c, $1c
+        .byte $1e, $1a, $1a, $1a, $1b, $1b, $1c, $1c
 
 tbl_vs_title_chr_addresses_low:
-    .byte $a0, $00, $60, $c0, $10, $80, $00, $80
+        .byte $a0, $00, $60, $c0, $10, $80, $00, $80
 
-.endif
+    .endif
 
 handler_copy_title_screen_from_chr:
     LDA ram_oper_mode  ; are we in title screen mode?
     BNE loc_advance_operation_mode_task  ; if not, exit
-.if con_revision_profile = con_revision_profile_vs
-    LDY #$00
+    .if con_revision_profile = con_revision_profile_vs
+        LDY #$00
 sub_load_vs_title_chr_screen:
-    LDA #$06  ; select the Vs. title-screen CHR bank
-    STA VS_REQUEST
-    LDA tbl_vs_title_chr_addresses_high,y
-    STA PPU_ADDRESS
-    LDA tbl_vs_title_chr_addresses_low,y
-    STA PPU_ADDRESS
-    LDA #$63  ; put address $6300 into the indirect at $00
-    STA $01
-    LDY #$00
-    STY $00
-    LDA PPU_DATA  ; do one garbage read before copying CHR data
+        LDA #$06  ; select the Vs. title-screen CHR bank
+        STA VS_REQUEST
+        LDA tbl_vs_title_chr_addresses_high,y
+        STA PPU_ADDRESS
+        LDA tbl_vs_title_chr_addresses_low,y
+        STA PPU_ADDRESS
+        LDA #$63  ; put address $6300 into the indirect at $00
+        STA $01
+        LDY #$00
+        STY $00
+        LDA PPU_DATA  ; do one garbage read before copying CHR data
 bra_copy_vs_title_screen_data:
-    LDA PPU_DATA
-    STA ($00),y
-    INY
-    BNE bra_check_vs_title_screen_copy_end
-    INC $01
+        LDA PPU_DATA
+        STA ($00),y
+        INY
+        BNE bra_check_vs_title_screen_copy_end
+        INC $01
 bra_check_vs_title_screen_copy_end:
-    LDA $01
-    CMP #$64
-    BNE bra_copy_vs_title_screen_data
-    CPY #$5a
-    BCC bra_copy_vs_title_screen_data
-    LDA #$02  ; restore the Vs. program bank
-    STA VS_REQUEST
-    LDA #$1c  ; select the copied title-screen packet
-    JMP loc_store_vram_buffer_control_from_a
-.else
-    LDA #>con_title_screen_data_offset  ; load address $1ec0 into
-    STA PPU_ADDRESS  ; the vram address register
-    LDA #<con_title_screen_data_offset
-    STA PPU_ADDRESS
-    LDA #$03  ; put address $0300 into
-    STA $01  ; the indirect at $00
-    LDY #$00
-    STY $00
-    LDA PPU_DATA  ; do one garbage read
+        LDA $01
+        CMP #$64
+        BNE bra_copy_vs_title_screen_data
+        CPY #$5a
+        BCC bra_copy_vs_title_screen_data
+        LDA #$02  ; restore the Vs. program bank
+        STA VS_REQUEST
+        LDA #$1c  ; select the copied title-screen packet
+        JMP loc_store_vram_buffer_control_from_a
+    .else
+        LDA #>con_title_screen_data_offset  ; load address $1ec0 into
+        STA PPU_ADDRESS  ; the vram address register
+        LDA #<con_title_screen_data_offset
+        STA PPU_ADDRESS
+        LDA #$03  ; put address $0300 into
+        STA $01  ; the indirect at $00
+        LDY #$00
+        STY $00
+        LDA PPU_DATA  ; do one garbage read
 bra_copy_title_screen_data:
-    LDA PPU_DATA  ; get title screen from chr-rom
-    STA ($00),y  ; store 256 bytes into buffer
-    INY
-    BNE bra_check_title_screen_copy_end  ; if not past 256 bytes, do not increment
-    INC $01  ; otherwise increment high byte of indirect
+        LDA PPU_DATA  ; get title screen from chr-rom
+        STA ($00),y  ; store 256 bytes into buffer
+        INY
+        BNE bra_check_title_screen_copy_end  ; if not past 256 bytes, do not increment
+        INC $01  ; otherwise increment high byte of indirect
 bra_check_title_screen_copy_end:
-    LDA $01  ; check high byte?
-    CMP #$04  ; at $0400?
-    BNE bra_copy_title_screen_data  ; if not, loop back and do another
-    CPY #$3a  ; check if offset points past end of data
-    BCC bra_copy_title_screen_data  ; if not, loop back and do another
-    LDA #$05  ; set buffer transfer control to $0300,
-    JMP loc_store_vram_buffer_control_from_a  ; increment task and exit
-.endif
+        LDA $01  ; check high byte?
+        CMP #$04  ; at $0400?
+        BNE bra_copy_title_screen_data  ; if not, loop back and do another
+        CPY #$3a  ; check if offset points past end of data
+        BCC bra_copy_title_screen_data  ; if not, loop back and do another
+        LDA #$05  ; set buffer transfer control to $0300,
+        JMP loc_store_vram_buffer_control_from_a  ; increment task and exit
+    .endif
 
 ; -------------------------------------------------------------------------------------
 
@@ -333,9 +440,9 @@ bra_clear_title_screen_buffers:
     STA ram_vram_buffer1-1+$100,x
     DEX
     BNE bra_clear_title_screen_buffers
-.if con_revision_profile <> con_revision_profile_vs
-    JSR sub_draw_mushroom_icon  ; draw player select icon
-.endif
+    .if con_revision_profile <> con_revision_profile_vs .and con_revision_profile <> con_revision_profile_ann
+        JSR sub_draw_mushroom_icon  ; draw player select icon
+    .endif
 loc_advance_screen_task:
     INC ram_screen_routine_task  ; move onto next task
     RTS
@@ -348,9 +455,13 @@ handler_write_title_top_score:
 loc_advance_operation_mode_task:
     INC ram_oper_mode_task  ; move onto next mode
     RTS
+.endif
 
 ; -------------------------------------------------------------------------------------
 
+.if con_revision_profile = con_revision_profile_ann
+    .include "../platforms/ann/background_text.asm"
+.else
 tbl_game_text_packets:
 off_top_status_bar_packet:
     .incbin "ju_prg.bin", $0752, $027
@@ -376,11 +487,11 @@ tbl_luigi_name_tiles:
 
 tbl_warp_zone_number_tiles:
     .incbin "ju_prg.bin", $07f2, $008
-.if con_revision_profile = con_revision_profile_vs
-    .byte $24, $06, $24, $00  ; the Vs. warp-zone layout
-.else
-    .byte $08, $07, $06, $00  ; the minus world
-.endif
+    .if con_revision_profile = con_revision_profile_vs
+        .byte $24, $06, $24, $00  ; the Vs. warp-zone layout
+    .else
+        .byte $08, $07, $06, $00  ; the minus world
+    .endif
 
 tbl_game_text_packet_offsets:
     .byte off_top_status_bar_packet-tbl_game_text_packets, off_top_status_bar_packet-tbl_game_text_packets
@@ -447,15 +558,15 @@ bra_check_game_text_player_name:
     DEX  ; check to see if current message number is for time up
     BNE bra_check_luigi_name_replacement
     LDY ram_oper_mode  ; check for game over mode
-.if con_revision_profile = con_revision_profile_vs
-    CPY #con_vs_mode_game_over
-    BEQ bra_check_luigi_name_replacement
-    LDY ram_off_scr_numberof_lives
-    BMI bra_check_luigi_name_replacement
-.else
-    CPY #con_mode_game_over
-    BEQ bra_check_luigi_name_replacement
-.endif
+    .if con_revision_profile = con_revision_profile_vs
+        CPY #con_vs_mode_game_over
+        BEQ bra_check_luigi_name_replacement
+        LDY ram_off_scr_numberof_lives
+        BMI bra_check_luigi_name_replacement
+    .else
+        CPY #con_mode_game_over
+        BEQ bra_check_luigi_name_replacement
+    .endif
     EOR #%00000001  ; if not, must be time up, invert d0 to do other player
 bra_check_luigi_name_replacement:
     LSR
@@ -487,6 +598,7 @@ bra_print_warp_zone_numbers_loop:
     BCC bra_print_warp_zone_numbers_loop
     LDA #$2c  ; load new buffer pointer at end of message
     JMP loc_store_primary_vram_buffer_offset
+.endif
 
 ; -------------------------------------------------------------------------------------
 
