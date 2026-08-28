@@ -344,99 +344,60 @@ tbl_metatile_graphics_pointers_low:
 tbl_metatile_graphics_pointers_high:
     .byte >off_palette_0_metatiles, >off_palette_1_metatiles, >off_palette_2_metatiles, >off_palette_3_metatiles
 
+.if con_revision_profile = con_revision_profile_ann
+    .define con_metatile_graphics_asset "../../assets/generated/platforms/ann_fds/source/ann_metatile_graphics.bin"
+con_palette_1_metatiles_size = $0bc
+con_palette_2_metatiles_offset = $158
+.else
+    .define con_metatile_graphics_asset "../../assets/generated/source/base_metatile_graphics.bin"
+con_palette_1_metatiles_size = $0b8
+con_palette_2_metatiles_offset = $154
+.endif
+
 off_palette_0_metatiles:
-    .byte $24, $24, $24, $24  ; blank
-    .incbin "ju_prg.bin", $0b14, $098
+    .incbin con_metatile_graphics_asset, $000, $09c
 
 off_palette_1_metatiles:
-    .incbin "ju_prg.bin", $0bac, $04c
-    .byte $45, $47, $45, $47  ; breakable brick (not used)
-.if con_revision_profile <> con_revision_profile_ann
-    .byte $b4, $b6, $b5, $b7  ; cracked rock terrain
-.endif
-    .byte $45, $47, $45, $47  ; brick with line (power-up)
-    .byte $45, $47, $45, $47  ; brick with line (vine)
-    .byte $45, $47, $45, $47  ; brick with line (star)
-    .byte $45, $47, $45, $47  ; brick with line (coins)
-    .byte $45, $47, $45, $47  ; brick with line (1-up)
-    .byte $47, $47, $47, $47  ; brick (power-up)
-    .byte $47, $47, $47, $47  ; brick (vine)
-    .byte $47, $47, $47, $47  ; brick (star)
-    .byte $47, $47, $47, $47  ; brick (coins)
-    .byte $47, $47, $47, $47  ; brick (1-up)
-.if con_revision_profile = con_revision_profile_ann
-    .byte $24, $24, $24, $24  ; blank reserved by the later metatile layout
-.endif
-    .incbin "ju_prg.bin", $0c28, $02c
-.if con_revision_profile = con_revision_profile_ann
-    .byte $b4, $b6, $b5, $b7  ; normal floor in the later metatile layout
-.endif
-    .incbin "ju_prg.bin", $0c54, $010
+    .incbin con_metatile_graphics_asset, $09c, con_palette_1_metatiles_size
 
 off_palette_2_metatiles:
-    .incbin "ju_prg.bin", $0c64, $028
+    .incbin con_metatile_graphics_asset, con_palette_2_metatiles_offset, $028
 
 off_palette_3_metatiles:
-    .incbin "ju_prg.bin", $0c8c, $018
+    .incbin con_metatile_graphics_asset, con_palette_2_metatiles_offset + $028, $018
 
 ; -------------------------------------------------------------------------------------
 ; VRAM BUFFER DATA FOR LOCATIONS IN PRG-ROM
 
-off_water_area_palette_packet:
 .if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0ea5, $024
+    .define con_area_palette_packets_asset "../../assets/generated/platforms/vs_smb/source/vs_area_palette_packets.bin"
 .else
-    .incbin "ju_prg.bin", $0ca4, $024
+    .define con_area_palette_packets_asset "../../assets/generated/source/base_area_palette_packets.bin"
 .endif
+
+off_water_area_palette_packet:
+    .incbin con_area_palette_packets_asset, $00, $24
 
 off_ground_area_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0ec9, $024
-.else
-    .incbin "ju_prg.bin", $0cc8, $024
-.endif
+    .incbin con_area_palette_packets_asset, $24, $24
 
 off_underground_area_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0eed, $024
-.else
-    .incbin "ju_prg.bin", $0cec, $024
-.endif
+    .incbin con_area_palette_packets_asset, $48, $24
 
 off_castle_area_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0f11, $024
-.else
-    .incbin "ju_prg.bin", $0d10, $024
-.endif
+    .incbin con_area_palette_packets_asset, $6c, $24
 
 off_day_snow_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0f35, $008
-.else
-    .incbin "ju_prg.bin", $0d34, $008
-.endif
+    .incbin con_area_palette_packets_asset, $90, $08
 
 off_night_snow_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0f3d, $008
-.else
-    .incbin "ju_prg.bin", $0d3c, $008
-.endif
+    .incbin con_area_palette_packets_asset, $98, $08
 
 off_mushroom_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0f45, $008
-.else
-    .incbin "ju_prg.bin", $0d44, $008
-.endif
+    .incbin con_area_palette_packets_asset, $a0, $08
 
 off_bowser_palette_packet:
-.if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0f4d, $008
-.else
-    .incbin "ju_prg.bin", $0d4c, $008
-.endif
+    .incbin con_area_palette_packets_asset, $a8, $08
 
 off_mario_thanks_message:
 ; "THANK YOU MARIO!"
