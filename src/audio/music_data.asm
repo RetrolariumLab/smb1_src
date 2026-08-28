@@ -96,10 +96,8 @@ off_music_header_end_of_level:
 unused_music_header_residual:
 .if con_revision_profile = con_revision_profile_vs
     .byte con_music_length_offset_e, $7d, $fc, $3f, $1d
-.elseif con_revision_profile = con_revision_profile_pal
-    .byte $20, $c5, $fc, $3f, $1d
 .else
-    .byte $20, $c4, $fc, $3f, $1d
+    .byte $20, <off_music_stream_unused, >off_music_stream_unused, $3f, $1d
 .endif
 off_music_header_underground:
     .byte con_music_length_offset_d, <off_music_stream_underground, >off_music_stream_underground, $00, $00
@@ -267,7 +265,9 @@ off_music_stream_time_running_out:
 
 
 off_music_stream_end_of_level:
-    .incbin "ju_prg.bin", $7cb0, $061
+    .incbin "ju_prg.bin", $7cb0, $014
+off_music_stream_unused:
+    .incbin "ju_prg.bin", $7cc4, $04d
 
 
 
