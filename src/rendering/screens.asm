@@ -467,7 +467,9 @@ off_top_status_bar_packet:
     .incbin "ju_prg.bin", $0752, $027
 
 off_world_lives_display_packet:
-    .incbin "ju_prg.bin", $0779, $01f
+    .incbin "ju_prg.bin", $0779, $016
+off_time_up_clear_packet = off_world_lives_display_packet + $16
+    .incbin "ju_prg.bin", $078f, $009
 
 off_two_player_time_up_packet:
     .incbin "ju_prg.bin", $0798, $008
