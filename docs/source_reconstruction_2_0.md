@@ -26,7 +26,7 @@ outside the 2.0 scope.
 
 The alternate European candidate remains an evaluated provenance record rather
 than a required supported release unless independent evidence establishes its
-identity. Source Reconstruction 3.0 is reserved for later semantic
+identity. Source Reconstruction 2.1 is reserved for later semantic
 consolidation, variant-wide authoring, deeper behavioral evidence, and possible
 evaluation of the Japanese SMB2 engine.
 
