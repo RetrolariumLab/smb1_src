@@ -155,14 +155,10 @@ off_smb2_main_water_area_1_objects:
 
 ; water area used by level 4-1
 off_smb2_main_water_area_3_objects:
-    .incbin "SM2MAIN.bin", $721b, $041
+    .incbin "SM2MAIN.bin", $721b, $031
 
 ; a bunch of unused space
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
-    .byte $ff, $ff, $ff
+    .res 83, $ff
 
 ; -------------------------------------------------------------------------------------
 
