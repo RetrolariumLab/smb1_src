@@ -151,6 +151,9 @@ make source-2-1-audit
 # Run the complete Source Reconstruction 2.1 release gate
 make source-2-1-check
 
+# Compare normalized ANN and SMB2 instruction streams
+make later-engine-source-overlap
+
 # Rebuild SMB2 / The Lost Levels and verify the complete FDS side
 make verify-smb2
 
