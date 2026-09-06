@@ -9,7 +9,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[1] / "scripts"))
 
-from source_2_1_audit import (
+from validation.source_2_1_audit import (
     EXPECTED_MILESTONES,
     validate_milestones,
     validate_authoring_contract,
