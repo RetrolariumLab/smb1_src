@@ -9,7 +9,8 @@ contracts.
 
 - [`preservation_source_1_0.md`](preservation_source_1_0.md) — stable preservation baseline and acceptance boundary.
 - [`source_reconstruction_2_0.md`](source_reconstruction_2_0.md) — 2.0 source-reconstruction contract.
-- [`source_reconstruction_2_1.md`](source_reconstruction_2_1.md) — active 2.1 contract, milestones, and aggregate gate.
+- [`source_reconstruction_2_1.md`](source_reconstruction_2_1.md) — published 2.1 contract, milestones, and aggregate gate.
+- [`source_reconstruction_2_2.md`](source_reconstruction_2_2.md) — compatible repository modernization and release evidence.
 - [`roadmap.md`](roadmap.md) — completed work, remaining work, and project policy.
 - [`smb2_reconstruction.md`](smb2_reconstruction.md) — Super Mario Bros. 2 FDS reconstruction scope.
 - [`later_engine_feasibility.md`](later_engine_feasibility.md) and [`later_engine_source_overlap.md`](later_engine_source_overlap.md) — later-engine evidence and source-overlap analysis.

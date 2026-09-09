@@ -2,20 +2,21 @@
 
 A comprehensive disassembly of Super Mario Bros for the Nintendo Entertainment System (NES).
 
-The current tag-ready release candidate is **Source Reconstruction 2.1**. It
-retains the byte-identical Preservation Source 1.0 baseline and complete Source
-Reconstruction 2.0 contract while adding relocation proofs, deeper semantic
-evidence, seven-profile content authoring, and a separate source reconstruction
-of Japanese SMB2 / The Lost Levels. Original ROMs, disk images, CHR payloads,
-and extracted content remain private ignored inputs.
+The current development candidate is **Source Reconstruction 2.2**. It retains
+the byte-identical Preservation Source 1.0 baseline, complete Source
+Reconstruction 2.0 contract, and published 2.1 capabilities while modernizing
+repository structure, test ownership, language policy, and release evidence.
+Original ROMs, disk images, CHR payloads, and extracted content remain private
+ignored inputs.
 
-The immutable `source-reconstruction-1.0` and `source-reconstruction-2.0` tags
-preserve their original release contracts. Source Reconstruction 2.1 keeps
-every earlier acceptance gate and layers its new contracts on top.
+The immutable `source-reconstruction-1.0`, `source-reconstruction-2.0`, and
+`source-reconstruction-2.1` tags preserve their original release contracts.
+Version 2.2 is a compatible quality release and does not alter emitted bytes or
+introduce a new platform boundary.
 
-The complete `make source-2-1-check` gate qualifies the 2.1 candidate without
-changing either stable predecessor tag or the default byte-identical build. See
-[`docs/source_reconstruction_2_1.md`](docs/source_reconstruction_2_1.md).
+The complete `make source-2-2-check` gate reruns the published 2.1 boundary and
+then validates the new structure, metadata, toolchain, and history. See
+[`docs/source_reconstruction_2_2.md`](docs/source_reconstruction_2_2.md).
 
 ## Overview
 
@@ -42,6 +43,7 @@ This repository contains:
 - **docs/preservation_source_1_0.md** - Stable release scope and evidence boundary
 - **docs/source_reconstruction_2_0.md** - Aggregate 2.0 scope and acceptance gate
 - **docs/source_reconstruction_2_1.md** - Active 2.1 milestones and boundaries
+- **docs/source_reconstruction_2_2.md** - Compatible modernization scope and release gate
 - **docs/relocation_testing.md** - Generated address-shift and runtime proof
 - **CONTRIBUTING.md** - Safe source, data, evidence, and verification workflow
 
@@ -174,6 +176,19 @@ make source-2-1-pre-tag
 
 # After publishing the annotated tag, prove local/remote tag identity
 make source-2-1-post-tag
+
+# Check structure, tests, and release metadata without private ROMs
+make scaffold-check
+
+# Run the complete compatible Source Reconstruction 2.2 gate
+make source-2-2-check
+
+# Equivalent quality-line alias for the 2.2 compatible minor release
+make source-2-minor-check
+
+# Audit the future 2.2 tag before or after owner-managed publication
+make source-2-2-pre-tag
+make source-2-2-post-tag
 
 # Compare normalized ANN and SMB2 instruction streams
 make later-engine-source-overlap

@@ -13,6 +13,15 @@ and must never weaken its byte-identity gate.
 This project is not a C rewrite. The original 6502 instruction stream, memory
 layout, timing behavior, and data formats remain the source of truth.
 
+## Source Reconstruction 2.2 Modernization
+
+Version 2.2 keeps the published 2.1 gameplay, profile, relocation, and sibling
+engine boundaries unchanged. Its release delta modularizes Make orchestration,
+assigns configuration and tests to explicit responsibility packages, enforces
+English public text, and replaces review-specific metadata with a self-contained
+project release contract. `make source-2-2-check` is the aggregate gate; the
+candidate remains in development until that command passes on the final tree.
+
 ## Preservation Contract
 
 The first technical milestone is to identify the exact reference ROM reproduced
