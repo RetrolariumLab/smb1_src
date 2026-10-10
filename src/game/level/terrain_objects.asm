@@ -1,6 +1,6 @@
 ; --------------------------------
 
-handler_water_hole:
+handler_water_or_lava_hole:
     JSR sub_check_large_area_object_length  ; get low nybble and save as length
     LDA #$86  ; render waves
     STA ram_metatile_buffer+10

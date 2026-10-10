@@ -246,9 +246,9 @@ bra_decode_enemy_or_group_id:
     LDA (ram_enemy_data),y  ; get second byte and mask out 2 MSB
 .endif
     AND #%00111111
-    CMP #$37  ; check for value below $37
+    CMP #con_goomba_pair_low  ; check for value below $37
     BCC bra_apply_hard_mode_enemy_substitution
-    CMP #$3f  ; if $37 or greater, check for value
+    CMP #con_koopa_trio_high + 1  ; if $37 or greater, check for value
     BCC bra_spawn_enemy_group  ; below $3f, branch if below $3f
 
 bra_apply_hard_mode_enemy_substitution:

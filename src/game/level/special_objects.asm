@@ -123,7 +123,7 @@ bra_store_area_frenzy_queue:
 ; --------------------------------
 ; $06 - used by handler_draw_mushroom_ledge to store length
 
-handler_set_area_style:
+handler_draw_area_style_object:
     LDA ram_area_style  ; load level object style and jump to the right sub
     JSR sub_dispatch_inline_handler
     .word handler_draw_tree_ledge  ; also used for cloud type levels

@@ -616,7 +616,7 @@ bra_check_tall_enemy_collision_shape:
     BEQ bra_update_floating_score_position  ; branch if piranha plant
     CMP #con_hammer_bro
     BEQ bra_use_alternate_score_oam_offset  ; branch elsewhere if hammer bro
-    CMP #con_grey_cheep_cheep
+    CMP #con_green_cheep_cheep
     BEQ bra_update_floating_score_position  ; branch if cheep-cheep of either color
     CMP #con_red_cheep_cheep
     BEQ bra_update_floating_score_position
