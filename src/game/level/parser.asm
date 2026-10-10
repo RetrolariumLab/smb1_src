@@ -579,7 +579,7 @@ bra_dispatch_current_area_object:
 
 ; large objects (rows $00-$0b or 00-11, d6-d4 set)
     .word handler_draw_vertical_pipe  ; used by warp pipes
-    .word handler_set_area_style
+    .word handler_draw_area_style_object
     .word handler_draw_brick_row
     .word handler_draw_solid_block_row
     .word handler_draw_coin_row
@@ -593,7 +593,7 @@ bra_dispatch_current_area_object:
     .word handler_draw_high_bridge
     .word handler_draw_middle_bridge
     .word handler_draw_low_bridge
-    .word handler_water_hole
+    .word handler_water_or_lava_hole
     .word handler_draw_high_question_block_row
     .word handler_draw_low_question_block_row
 

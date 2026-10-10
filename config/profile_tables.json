@@ -1,0 +1,601 @@
+{
+  "revisions": {
+    "ju": {
+      "engine": "smb1",
+      "dbg": "build/revisions/ju/smb.dbg",
+      "offsets": "image"
+    },
+    "pal": {
+      "engine": "smb1",
+      "dbg": "build/revisions/pal/smb.dbg",
+      "offsets": "image"
+    },
+    "pc10": {
+      "engine": "smb1",
+      "dbg": "build/revisions/pc10/smb.dbg",
+      "offsets": "image"
+    },
+    "vs_smb": {
+      "engine": "smb1",
+      "dbg": "build/platforms/vs_smb/smb.dbg",
+      "offsets": "payload"
+    },
+    "fds_smb": {
+      "engine": "smb1",
+      "dbg": "build/platforms/fds_smb/smb.dbg",
+      "offsets": "payload"
+    },
+    "ann_fds": {
+      "engine": "smb1",
+      "dbg": "build/platforms/ann_fds/smb.dbg",
+      "offsets": "payload"
+    },
+    "smb2_jp_fds": {
+      "engine": "smb2",
+      "dbg": "build/smb2/source/smb2.dbg",
+      "offsets": "payload"
+    }
+  },
+  "engines": {
+    "smb1": [
+      {
+        "name": "background_scenery_offsets",
+        "label": "tbl_background_scenery_data_offsets"
+      },
+      {
+        "name": "background_scenery_patterns",
+        "label": "tbl_background_scenery_patterns"
+      },
+      {
+        "name": "background_scenery_metatiles",
+        "label": "tbl_background_scenery_metatiles"
+      },
+      {
+        "name": "foreground_scenery_offsets",
+        "label": "tbl_foreground_scenery_data_offsets"
+      },
+      {
+        "name": "foreground_scenery_metatiles",
+        "label": "tbl_foreground_scenery_metatiles"
+      },
+      {
+        "name": "terrain_metatiles",
+        "label": "tbl_terrain_metatiles"
+      },
+      {
+        "name": "terrain_render_masks",
+        "label": "tbl_terrain_render_masks"
+      },
+      {
+        "name": "hole_metatiles",
+        "label": "tbl_hole_metatiles"
+      },
+      {
+        "name": "pulley_rope_metatiles",
+        "label": "tbl_pulley_rope_metatiles"
+      },
+      {
+        "name": "castle_structure_metatiles",
+        "label": "tbl_castle_structure_metatiles"
+      },
+      {
+        "name": "side_pipe_shaft_metatiles",
+        "label": "tbl_side_pipe_shaft_metatiles"
+      },
+      {
+        "name": "side_pipe_top_metatiles",
+        "label": "tbl_side_pipe_top_metatiles"
+      },
+      {
+        "name": "side_pipe_bottom_metatiles",
+        "label": "tbl_side_pipe_bottom_metatiles"
+      },
+      {
+        "name": "vertical_pipe_metatiles",
+        "label": "tbl_vertical_pipe_metatiles"
+      },
+      {
+        "name": "coin_metatiles",
+        "label": "tbl_coin_metatiles_by_area_type"
+      },
+      {
+        "name": "castle_object_rows",
+        "label": "tbl_castle_object_rows"
+      },
+      {
+        "name": "castle_object_metatiles",
+        "label": "tbl_castle_object_metatiles"
+      },
+      {
+        "name": "solid_block_metatiles",
+        "label": "tbl_solid_block_metatiles"
+      },
+      {
+        "name": "brick_metatiles",
+        "label": "tbl_brick_metatiles"
+      },
+      {
+        "name": "staircase_heights",
+        "label": "tbl_staircase_heights"
+      },
+      {
+        "name": "staircase_start_rows",
+        "label": "tbl_staircase_start_rows"
+      },
+      {
+        "name": "block_metatiles",
+        "label": "tbl_brick_and_question_block_metatiles"
+      },
+      {
+        "name": "enemy_graphics_tiles",
+        "label": "tbl_enemy_graphics_tiles"
+      },
+      {
+        "name": "enemy_graphics_offsets",
+        "label": "tbl_enemy_graphics_offsets"
+      },
+      {
+        "name": "enemy_sprite_attributes",
+        "label": "tbl_enemy_sprite_attributes"
+      },
+      {
+        "name": "player_starting_y_positions",
+        "label": "tbl_player_starting_y_positions"
+      },
+      {
+        "name": "background_colors",
+        "label": "tbl_background_colors"
+      },
+      {
+        "name": "cloud_terrain",
+        "after": "bra_select_terrain_metatile",
+        "immediate": 0
+      },
+      {
+        "name": "tree_ledge_start",
+        "after": "handler_draw_tree_ledge",
+        "immediate": 0
+      },
+      {
+        "name": "tree_ledge_middle",
+        "after": "handler_draw_tree_ledge",
+        "immediate": 1
+      },
+      {
+        "name": "tree_ledge_trunk",
+        "after": "handler_draw_tree_ledge",
+        "immediate": 2
+      },
+      {
+        "name": "tree_ledge_end",
+        "after": "handler_draw_tree_ledge",
+        "immediate": 3
+      },
+      {
+        "name": "mushroom_ledge_start",
+        "after": "handler_draw_mushroom_ledge",
+        "immediate": 0
+      },
+      {
+        "name": "mushroom_ledge_end",
+        "after": "handler_draw_mushroom_ledge",
+        "immediate": 1
+      },
+      {
+        "name": "mushroom_ledge_middle",
+        "after": "handler_draw_mushroom_ledge",
+        "immediate": 2
+      },
+      {
+        "name": "mushroom_stem_top",
+        "after": "handler_draw_mushroom_ledge",
+        "immediate": 3
+      },
+      {
+        "name": "mushroom_stem",
+        "after": "handler_draw_mushroom_ledge",
+        "immediate": 4
+      },
+      {
+        "name": "water_pipe_top",
+        "after": "handler_draw_water_pipe",
+        "immediate": 0
+      },
+      {
+        "name": "water_pipe_bottom",
+        "after": "handler_draw_water_pipe",
+        "immediate": 1
+      },
+      {
+        "name": "castle_stop_block",
+        "after": "bra_place_castle_player_stop_block",
+        "immediate": 0
+      },
+      {
+        "name": "water_surface",
+        "after": "handler_water_or_lava_hole",
+        "immediate": 0
+      },
+      {
+        "name": "water_body",
+        "after": "handler_water_or_lava_hole",
+        "immediate": 3
+      },
+      {
+        "name": "coin_row",
+        "after": "loc_draw_question_block_row",
+        "immediate": 0
+      },
+      {
+        "name": "bridge_top",
+        "after": "loc_draw_bridge",
+        "immediate": 0
+      },
+      {
+        "name": "bridge_support",
+        "after": "loc_draw_bridge",
+        "immediate": 2
+      },
+      {
+        "name": "residual_flag",
+        "after": "handler_residual_flag_balls",
+        "immediate": 1
+      },
+      {
+        "name": "flagpole_ball",
+        "after": "handler_draw_flagpole_object",
+        "immediate": 0
+      },
+      {
+        "name": "flagpole_shaft",
+        "after": "handler_draw_flagpole_object",
+        "immediate": 3
+      },
+      {
+        "name": "flagpole_base",
+        "after": "handler_draw_flagpole_object",
+        "immediate": 4
+      },
+      {
+        "name": "balance_rope_top",
+        "after": "handler_draw_balance_platform_rope",
+        "immediate": 2
+      },
+      {
+        "name": "rope",
+        "after": "loc_draw_rope_segment",
+        "immediate": 0
+      },
+      {
+        "name": "empty_block",
+        "after": "handler_draw_empty_block",
+        "immediate": 0
+      },
+      {
+        "name": "cannon_top",
+        "after": "handler_draw_bullet_bill_cannon",
+        "immediate": 0
+      },
+      {
+        "name": "cannon_middle",
+        "after": "handler_draw_bullet_bill_cannon",
+        "immediate": 1
+      },
+      {
+        "name": "cannon_bottom",
+        "after": "handler_draw_bullet_bill_cannon",
+        "immediate": 2
+      },
+      {
+        "name": "staircase",
+        "after": "bra_render_next_stair_step",
+        "immediate": 0
+      },
+      {
+        "name": "jumpspring_top",
+        "after": "handler_draw_jumpspring",
+        "immediate": 2
+      },
+      {
+        "name": "jumpspring_bottom",
+        "after": "handler_draw_jumpspring",
+        "immediate": 3
+      },
+      {
+        "name": "firebar_tile",
+        "after": "sub_draw_firebar",
+        "immediate": 1
+      },
+      {
+        "name": "platform_tile",
+        "after": "sub_draw_small_platform",
+        "immediate": 0
+      },
+      {
+        "name": "firebar_attributes",
+        "after": "sub_draw_firebar",
+        "immediate": 2
+      },
+      {
+        "name": "platform_attributes",
+        "after": "sub_draw_small_platform",
+        "immediate": 1
+      }
+    ],
+    "smb2": [
+      {
+        "name": "background_scenery_offsets",
+        "label": "tbl_smb2_main_background_scenery_data_offsets"
+      },
+      {
+        "name": "background_scenery_patterns",
+        "label": "off_smb2_main_background_scenery_patterns"
+      },
+      {
+        "name": "background_scenery_metatiles",
+        "label": "tbl_smb2_main_background_scenery_metatiles"
+      },
+      {
+        "name": "foreground_scenery_offsets",
+        "label": "tbl_smb2_main_foreground_scenery_data_offsets"
+      },
+      {
+        "name": "foreground_scenery_metatiles",
+        "label": "off_smb2_main_foreground_scenery_metatiles"
+      },
+      {
+        "name": "terrain_metatiles",
+        "label": "tbl_smb2_main_terrain_metatiles"
+      },
+      {
+        "name": "terrain_render_masks",
+        "label": "tbl_smb2_main_terrain_render_masks"
+      },
+      {
+        "name": "hole_metatiles",
+        "label": "tbl_smb2_main_hole_metatiles"
+      },
+      {
+        "name": "pulley_rope_metatiles",
+        "label": "tbl_smb2_main_pulley_rope_metatiles"
+      },
+      {
+        "name": "castle_structure_metatiles",
+        "label": "tbl_smb2_main_castle_structure_metatiles"
+      },
+      {
+        "name": "side_pipe_shaft_metatiles",
+        "label": "off_smb2_main_side_pipe_shaft_metatiles"
+      },
+      {
+        "name": "side_pipe_top_metatiles",
+        "label": "tbl_smb2_main_side_pipe_top_metatiles"
+      },
+      {
+        "name": "side_pipe_bottom_metatiles",
+        "label": "tbl_smb2_main_side_pipe_bottom_metatiles"
+      },
+      {
+        "name": "vertical_pipe_metatiles",
+        "label": "off_smb2_main_vertical_pipe_metatiles"
+      },
+      {
+        "name": "coin_metatiles",
+        "label": "off_smb2_main_coin_metatiles_by_area_type"
+      },
+      {
+        "name": "castle_object_rows",
+        "label": "tbl_smb2_main_castle_object_rows"
+      },
+      {
+        "name": "castle_object_metatiles",
+        "label": "tbl_smb2_main_castle_object_metatiles"
+      },
+      {
+        "name": "solid_block_metatiles",
+        "label": "tbl_smb2_main_solid_block_metatiles"
+      },
+      {
+        "name": "brick_metatiles",
+        "label": "tbl_smb2_main_brick_metatiles"
+      },
+      {
+        "name": "staircase_heights",
+        "label": "off_smb2_main_staircase_heights"
+      },
+      {
+        "name": "staircase_start_rows",
+        "label": "off_smb2_main_staircase_start_rows"
+      },
+      {
+        "name": "block_metatiles",
+        "label": "tbl_smb2_main_brick_and_question_block_metatiles"
+      },
+      {
+        "name": "enemy_graphics_tiles",
+        "label": "tbl_smb2_main_enemy_graphics_tiles"
+      },
+      {
+        "name": "enemy_graphics_offsets",
+        "label": "tbl_smb2_main_enemy_graphics_offsets"
+      },
+      {
+        "name": "enemy_sprite_attributes",
+        "label": "off_smb2_main_enemy_sprite_attributes"
+      },
+      {
+        "name": "player_starting_y_positions",
+        "label": "tbl_smb2_main_player_starting_y_positions"
+      },
+      {
+        "name": "background_colors",
+        "label": "tbl_smb2_main_background_colors"
+      },
+      {
+        "name": "cloud_terrain",
+        "after": "bra_smb2_main_select_terrain_metatile",
+        "immediate": 0
+      },
+      {
+        "name": "tree_ledge_start",
+        "after": "handler_smb2_main_draw_tree_ledge",
+        "immediate": 0
+      },
+      {
+        "name": "tree_ledge_middle",
+        "after": "handler_smb2_main_draw_tree_ledge",
+        "immediate": 1
+      },
+      {
+        "name": "tree_ledge_trunk",
+        "after": "handler_smb2_main_draw_tree_ledge",
+        "immediate": 2
+      },
+      {
+        "name": "tree_ledge_end",
+        "after": "handler_smb2_main_draw_tree_ledge",
+        "immediate": 3
+      },
+      {
+        "name": "cloud_ledge_start",
+        "after": "handler_smb2_main_cloud_ledge",
+        "immediate": 0
+      },
+      {
+        "name": "cloud_ledge_end",
+        "after": "handler_smb2_main_cloud_ledge",
+        "immediate": 1
+      },
+      {
+        "name": "cloud_ledge_middle",
+        "after": "handler_smb2_main_cloud_ledge",
+        "immediate": 2
+      },
+      {
+        "name": "water_pipe_top",
+        "after": "handler_smb2_main_draw_water_pipe",
+        "immediate": 0
+      },
+      {
+        "name": "water_pipe_bottom",
+        "after": "handler_smb2_main_draw_water_pipe",
+        "immediate": 1
+      },
+      {
+        "name": "castle_stop_block",
+        "after": "bra_smb2_main_place_castle_player_stop_block",
+        "immediate": 0
+      },
+      {
+        "name": "water_surface",
+        "after": "handler_smb2_main_water_hole",
+        "immediate": 0
+      },
+      {
+        "name": "water_body",
+        "after": "handler_smb2_main_water_hole",
+        "immediate": 3
+      },
+      {
+        "name": "coin_row",
+        "after": "handler_smb2_main_draw_high_question_block_row",
+        "immediate": 2
+      },
+      {
+        "name": "bridge_top",
+        "after": "handler_smb2_main_draw_high_bridge",
+        "immediate": 3
+      },
+      {
+        "name": "bridge_support",
+        "after": "handler_smb2_main_draw_high_bridge",
+        "immediate": 5
+      },
+      {
+        "name": "residual_flag",
+        "after": "handler_smb2_main_residual_flag_balls",
+        "immediate": 1
+      },
+      {
+        "name": "flagpole_ball",
+        "after": "handler_smb2_main_draw_flagpole_object",
+        "immediate": 0
+      },
+      {
+        "name": "flagpole_shaft",
+        "after": "handler_smb2_main_draw_flagpole_object",
+        "immediate": 3
+      },
+      {
+        "name": "flagpole_base",
+        "after": "handler_smb2_main_draw_flagpole_object",
+        "immediate": 4
+      },
+      {
+        "name": "balance_rope_top",
+        "after": "handler_smb2_main_draw_balance_platform_rope",
+        "immediate": 2
+      },
+      {
+        "name": "rope",
+        "after": "loc_smb2_main_draw_rope_segment",
+        "immediate": 0
+      },
+      {
+        "name": "empty_block",
+        "after": "handler_smb2_main_draw_empty_block",
+        "immediate": 0
+      },
+      {
+        "name": "cannon_top",
+        "after": "handler_smb2_main_draw_bullet_bill_cannon",
+        "immediate": 0
+      },
+      {
+        "name": "cannon_middle",
+        "after": "handler_smb2_main_draw_bullet_bill_cannon",
+        "immediate": 1
+      },
+      {
+        "name": "cannon_bottom",
+        "after": "handler_smb2_main_draw_bullet_bill_cannon",
+        "immediate": 2
+      },
+      {
+        "name": "staircase",
+        "after": "bra_smb2_main_render_next_stair_step",
+        "immediate": 0
+      },
+      {
+        "name": "jumpspring_top",
+        "after": "handler_smb2_main_draw_jumpspring",
+        "immediate": 2
+      },
+      {
+        "name": "jumpspring_bottom",
+        "after": "handler_smb2_main_draw_jumpspring",
+        "immediate": 3
+      },
+      {
+        "name": "firebar_tile",
+        "after": "sub_smb2_main_draw_firebar",
+        "immediate": 1
+      },
+      {
+        "name": "platform_tile",
+        "after": "sub_smb2_main_draw_small_platform",
+        "immediate": 0
+      },
+      {
+        "name": "firebar_attributes",
+        "after": "sub_smb2_main_draw_firebar",
+        "immediate": 2
+      },
+      {
+        "name": "platform_attributes",
+        "after": "sub_smb2_main_draw_small_platform",
+        "immediate": 1
+      }
+    ]
+  }
+}

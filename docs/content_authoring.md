@@ -259,3 +259,16 @@ The immutable 1.0 round-trip manifest remains `config/authoring/data_formats.jso
 `config/authoring/content_formats.json` layers complete level streams, the full vanilla
 music bank, all metatiles, complete game text, and area palette packets over it
 without changing the accepted 1.0 evidence count.
+
+## Names and tables for Retrolarium
+
+Retrolarium keeps nothing taken from the game; this repository gives it what it
+needs. `config/names.json` holds the game's own names (the enemies, area objects
+and player colours) in English. The studio and the kit read it when a project
+opens and show the names as they are, untranslated; without it they show numbers
+instead. Its `guard` list names what Retrolarium's own repositories must never
+contain.
+
+`config/profile_tables.json` names, by label, the tables the kit reads from the
+image built from this source; `tools/profile_tables.py` in Retrolarium Kit turns
+it into the profile's offsets for every revision.

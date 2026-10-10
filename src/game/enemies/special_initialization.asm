@@ -432,7 +432,7 @@ bra_fire_frenzy_bullet_bill:
 loc_spawn_enemy_group:
     LDY #$00  ; load value for green koopa troopa
     SEC
-    SBC #$37  ; subtract $37 from second byte read
+    SBC #con_goomba_pair_low  ; subtract $37 from second byte read
     PHA  ; save result in stack for now
     CMP #$04  ; was byte in $3b-$3e range?
     BCS bra_store_group_enemy_type  ; if so, branch

@@ -177,7 +177,7 @@ con_hammer_bro             = $05
 con_goomba                = $06
 con_bloober               = $07
 con_bullet_bill_frenzy_var  = $08
-con_grey_cheep_cheep        = $0a
+con_green_cheep_cheep        = $0a
 con_red_cheep_cheep         = $0b
 con_podoboo               = $0c
 con_piranha_plant          = $0d
@@ -200,7 +200,40 @@ con_star_flag_object        = $31
 con_jumpspring_object      = $32
 con_bullet_bill_cannon_var  = $33
 con_retainer_object        = $35
+; $09 itself has no initializer (never placed or spawned); its sprite is a
+; green paratroopa, and the code uses the value as the first "tall" enemy
+con_unused_green_paratroopa = $09
 con_tall_enemy             = $09
+
+; firebars: spin direction and speed come from tbl_firebar_spin_* by id - $1b
+con_firebar_cw_slow        = $1b
+con_firebar_cw_fast        = $1c
+con_firebar_ccw_slow       = $1d
+con_firebar_ccw_fast       = $1e
+con_firebar_long           = $1f
+
+; lifts (platforms); $24-$2a also select sub_dispatch_large_platform_movement
+con_balance_lift           = $24
+con_vertical_lift          = $25
+con_large_lift_up          = $26
+con_large_lift_down        = $27
+con_horizontal_lift        = $28
+con_drop_lift              = $29
+con_right_moving_lift      = $2a
+con_small_lift_up          = $2b
+con_small_lift_down        = $2c
+
+; enemy groups spawned at the right screen edge: d0 = three instead of two,
+; d1 = upper row ($70) instead of the floor row ($b0); goombas become buzzy
+; beetles in the primary hard mode
+con_goomba_pair_low        = $37
+con_goomba_trio_low        = $38
+con_goomba_pair_high       = $39
+con_goomba_trio_high       = $3a
+con_koopa_pair_low         = $3b
+con_koopa_trio_low         = $3c
+con_koopa_pair_high        = $3d
+con_koopa_trio_high        = $3e
 
 ; other constants
 con_world1 = 0
