@@ -295,6 +295,13 @@ For a few practical modification examples, see [docs/modding_examples.md](docs/m
   [TASVideos user file 68410246126700593](https://tasvideos.org/UserFiles/Info/68410246126700593)
 - **Original game** - Nintendo
 
+## Trademarks
+
+This is an unofficial reconstruction, made for study and preservation. The game,
+its title and its characters are trademarks of their owners, who have not made,
+licensed or endorsed this project. It contains no part of the game: you need
+your own copy of Super Mario Bros. to build anything.
+
 ## License
 
 This is a work of reverse engineering for educational and preservation
