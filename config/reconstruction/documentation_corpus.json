@@ -5,7 +5,7 @@
   "documents": [
     {"path": "README.md", "owner": "project", "purpose": "Project status, legal inputs, quick start, and public command overview.", "decision": "retain"},
     {"path": "CONTRIBUTING.md", "owner": "project", "purpose": "Source, evidence, test, private-data, and commit workflow.", "decision": "retain"},
-    {"path": "bin/README.md", "owner": "toolchain", "purpose": "Bundled assembler and linker provenance and license.", "decision": "retain"},
+    {"path": "docs/toolchain.md", "owner": "toolchain", "purpose": "The kit's cc65 and the released toolchains kept at their tags.", "decision": "retain"},
     {"path": "movies/README.md", "owner": "runtime", "purpose": "Runtime input fixture provenance, license, and content boundary.", "decision": "retain"},
     {"path": "docs/index.md", "owner": "documentation", "purpose": "Task-oriented entrypoint for every reader journey.", "decision": "retain"},
     {"path": "docs/6502_reference.md", "owner": "source", "purpose": "NES CPU instruction and flag reference used while reviewing assembly.", "decision": "retain"},

@@ -19,9 +19,10 @@ presence in the repository does not by itself grant redistribution rights.
 
 ## Third-Party Material
 
-- Bundled `ca65.exe` and `ld65.exe` are cc65 tools distributed under the zlib
-  license reproduced in `bin/cc65-LICENSE.txt`; exact build provenance and
-  hashes are recorded in `bin/README.md`.
+- `ca65` and `ld65` are cc65 tools under the zlib license. Retrolarium Kit
+  builds and ships them with the notice; this repository stores no
+  executables. The released 2.1 and 2.2 binaries, notice, and provenance stay
+  at their tags, as `docs/toolchain.md` records.
 - FCEUX is an external, unbundled dependency. Its source commit and the tested
   binary hash are pinned by `config/release_toolchain_2_1.json`; FCEUX remains
   governed by its upstream licenses.

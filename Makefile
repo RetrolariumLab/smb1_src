@@ -1,5 +1,8 @@
 # Stable project interface; implementation is grouped by workflow under mk/.
 PYTHON ?= python
+# The kit command that names cc65 (rltool build-tools path nes ca65).
+RLTOOL ?= rltool
+export RLTOOL
 PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
 
 .DEFAULT_GOAL := build

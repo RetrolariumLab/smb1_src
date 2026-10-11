@@ -191,7 +191,6 @@ def documentation_paths(project_root: Path) -> list[Path]:
         project_root / "README.md",
         project_root / "CONTRIBUTING.md",
         *sorted((project_root / "docs").rglob("*.md")),
-        project_root / "bin" / "README.md",
         project_root / "movies" / "README.md",
     ]
     return [path for path in candidates if path.is_file()]

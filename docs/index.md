@@ -26,6 +26,7 @@ contracts.
 - [`unknowns.md`](unknowns.md) — unresolved and closed evidence records.
 - [`provenance.md`](provenance.md) — imported-source provenance and canonical label history.
 - [`licensing.md`](licensing.md) — licensing and distribution status for source, tools, and private inputs.
+- [`toolchain.md`](toolchain.md) — the cc65 Retrolarium Kit ships and the released toolchains.
 
 ## Builds, Profiles, and Debugging
 

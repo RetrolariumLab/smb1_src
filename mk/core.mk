@@ -123,13 +123,15 @@ check-assets:
 		--manifest "$(ASSET_MANIFEST)" \
 		--asset-dir "$(GENERATED_ASSET_DIR)"
 
+# House style (config/lint.json) from Retrolarium Kit; the source invariants
+# below are this game's own.
 lint:
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.asm_style "$(PROJECT_DIR)src"
+	$(RLTOOL) lint --project "$(PROJECT_DIR)."
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.lint_source "$(PROJECT_DIR)"
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.lint_project "$(PROJECT_DIR)"
 
 format:
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.asm_style --fix "$(PROJECT_DIR)src"
+	$(RLTOOL) lint --project "$(PROJECT_DIR)." --fix
 	$(MAKE) lint
 
 test:
