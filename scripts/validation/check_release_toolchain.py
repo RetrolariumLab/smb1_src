@@ -1,5 +1,9 @@
 #!/usr/bin/env python3
-"""Verify the pinned Source Reconstruction release toolchain and private BIOS."""
+"""Verify the pinned Source Reconstruction release toolchain and private BIOS.
+
+A release's bundled cc65 stays at its release tag once the build moved to
+the cc65 Retrolarium Kit ships: the pinned files are then read from the tag,
+and the kit's programs must report the same version."""
 
 from __future__ import annotations
 
@@ -7,8 +11,11 @@ import argparse
 import hashlib
 import json
 import subprocess
+import tempfile
 from pathlib import Path
 from typing import Any
+
+from build.build_native import resolve_tool
 
 
 def load_json(path: Path) -> dict[str, Any]:
@@ -40,6 +47,22 @@ def verify_file(path: Path, component: dict[str, Any]) -> list[str]:
     return errors
 
 
+def release_tag(manifest: dict[str, Any]) -> str:
+    """The tag of a release ("Source Reconstruction 2.2" is tagged
+    source-reconstruction-2.2)."""
+    return str(manifest.get("release", "")).lower().replace(" ", "-")
+
+
+def tagged_blob(project_root: Path, tag: str, relative: str) -> bytes | None:
+    result = subprocess.run(
+        ["git", "show", f"{tag}:{relative}"],
+        cwd=project_root,
+        check=False,
+        capture_output=True,
+    )
+    return result.stdout if result.returncode == 0 else None
+
+
 def verify_version(path: Path, expected: str, identifier: str) -> list[str]:
     result = subprocess.run(
         [str(path), "--version"],
@@ -53,6 +76,32 @@ def verify_version(path: Path, expected: str, identifier: str) -> list[str]:
     if result.returncode != 0 or expected not in reported:
         return [f"{identifier} version differs from {expected}"]
     return []
+
+
+def verify_tagged_tool(project_root: Path, tag: str, component: dict[str, Any]) -> list[str]:
+    """A bundled tool kept at its release tag, and the kit's program in its
+    place."""
+    identifier = component["id"]
+    data = tagged_blob(project_root, tag, component.get("path", ""))
+    if data is None:
+        return [f"{identifier} is missing at {tag}: {component.get('path')}"]
+    errors: list[str] = []
+    for field in ("provenance", "license"):
+        if tagged_blob(project_root, tag, component.get(field, "")) is None:
+            errors.append(f"{identifier} {field} record is missing at {tag}")
+    expected = component.get("version", "")
+    with tempfile.TemporaryDirectory() as directory:
+        copy = Path(directory) / Path(component["path"]).name
+        copy.write_bytes(data)
+        errors.extend(verify_file(copy, component))
+        if not errors:
+            errors.extend(verify_version(copy, expected, identifier))
+    try:
+        current = resolve_tool(identifier, project_root)
+    except SystemExit:
+        return [*errors, f"{identifier} is not available from Retrolarium Kit"]
+    errors.extend(verify_version(current, expected, f"Retrolarium Kit {identifier}"))
+    return errors
 
 
 def validate_toolchain(
@@ -73,11 +122,16 @@ def validate_toolchain(
         errors.append("release toolchain component set differs")
         return errors
 
+    tag = release_tag(manifest)
     for component in components:
         identifier = component["id"]
         override = fceux if identifier == "fceux" else fds_bios if identifier == "fds_bios" else None
         relative = component.get("path") or component.get("default_path")
         path = override.resolve() if override is not None else resolve_path(project_root, relative)
+
+        if component.get("kind") == "bundled_tool" and not path.is_file():
+            errors.extend(verify_tagged_tool(project_root, tag, component))
+            continue
         errors.extend(verify_file(path, component))
 
         if component.get("kind") == "bundled_tool":

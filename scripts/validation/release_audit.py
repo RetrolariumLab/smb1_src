@@ -10,6 +10,7 @@ import subprocess
 from pathlib import Path
 from typing import Any
 
+from build.build_native import resolve_tool
 from validation.make_contract import combined_makefile_text
 
 
@@ -123,7 +124,7 @@ def validate_release(project_root: Path, manifest_path: Path) -> list[str]:
             errors.append(f"release command has no Make target: {target}")
     for tool in ("ca65", "ld65"):
         expected_version = release["toolchain"][tool]
-        actual_version = tool_version(project_root / "bin" / f"{tool}.exe")
+        actual_version = tool_version(resolve_tool(tool, project_root))
         if expected_version not in actual_version:
             errors.append(f"unexpected {tool} version: {actual_version!r}")
     return errors

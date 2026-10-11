@@ -12,7 +12,7 @@ from dataclasses import dataclass
 from pathlib import Path
 from typing import Any, Iterable
 
-from validation.asm_style import LABEL_RE, MNEMONICS, split_comment
+from build.build_native import resolve_tool
 
 
 LISTING_LINE_RE = re.compile(
@@ -23,6 +23,35 @@ LISTING_BYTES_RE = re.compile(
 )
 MAX_REPORTED_BLOCKS = 40
 
+
+MNEMONICS = frozenset(
+    """
+    ADC AND ASL BCC BCS BEQ BIT BMI BNE BPL BRK BVC BVS CLC CLD CLI CLV
+    CMP CPX CPY DEC DEX DEY EOR INC INX INY JMP JSR LDA LDX LDY LSR NOP
+    ORA PHA PHP PLA PLP ROL ROR RTI RTS SBC SEC SED SEI STA STX STY TAX
+    TAY TSX TXA TXS TYA
+    """.split()
+)
+LABEL_RE = re.compile(r"^(?P<label>[A-Za-z_@.?][A-Za-z0-9_@.?]*:)(?P<tail>.*)$")
+
+
+def split_comment(line: str) -> tuple[str, str | None]:
+    """Split at the first semicolon outside a quoted string."""
+    quote: str | None = None
+    escaped = False
+    for index, character in enumerate(line):
+        if escaped:
+            escaped = False
+        elif character == "\\" and quote is not None:
+            escaped = True
+        elif quote is not None:
+            if character == quote:
+                quote = None
+        elif character in {'"', "'"}:
+            quote = character
+        elif character == ";":
+            return line[:index], line[index + 1 :]
+    return line, None
 
 @dataclass(frozen=True)
 class Instruction:
@@ -305,7 +334,7 @@ def main() -> int:
     parser.add_argument(
         "--assembler",
         type=Path,
-        default=default_root / "bin" / "ca65.exe",
+        help="ca65 to use (default: the one Retrolarium Kit ships)",
     )
     parser.add_argument(
         "--work-dir",
@@ -321,9 +350,10 @@ def main() -> int:
     project_root = args.project_root.resolve()
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     try:
+        assembler = args.assembler or resolve_tool("ca65", project_root)
         report = analyze(
             project_root,
-            args.assembler.resolve(),
+            assembler.resolve(),
             manifest,
             args.work_dir.resolve(),
         )

@@ -153,7 +153,7 @@
     },
     "licensing_and_provenance": {
       "status": "satisfied",
-      "evidence": {"files": ["docs/licensing.md", "docs/provenance.md", "bin/README.md"]}
+      "evidence": {"files": ["docs/licensing.md", "docs/provenance.md", "docs/toolchain.md"]}
     },
     "aggregate_release_gate": {
       "status": "satisfied",
@@ -221,7 +221,7 @@
     {"component": "fceux_runtime", "origin": "external_unbundled", "license_id_or_status": "external_unbundled", "redistribution": "not_committed"}
   ],
   "provenance": {
-    "references": ["docs/provenance.md", "config/reconstruction/label_renames.json", "movies/README.md", "bin/README.md"],
+    "references": ["docs/provenance.md", "config/reconstruction/label_renames.json", "movies/README.md", "docs/toolchain.md"],
     "private_inputs_tracked": false
   },
   "historical_constraints": [

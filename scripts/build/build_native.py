@@ -13,6 +13,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
+from build.kit_tools import kit_tool_path
 from validation.debug_symbols import normalize_dbg_for_ines
 
 
@@ -43,13 +44,14 @@ def rooted(project_root: Path, value: str) -> Path:
 
 
 def resolve_tool(name: str, project_root: Path) -> Path:
-    bundled = project_root / "bin" / f"{name}.exe"
-    if bundled.is_file():
-        return bundled
-    found = shutil.which(name)
-    if found:
-        return Path(found)
-    fail(f"{name} not found (expected in bin/ or PATH)")
+    """The cc65 program Retrolarium Kit ships, else one on PATH."""
+    try:
+        return kit_tool_path(f"nes/{name}")
+    except (OSError, ValueError) as exc:
+        found = shutil.which(name)
+        if found:
+            return Path(found)
+        fail(f"{name} not found (Retrolarium Kit: {exc}; not on PATH)")
     raise AssertionError
 
 

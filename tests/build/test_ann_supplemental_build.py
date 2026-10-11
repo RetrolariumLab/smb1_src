@@ -104,7 +104,7 @@ class AnnSupplementalBuildTests(unittest.TestCase):
                 PROJECT_ROOT / "assets" / "manifest.json",
                 clone / "assets" / "manifest.json",
             )
-            for name in ("mk", "scripts", "src", "config", "bin"):
+            for name in ("mk", "scripts", "src", "config"):
                 shutil.copytree(
                     PROJECT_ROOT / name,
                     clone / name,

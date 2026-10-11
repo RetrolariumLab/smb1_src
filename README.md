@@ -24,8 +24,6 @@ This repository contains:
 
 - **src/main.asm** - Address-ordered entrypoint for the modular disassembly
 - **config/linker/** - Linker contracts for native, expanded, FDS, and ANN payloads
-- **bin/ca65.exe** - 6502 assembly compiler from [cc65](http://www.cc65.org/)
-- **bin/ld65.exe** - 6502 linker from [cc65](http://www.cc65.org/)
 - **docs/index.md** - Documentation map by release, architecture, runtime, and authoring topic
 - **docs/6502_reference.md** - NES 6502 instructions, flags, and opcodes
 - **docs/modding_examples.md** - Example gameplay edits and patch ideas
@@ -50,9 +48,6 @@ This repository contains:
 
 ```text
 smb1_src/
-|-- bin/                # Local ca65/ld65 toolchain
-|   |-- ca65.exe
-|   `-- ld65.exe
 |-- assets/
 |   |-- manifest.json   # Reference identity and extracted-asset hashes
 |   `-- generated/      # Ignored local container, graphics, and content assets
@@ -86,6 +81,10 @@ smb1_src/
 ```
 
 ## Prerequisites
+
+The build assembles with the `ca65` and `ld65` that
+Retrolarium Kit ships; `RLTOOL` names the kit
+command (default `rltool`). See [`docs/toolchain.md`](docs/toolchain.md).
 
 The preservation profile currently targets exactly:
 

@@ -169,5 +169,4 @@ later-engine-source-overlap:
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" workflow.compare_assembly_sources \
 		--project-root "$(PROJECT_DIR)" \
 		--manifest "$(LATER_ENGINE_OVERLAP_MANIFEST)" \
-		--assembler "$(PROJECT_DIR)bin/ca65.exe" \
 		--output "$(LATER_ENGINE_OVERLAP_REPORT)"

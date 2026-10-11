@@ -8,11 +8,12 @@ import hashlib
 import json
 import re
 import shutil
+import subprocess
 import sys
 from dataclasses import dataclass
 from pathlib import Path
 
-from validation.asm_style import format_file
+from build.kit_tools import kit_command
 
 
 REFERENCE_FILES = {
@@ -334,6 +335,21 @@ SMB2_SEMANTIC_OVERRIDES = {
     "WZMLoop": "write_warp_zone_message_loop",
 }
 
+
+PROJECT_ROOT = Path(__file__).resolve().parents[2]
+
+
+def format_file(path: Path) -> None:
+    """Bring a written source to the house style with Retrolarium Kit's
+    formatter (rltool lint --fix), under this repository's lint config."""
+    completed = subprocess.run(
+        [*kit_command(), "lint", "--fix", "--only", "assembly",
+         "--config", str(PROJECT_ROOT / "config" / "lint.json"),
+         "--project", str(path.parent), path.name],
+        capture_output=True, text=True, check=False,
+    )
+    if completed.returncode:
+        raise RuntimeError(f"cannot format {path}: {completed.stderr.strip()}")
 
 @dataclass(frozen=True)
 class SymbolKey:
