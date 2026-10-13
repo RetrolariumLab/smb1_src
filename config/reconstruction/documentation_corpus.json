@@ -10,7 +10,7 @@
     {"path": "docs/index.md", "owner": "documentation", "purpose": "Task-oriented entrypoint for every reader journey.", "decision": "retain"},
     {"path": "docs/6502_reference.md", "owner": "source", "purpose": "NES CPU instruction and flag reference used while reviewing assembly.", "decision": "retain"},
     {"path": "docs/assembly_style.md", "owner": "source", "purpose": "Mechanically enforced assembly layout and naming rules.", "decision": "retain"},
-    {"path": "docs/content_authoring.md", "owner": "authoring", "purpose": "End-to-end authoring, editor-model, profile, and research-reference workflow.", "decision": "retain"},
+    {"path": "docs/retrolarium.md", "owner": "retrolarium", "purpose": "Editing every revision in Retrolarium, the names and tables it reads, the 3.0 gates, and the reference editors.", "decision": "retain"},
     {"path": "docs/data_formats.md", "owner": "authoring", "purpose": "Codec ownership, capacities, and round-trip contracts.", "decision": "retain"},
     {"path": "docs/debugger_workflow.md", "owner": "runtime", "purpose": "Debugger symbols, breakpoints, watches, and validation layers.", "decision": "retain"},
     {"path": "docs/later_engine.md", "owner": "reconstruction", "purpose": "Container and instruction evidence for the ANN and SMB2 architecture decision.", "decision": "retain"},
@@ -38,12 +38,12 @@
   "reader_journeys": [
     {"id": "build_and_verify", "paths": ["README.md", "docs/index.md", "docs/revision_profiles.md", "docs/platform_profiles.md", "docs/source_reconstruction_2_2.md"]},
     {"id": "understand_architecture", "paths": ["README.md", "docs/index.md", "docs/source_layout.md", "docs/subsystems.md", "docs/ram_fields.md"]},
-    {"id": "author_content", "paths": ["README.md", "docs/index.md", "docs/content_authoring.md", "docs/data_formats.md"]},
+    {"id": "author_content", "paths": ["README.md", "docs/index.md", "docs/retrolarium.md", "docs/data_formats.md"]},
     {"id": "review_evidence", "paths": ["README.md", "docs/index.md", "docs/runtime_evidence.md", "docs/unknowns.md", "docs/provenance.md"]},
     {"id": "review_late_fds", "paths": ["README.md", "docs/index.md", "docs/later_engine.md", "docs/smb2_reconstruction.md", "docs/platform_profiles.md"]}
   ],
   "consolidations": [
-    {"sources": ["docs/editor_references.md"], "destination": "docs/content_authoring.md", "reason": "Editor references are evidence for the authoring workflow rather than a separate reader task."},
+    {"sources": ["docs/editor_references.md"], "destination": "docs/retrolarium.md", "reason": "Editor references are evidence for the data formats rather than a separate reader task."},
     {"sources": ["docs/scoring_runtime.md"], "destination": "docs/runtime_evidence.md", "reason": "Scoring scenarios are one runtime-evidence layer and now share its validation narrative."},
     {"sources": ["docs/expanded_rom.md", "docs/fixed_layout_variants.md"], "destination": "docs/variants.md", "reason": "Both documents describe isolated non-preservation builds and their three-layer acceptance checks."},
     {"sources": ["docs/later_engine_feasibility.md", "docs/later_engine_source_overlap.md"], "destination": "docs/later_engine.md", "reason": "The binary and instruction comparisons support one late-FDS architectural decision."},

@@ -134,8 +134,8 @@ interpretations.
    generated original-name mapping.
 4. Prove runtime startup, overlay transitions, course behavior, and relocation
    independently from ANN.
-5. Add SMB2 to a Studio only after that Studio's pointer tables, capacities,
-   and output composition are proven for all relevant payloads.
+5. Make SMB2 editable only after its pointer tables, capacities, and output
+   composition are proven for all relevant payloads.
 
 Code is shared only after independent static and runtime evidence establishes
 equivalence. `make later-engine-source-overlap` supplies the instruction-level

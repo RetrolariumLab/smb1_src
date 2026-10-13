@@ -36,7 +36,7 @@ validate-runtime:
 trace: validate-symbols trace-runtime
 
 roundtrip-formats: build-prg
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" authoring.data_formats \
+	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.data_formats \
 		--manifest "$(DATA_FORMAT_MANIFEST)" \
 		--labels "$(NATIVE_LABELS)" \
 		--prg "$(NATIVE_PRG)" \

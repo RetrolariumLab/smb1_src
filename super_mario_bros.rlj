@@ -1,0 +1,51 @@
+schema = "retrolarium.game"
+schema_version = 1
+
+# Opened by Retrolarium Studio: pick a version, and the studio checks its ROM,
+# splits the assets and keeps your edits in hack/<version>/ (not tracked).
+
+[game]
+id = "smb1"
+name = "Super Mario Bros."
+platform = "nes"
+profile = "smb1.v1"
+
+[[revisions]]
+id = "ju"
+label = "Japan / USA"
+rom = "Super Mario Bros. (JU) [!].nes"
+
+[[revisions]]
+id = "pal"
+label = "Europe"
+rom = "Super Mario Bros. (E) (REV0) [!p].nes"
+
+[[revisions]]
+id = "pc10"
+label = "PlayChoice-10"
+rom = "Super Mario Bros. (PC10).nes"
+
+[[revisions]]
+id = "vs_smb"
+label = "Vs. Super Mario Bros."
+rom = "VS. Super Mario Bros. (VS).nes"
+
+[[revisions]]
+id = "fds_smb"
+label = "Famicom Disk System"
+rom = "Super Mario Brothers (Japan).fds"
+
+[[revisions]]
+id = "ann_fds"
+label = "All Night Nippon (Disk System)"
+rom = "All Night Nippon Super Mario Brothers (Japan) (Promotion Card).fds"
+
+[[revisions]]
+id = "smb2_jp_fds"
+label = "Super Mario Bros. 2 (Japan, Disk System)"
+rom = "Super Mario Brothers 2 (Japan).fds"
+
+[split]
+revision = "ju"
+command = ["scripts/run.py", "build.split_assets", "--rom", "{rom}", "--manifest", "assets/manifest.json", "--output-dir", "assets/generated"]
+check = ["scripts/run.py", "build.check_assets", "--manifest", "assets/manifest.json", "--asset-dir", "assets/generated"]

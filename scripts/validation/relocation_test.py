@@ -13,7 +13,7 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from authoring.data_formats import load_labels
+from build.data_formats import load_labels
 from build.platform_profiles import (
     find_fds_record,
     load_profile as load_platform_profile,
@@ -22,7 +22,7 @@ from build.platform_profiles import (
     validate_fds_reference,
 )
 from build.revision_profiles import load_profile, split_rom
-from authoring.sound_studio_model import HEADER_NAMES, MusicBank
+from validation.music_decoder import MusicDecoder
 
 
 SYMBOL_PATTERN = re.compile(
@@ -398,41 +398,8 @@ def replace_fds_payloads(
     return bytes(candidate)
 
 
-def music_bank(labels: dict[str, int], prg: bytes, cpu_base: int) -> MusicBank:
-    model = MusicBank.__new__(MusicBank)
-    model.labels = labels
-    model.prg = prg
-    model.base = labels["tbl_music_header_offsets"]
-    model.end = labels["tbl_music_note_periods"]
-    model.stream_addresses = sorted({
-        address
-        for name, address in labels.items()
-        if name.startswith("off_music_stream_")
-    })
-    model.header_labels = sorted(
-        [name for name in HEADER_NAMES if name in labels],
-        key=labels.__getitem__,
-    )
-    model._prg_bytes = lambda label, length: prg[
-        labels[label] - cpu_base:labels[label] - cpu_base + length
-    ]
-    values = list(prg[model.base - cpu_base:model.end - cpu_base])
-    model.document = type(
-        "RelocationMusicDocument",
-        (),
-        {"document": {"data": {"values": values}}},
-    )()
-    model.periods = model._periods()
-    model.lengths = model._lengths()
-    model.envelope_bytes = (
-        model._prg_bytes("tbl_castle_clear_music_envelope", 53)
-        if "tbl_castle_clear_music_envelope" in labels
-        else bytes(53)
-    )
-    model.header_by_offset = {
-        labels[name] - model.base: name for name in model.header_labels
-    }
-    return model
+def music_bank(labels: dict[str, int], prg: bytes, cpu_base: int) -> MusicDecoder:
+    return MusicDecoder(labels, prg, cpu_base)
 
 
 def verify_music_padding(

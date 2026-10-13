@@ -9,7 +9,7 @@ import re
 from pathlib import Path
 from typing import Any
 
-from authoring.data_formats import decode_enemy_object_stream, load_labels
+from build.data_formats import decode_enemy_object_stream, load_labels
 
 
 def number(value: Any) -> int:

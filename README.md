@@ -2,21 +2,20 @@
 
 A comprehensive disassembly of Super Mario Bros for the Nintendo Entertainment System (NES).
 
-The current tag-ready candidate is **Source Reconstruction 2.2**. It retains
-the byte-identical Preservation Source 1.0 baseline, complete Source
-Reconstruction 2.0 contract, and published 2.1 capabilities while modernizing
-repository structure, test ownership, language policy, and release evidence.
-Original ROMs, disk images, CHR payloads, and extracted content remain private
-ignored inputs.
+The current release is **Source Reconstruction 3.0**: editing moves to
+[Retrolarium](docs/retrolarium.md). Open `super_mario_bros.rlj` in Retrolarium
+Studio to edit any of the seven revisions; the repository keeps the
+byte-identical source, its builds and checks, the game's names and the tables
+the kit reads. Original ROMs, disk images, CHR payloads, and extracted content
+remain private ignored inputs.
 
-The immutable `source-reconstruction-1.0`, `source-reconstruction-2.0`, and
-`source-reconstruction-2.1` tags preserve their original release contracts.
-Version 2.2 is a compatible quality release and does not alter emitted bytes or
-introduce a new platform boundary.
+The immutable `source-reconstruction-1.0`, `-2.0`, `-2.1` and `-2.2` tags
+preserve their original release contracts; 2.1 and 2.2 add relocation proofs,
+platform profiles, semantic evidence and the SMB2 sibling engine to 2.0, and the
+Tkinter studios they carried stay in history there.
 
-The complete `make source-2-2-check` gate reruns the published 2.1 boundary and
-then validates the new structure, metadata, toolchain, and history. See
-[`docs/source_reconstruction_2_2.md`](docs/source_reconstruction_2_2.md).
+`make source-3-check` runs the functional 2.2 gate and then checks every
+revision in Retrolarium Kit. See [`docs/retrolarium.md`](docs/retrolarium.md).
 
 ## Overview
 
@@ -24,7 +23,8 @@ This repository contains:
 
 - **src/main.asm** - Address-ordered entrypoint for the modular disassembly
 - **config/linker/** - Linker contracts for native, expanded, FDS, and ANN payloads
-- **docs/index.md** - Documentation map by release, architecture, runtime, and authoring topic
+- **docs/index.md** - Documentation map by release, architecture, runtime, and data format topic
+- **docs/retrolarium.md** - Editing the game in Retrolarium and the checks that prove it
 - **docs/6502_reference.md** - NES 6502 instructions, flags, and opcodes
 - **docs/modding_examples.md** - Example gameplay edits and patch ideas
 - **docs/naming.md** - Semantic symbol vocabulary and evidence rules
@@ -52,7 +52,6 @@ smb1_src/
 |   |-- manifest.json   # Reference identity and extracted-asset hashes
 |   `-- generated/      # Ignored local container, graphics, and content assets
 |-- config/
-|   |-- authoring/      # Codec, Studio, and content-profile contracts
 |   |-- debugger/       # Breakpoint and watch contracts
 |   |-- linker/         # Native, expanded, FDS, and ANN linker contracts
 |   `-- reconstruction/ # Later-engine and sibling-source contracts
@@ -60,8 +59,7 @@ smb1_src/
 |   |-- 6502_reference.md
 |   `-- modding_examples.md
 |-- mk/                 # Make orchestration grouped by workflow
-|-- scripts/            # Categorized build, validation, runtime, authoring, and workflow tools
-|   |-- authoring/      # Content codecs, models, and interactive Studios
+|-- scripts/            # Categorized build, validation, runtime, and workflow tools
 |   |-- build/          # Builds, images, assets, and profile composition
 |   |-- runtime/        # Emulator runners and runtime validators
 |   |-- validation/     # Lint, release, relocation, and artifact audits
@@ -157,36 +155,26 @@ make roundtrip-formats
 # Run every Preservation Source 1.0 acceptance gate
 make release-check
 
-# Run Preservation Source 1.0 plus every Source Reconstruction 2.0 gate
-make source-2-check
+# Run Preservation Source 1.0 plus the functional Source Reconstruction 2.0 gates
+make source-2-functional-check
 
-# Audit the Source Reconstruction 2.1 boundary and milestone state
-make source-2-1-audit
-
-# Run the complete Source Reconstruction 2.1 release gate
-make source-2-1-check
+# Add relocation, semantic evidence and the SMB2 sibling (2.1), then the 2.2 toolchain
+make source-2-1-functional-check
+make source-2-2-functional-check
 
 # Verify the pinned assembler, linker, emulator, source commit, and FDS BIOS
 make check-source-2-1-toolchain
 
-# Before moving the reviewed tag, require a clean tree and audit local/remote refs
-make source-2-1-pre-tag
-
-# After publishing the annotated tag, prove local/remote tag identity
-make source-2-1-post-tag
+# Audit the 2.0, 2.1 and 2.2 manifests in checkouts of their tags
+make source-2-audit
+make source-2-1-audit
+make source-2-2-audit
 
 # Check structure, tests, and release metadata without private ROMs
 make scaffold-check
 
-# Run the complete compatible Source Reconstruction 2.2 gate
-make source-2-2-check
-
-# Equivalent quality-line alias for the 2.2 compatible minor release
-make source-2-minor-check
-
-# Audit the future 2.2 tag before or after owner-managed publication
-make source-2-2-pre-tag
-make source-2-2-post-tag
+# Run the complete Source Reconstruction 3.0 gate: 2.2 functional, then Retrolarium
+make source-3-check
 
 # Compare normalized ANN and SMB2 instruction streams
 make later-engine-source-overlap
@@ -218,23 +206,8 @@ make validate-hack
 # Build and validate the isolated CNROM profile
 make validate-expanded
 
-# Export, validate, and build ignored codec-backed content workspaces
-make init-content
-make export-content
-make validate-content
-make build-content
-
-# Open the four local Tkinter authoring programs
-make world-studio
-make level-studio
-make graphics-studio
-make sound-studio
-
-# Build and run the ignored edited-content ROM
-make run-content
-
-# Validate every studio input without opening a window
-make check-studios
+# Check every revision in Retrolarium Kit with no edits
+make studio-check
 
 # Verify and run all supported official profiles
 make verify-revisions

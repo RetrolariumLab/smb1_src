@@ -1,7 +1,7 @@
 # Documentation Index
 
 This index is the starting point for the repository's preservation, source,
-runtime-evidence, and authoring documentation. Contributors should also read
+runtime-evidence, data format, and Retrolarium documentation. Contributors should also read
 [`CONTRIBUTING.md`](../CONTRIBUTING.md) before changing emitted bytes or release
 contracts.
 
@@ -11,6 +11,7 @@ contracts.
 - [`source_reconstruction_2_0.md`](source_reconstruction_2_0.md) — 2.0 source-reconstruction contract.
 - [`source_reconstruction_2_1.md`](source_reconstruction_2_1.md) — published 2.1 contract, milestones, and aggregate gate.
 - [`source_reconstruction_2_2.md`](source_reconstruction_2_2.md) — compatible repository modernization and release evidence.
+- [`retrolarium.md`](retrolarium.md) — Source Reconstruction 3.0: editing in Retrolarium, `studio-check`, and the 3.0 manifest.
 - [`roadmap.md`](roadmap.md) — completed work, remaining work, and project policy.
 - [`smb2_reconstruction.md`](smb2_reconstruction.md) — Super Mario Bros. 2 FDS reconstruction scope.
 - [`later_engine.md`](later_engine.md) — later-engine feasibility, source-overlap evidence, and architectural decision.
@@ -41,19 +42,19 @@ contracts.
 - [`runtime_evidence.md`](runtime_evidence.md) — deterministic gameplay and semantic traces.
 - [`player_movement.md`](player_movement.md) — input, physics, collision, and movement traces.
 
-## Content Authoring
+## Content and Retrolarium
 
-- [`content_authoring.md`](content_authoring.md) — authored-content workflow and profiles.
+- [`retrolarium.md`](retrolarium.md) — editing every revision in Retrolarium Studio, the game's names and tables.
 - [`data_formats.md`](data_formats.md) — typed codecs and byte-identical round trips.
 - [`modding_examples.md`](modding_examples.md) — practical source modifications.
 
 ## Tool Layout
 
 Python tools are grouped under `scripts/build/`, `scripts/validation/`,
-`scripts/runtime/`, `scripts/authoring/`, and `scripts/workflow/`. Make targets
+`scripts/runtime/`, and `scripts/workflow/`. Make targets
 are grouped by the same responsibilities under `mk/`, and tests mirror those
 packages under `tests/`. Project configuration is grouped under
-`config/authoring/`, `config/debugger/`, `config/linker/`,
+`config/debugger/`, `config/linker/`,
 `config/reconstruction/`, and the release-facing manifests in `config/`.
 
 Run `make help` for the stable public command groups. For direct tool execution,

@@ -26,7 +26,7 @@ The splitter also extracts the 1,745-byte Vs. music-data range from PRG. Its
 additional star and game-over streams, lookup tables, and envelopes retain
 semantic ASM labels, while all address-bearing music headers remain
 relocatable source. A separate 176-byte source asset holds the eight arcade
-area-palette packets behind the same labels used by Graphics Studio.
+area-palette packets behind the same labels the graphics resources use.
 
 ## Famicom Disk System SMB1
 
@@ -115,7 +115,7 @@ The manifest validates every payload-relative range and SHA-1 before writing
 it. Git ignores the extracted bytes. ASM retains the semantic boundary label,
 offset, and protected capacity of every stream, while loaders, pointer tables,
 tile maps, executable code, and the initialized save record remain reviewed
-source. The streams retain the formats decoded by the Level Studio, providing
+source. The streams retain the formats the level codec decodes, providing
 a stable boundary for profile-aware editing without turning code into opaque
 binary data.
 

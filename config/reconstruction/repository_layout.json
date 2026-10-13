@@ -8,7 +8,6 @@
     "directory": "mk",
     "maximum_lines": 350,
     "files": [
-      "mk/authoring.mk",
       "mk/core.mk",
       "mk/evidence.mk",
       "mk/profiles.mk",
@@ -20,7 +19,6 @@
     ]
   },
   "responsibility_packages": [
-    "authoring",
     "build",
     "runtime",
     "validation",
@@ -145,30 +143,6 @@
   "python_size_policy": {
     "review_lines": 700,
     "reviews": [
-      {
-        "path": "scripts/authoring/content_studio.py",
-        "cohesion": "One CLI coordinates atomic decode and encode transactions across registered codecs.",
-        "extraction_decision": "Codec and model logic already lives in separate modules; splitting command phases would duplicate transaction state.",
-        "public_api_control": "scripts.run exposes one stable authoring.content_studio command."
-      },
-      {
-        "path": "scripts/authoring/level_studio.py",
-        "cohesion": "One Tk controller owns the level editor window and its user actions.",
-        "extraction_decision": "Headless data, validation, and image preparation already live outside the view controller.",
-        "public_api_control": "level_studio_model remains the tested headless boundary and the CLI keeps one stable command."
-      },
-      {
-        "path": "scripts/authoring/level_studio_model.py",
-        "cohesion": "One domain model owns area objects, enemies, capacity checks, and transactional edits.",
-        "extraction_decision": "Serializers remain in data_formats and UI code remains in level_studio; further splitting would fragment invariants shared by edits.",
-        "public_api_control": "Tests exercise the model directly without a display."
-      },
-      {
-        "path": "scripts/validation/source_2_1_audit.py",
-        "cohesion": "The historical 2.1 audit preserves one tagged release boundary.",
-        "extraction_decision": "Shared Make parsing is extracted; the remaining checks stay frozen together for historical reproducibility.",
-        "public_api_control": "The 2.2 audit is independent and does not extend this historical module."
-      },
       {
         "path": "scripts/validation/relocation_test.py",
         "cohesion": "One validation command owns relocation source generation, assembly, and evidence checks for every supported profile.",

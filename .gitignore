@@ -29,3 +29,10 @@ references/
 
 # Local content-authoring workspaces
 content/workspace/
+
+# Retrolarium Studio: generated projects and your edits (game data)
+/.retrolarium/
+/hack/
+
+# Test corpora made from your own ROM (game data)
+/tests/retrolarium/
