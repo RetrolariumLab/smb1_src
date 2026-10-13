@@ -7,7 +7,7 @@
   },
   "release_kind": "retrolarium",
   "tag": "source-reconstruction-3.0",
-  "status": "development",
+  "status": "tag-ready",
   "predecessor": {
     "manifest": "config/source_reconstruction_2_2.json",
     "tag": "source-reconstruction-2.2",
@@ -18,23 +18,19 @@
     "through_inclusive": "release-commit",
     "commits": [
       {
-        "commit": "3074f50a366c4f7eb869a12ad37c0b0463abf34d",
-        "subject": "Retrolarium descriptor"
-      },
-      {
-        "commit": "e7f6b37d64718ff44e727e0a72cdbe51fcc02908",
+        "commit": "6b8d1c68b3dfdc0e5813bfa5deaeea9e08218854",
         "subject": "The game's names: object constants and config/names.json"
       },
       {
-        "commit": "057d7e728075a812b01980704760e0d7c110a211",
+        "commit": "ef567e55accb763596df246cde93a9ec2b59f967",
         "subject": "Build and lint with Retrolarium Kit"
       },
       {
-        "commit": "e6d2f4da886fe7935774e5e5779b818d2d0bfc05",
+        "commit": "988440a19edfbe59f5f994769b47a04f4206df91",
         "subject": "README: a trademark notice"
       },
       {
-        "commit": "fe8ae33a0b9a8cd97e0a0fb0d4d49385e81f0d57",
+        "commit": "bb7ebe1e898815fe901a3a08711df93676fb7673",
         "subject": "Source Reconstruction 3.0: editing moves to Retrolarium"
       }
     ]
@@ -61,7 +57,7 @@
     {
       "id": "retrolarium-descriptor",
       "kind": "tooling",
-      "summary": "super_mario_bros.rlj names the game, its kit profile smb1.v1, the seven revisions it builds and its asset split; the studio's views come from the kit's profile."
+      "summary": "super_mario_bros.rlj names the game, its profile smb1.v1, the seven revisions it builds and its asset split; the studio's views come from the kit."
     },
     {
       "id": "editing-moves-to-retrolarium",
@@ -104,6 +100,11 @@
       "summary": "config/names.json keeps the game's own names, in English, and the lists that carry them; Retrolarium reads them when a project opens and keeps none itself."
     },
     {
+      "id": "game-profile",
+      "kind": "tooling",
+      "summary": "config/game_profile.json is the game's Retrolarium profile: its revisions with their hashes and where each resource lies in each image. Retrolarium Kit reads it when it opens the repository and keeps no copy."
+    },
+    {
       "id": "profile-tables",
       "kind": "tooling",
       "summary": "config/profile_tables.json names by label the tables Retrolarium Kit reads from the image built from this source."
@@ -113,10 +114,10 @@
     "descriptor": "super_mario_bros.rlj",
     "profile": "smb1.v1",
     "kit": {
-      "version": null,
-      "commit": null
+      "version": "0.5.0",
+      "commit": "53622768fae796d01e38622199c2d35563333a70"
     },
-    "studio_min_version": null,
+    "studio_min_version": "0.1.0",
     "revisions": [
       "ju",
       "pal",
@@ -165,7 +166,7 @@
       },
       {
         "path": "scripts/authoring/content_profiles.py",
-        "replaced_by": "the kit profile smb1.v1 and its revisions"
+        "replaced_by": "the profile smb1.v1 in config/game_profile.json and its revisions"
       },
       {
         "path": "scripts/authoring/emulator_image.py",
