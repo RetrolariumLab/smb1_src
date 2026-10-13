@@ -1,0 +1,451 @@
+{
+  "schema_version": 1,
+  "release_line": "3.0",
+  "release": {
+    "name": "Source Reconstruction 3.0",
+    "version": "3.0"
+  },
+  "release_kind": "retrolarium",
+  "tag": "source-reconstruction-3.0",
+  "status": "development",
+  "predecessor": {
+    "manifest": "config/source_reconstruction_2_2.json",
+    "tag": "source-reconstruction-2.2",
+    "commit": "5818115cad802ea521f8e82c97fe503a0012f4b4"
+  },
+  "delta_history": {
+    "from_exclusive": "5818115cad802ea521f8e82c97fe503a0012f4b4",
+    "through_inclusive": "release-commit",
+    "commits": [
+      {
+        "commit": "3074f50a366c4f7eb869a12ad37c0b0463abf34d",
+        "subject": "Retrolarium descriptor"
+      },
+      {
+        "commit": "e7f6b37d64718ff44e727e0a72cdbe51fcc02908",
+        "subject": "The game's names: object constants and config/names.json"
+      },
+      {
+        "commit": "057d7e728075a812b01980704760e0d7c110a211",
+        "subject": "Build and lint with Retrolarium Kit"
+      },
+      {
+        "commit": "e6d2f4da886fe7935774e5e5779b818d2d0bfc05",
+        "subject": "README: a trademark notice"
+      },
+      {
+        "commit": "fe8ae33a0b9a8cd97e0a0fb0d4d49385e81f0d57",
+        "subject": "Source Reconstruction 3.0: editing moves to Retrolarium"
+      }
+    ]
+  },
+  "included_scope": [
+    "inherited-source-reconstruction-2.2-contract",
+    "retrolarium-descriptor",
+    "kit-owned-editing",
+    "studio-check"
+  ],
+  "excluded_scope": [
+    {
+      "id": "vs_point_playtest",
+      "status": "unsupported",
+      "reason": "Vs. Super Mario Bros. plays in Retrolarium from power-on; starting from a chosen point is not supported yet."
+    },
+    {
+      "id": "expanded_cnrom_editing",
+      "status": "planned",
+      "reason": "The expanded CNROM variant repeats the original's PRG and CHR; its revision in the kit comes with its first content variant."
+    }
+  ],
+  "delta": [
+    {
+      "id": "retrolarium-descriptor",
+      "kind": "tooling",
+      "summary": "super_mario_bros.rlj names the game, its kit profile smb1.v1, the seven revisions it builds and its asset split; the studio's views come from the kit's profile."
+    },
+    {
+      "id": "editing-moves-to-retrolarium",
+      "kind": "tooling",
+      "summary": "The four Tkinter studios, their models, the content workspace and composer, the embedded FCEUX playtest, their tests, Make targets and documentation are removed; the last comparison of the kit's resources with the studios matched in all seven revisions, and editing happens in Retrolarium Studio over hack/<revision>/ (docs/retrolarium.md)."
+    },
+    {
+      "id": "gate-codecs-to-owners",
+      "kind": "tooling",
+      "summary": "The data-format codecs the round-trip gate proves move to scripts/build/data_formats.py with config/data_formats.json, and the relocation gate reads the music bank through the read-only scripts/validation/music_decoder.py."
+    },
+    {
+      "id": "studio-check",
+      "kind": "validation",
+      "summary": "make studio-check: in a throwaway copy the kit prepares, validates and rebuilds every revision with no edits, byte for byte."
+    },
+    {
+      "id": "tag-bound-2x-audits",
+      "kind": "validation",
+      "summary": "The 2.0, 2.1 and 2.2 manifests describe their tags, so their audits run in a disposable clone of each tag with the tag's own Make targets (validation.tag_audit); the functional 2.x gates stay on HEAD without the studios."
+    },
+    {
+      "id": "object-names",
+      "kind": "source",
+      "summary": "Constants name the firebars, the lifts, the enemy groups and enemy $09, the grey Cheep-Cheep and the area-style objects; every revision still builds byte for byte."
+    },
+    {
+      "id": "kit-toolchain",
+      "kind": "toolchain",
+      "summary": "The repository no longer carries ca65 and ld65: the build asks Retrolarium Kit for the cc65 2.19 0fca835 it builds and ships, and the 2.1 and 2.2 toolchain checks read the released binaries from their tags."
+    },
+    {
+      "id": "shared-linter",
+      "kind": "tooling",
+      "summary": "make lint and make format run Retrolarium Kit's shared linter over config/lint.json; asm_style.py and its tests move to the kit, and the game's source invariants stay here."
+    },
+    {
+      "id": "game-names",
+      "kind": "tooling",
+      "summary": "config/names.json keeps the game's own names, in English, and the lists that carry them; Retrolarium reads them when a project opens and keeps none itself."
+    },
+    {
+      "id": "profile-tables",
+      "kind": "tooling",
+      "summary": "config/profile_tables.json names by label the tables Retrolarium Kit reads from the image built from this source."
+    }
+  ],
+  "retrolarium": {
+    "descriptor": "super_mario_bros.rlj",
+    "profile": "smb1.v1",
+    "kit": {
+      "version": null,
+      "commit": null
+    },
+    "studio_min_version": null,
+    "revisions": [
+      "ju",
+      "pal",
+      "pc10",
+      "vs_smb",
+      "fds_smb",
+      "ann_fds",
+      "smb2_jp_fds"
+    ],
+    "removed_authoring": [
+      {
+        "path": "scripts/authoring/world_studio.py",
+        "replaced_by": "World view"
+      },
+      {
+        "path": "scripts/authoring/level_studio.py",
+        "replaced_by": "Levels view, with the playtest from a chosen point"
+      },
+      {
+        "path": "scripts/authoring/level_studio_model.py",
+        "replaced_by": "Levels view (kit codec smb.levels.v1)"
+      },
+      {
+        "path": "scripts/authoring/graphics_studio.py",
+        "replaced_by": "Graphics, Metatiles, Palettes, Animations, Screens and Text views"
+      },
+      {
+        "path": "scripts/authoring/sound_studio.py",
+        "replaced_by": "Sound view"
+      },
+      {
+        "path": "scripts/authoring/sound_studio_model.py",
+        "replaced_by": "Sound view (kit codecs smb.apu-music.v1 and smb.apu-envelope.v1)"
+      },
+      {
+        "path": "scripts/authoring/ann_sound_studio_model.py",
+        "replaced_by": "Sound view (the Disk System ending suites, kit codec fds.music.v1 with their waves and volume programs)"
+      },
+      {
+        "path": "scripts/authoring/content_studio.py",
+        "replaced_by": "the kit's workspace and build (hack/<revision>/, rltool studio)"
+      },
+      {
+        "path": "scripts/authoring/content_studio_model.py",
+        "replaced_by": "the kit's codecs and documents"
+      },
+      {
+        "path": "scripts/authoring/content_profiles.py",
+        "replaced_by": "the kit profile smb1.v1 and its revisions"
+      },
+      {
+        "path": "scripts/authoring/emulator_image.py",
+        "replaced_by": "the kit's playtest launch plans"
+      },
+      {
+        "path": "scripts/authoring/studio_common.py",
+        "replaced_by": "the Retrolarium Studio shell"
+      },
+      {
+        "path": "scripts/runtime/embedded_fceux.py",
+        "replaced_by": "the studio's playtest on MAME"
+      }
+    ]
+  },
+  "profiles": [
+    {
+      "id": "ju",
+      "status": "supported",
+      "artifact": "ju_rom",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "pc10",
+      "status": "supported",
+      "artifact": "pc10_rom",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "pal",
+      "status": "supported",
+      "artifact": "pal_rom",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "vs_smb",
+      "status": "supported",
+      "artifact": "vs_smb_rom",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "fds_smb",
+      "status": "supported",
+      "artifact": "fds_smb_disk",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "ann_fds",
+      "status": "supported",
+      "artifact": "ann_fds_disk",
+      "identity": "byte-identical"
+    },
+    {
+      "id": "smb2_jp_fds",
+      "status": "supported",
+      "artifact": "smb2_jp_fds_disk",
+      "identity": "byte-identical"
+    }
+  ],
+  "runtime_coverage": [
+    {
+      "profile_id": "ju",
+      "mode": "direct",
+      "targets": [
+        "validate-revision PROFILE=ju",
+        "trace"
+      ]
+    },
+    {
+      "profile_id": "pc10",
+      "mode": "direct",
+      "targets": [
+        "validate-revision PROFILE=pc10"
+      ]
+    },
+    {
+      "profile_id": "pal",
+      "mode": "direct",
+      "targets": [
+        "validate-revision PROFILE=pal"
+      ]
+    },
+    {
+      "profile_id": "vs_smb",
+      "mode": "direct",
+      "targets": [
+        "validate-platform PLATFORM=vs_smb"
+      ]
+    },
+    {
+      "profile_id": "fds_smb",
+      "mode": "direct",
+      "targets": [
+        "validate-platform PLATFORM=fds_smb"
+      ]
+    },
+    {
+      "profile_id": "ann_fds",
+      "mode": "direct",
+      "targets": [
+        "validate-platform PLATFORM=ann_fds"
+      ]
+    },
+    {
+      "profile_id": "smb2_jp_fds",
+      "mode": "direct",
+      "targets": [
+        "validate-smb2-runtime",
+        "validate-smb2-overlays",
+        "validate-smb2-gameplay"
+      ]
+    }
+  ],
+  "toolchain": {
+    "components": [
+      {
+        "id": "assembler",
+        "version": "ca65 V2.19 - Git 0fca835",
+        "source": "https://github.com/cc65/cc65",
+        "source_commit": "0fca835",
+        "binary_sha256": "779a2a266f038cfeea4cdb3cd2cf5bbef4b602bb43560c3fd9f1b45d7bc5c776",
+        "provenance": "retrolarium-kit",
+        "verification": "make verify"
+      },
+      {
+        "id": "linker",
+        "version": "ld65 V2.19 - Git 0fca835",
+        "source": "https://github.com/cc65/cc65",
+        "source_commit": "0fca835",
+        "binary_sha256": "06720e9200c9a2a53e049413888a6a55ee023b0801a598d4b6143caae8466813",
+        "provenance": "retrolarium-kit",
+        "verification": "make verify"
+      },
+      {
+        "id": "emulator",
+        "version": "source commit ec507d86c57acd8979547bc35e9627fb199fac9a",
+        "source": "https://github.com/oranguthang/fceux_automation.git",
+        "source_commit": "ec507d86c57acd8979547bc35e9627fb199fac9a",
+        "binary_sha256": "97aadff4970e98a413377810a296c045fab717661dd8270f84d58190f43a232e",
+        "provenance": "source-built",
+        "verification": "make check-source-2-2-toolchain"
+      }
+    ],
+    "private_inputs": [
+      {
+        "id": "fds_bios",
+        "size": 8192,
+        "sha256": "99c18490ed9002d9c6d999b9d8d15be5c051bdfa7cc7e73318053c9a994b0178",
+        "committed": false
+      }
+    ],
+    "hosts": [
+      {
+        "os": "Windows",
+        "architecture": "x64",
+        "shell": "PowerShell with GNU Make 4.4.1",
+        "language_versions": {
+          "python": "3.14.6"
+        },
+        "supported_status": "supported"
+      }
+    ]
+  },
+  "artifacts": [
+    {
+      "id": "ju_rom",
+      "profile": "ju",
+      "build_target": "verify-revision PROFILE=ju",
+      "size": 40976,
+      "sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
+      "sha256": "f61548fdf1670cffefcc4f0b7bdcdd9eaba0c226e3b74f8666071496988248de"
+    },
+    {
+      "id": "pc10_rom",
+      "profile": "pc10",
+      "build_target": "verify-revision PROFILE=pc10",
+      "size": 49168,
+      "sha1": "d48d2c65fda380217ead73ffa6a46cae62939194",
+      "sha256": "f586afeaaaa7a6cf2e3b69e5b17f2f0f1eb3fd9aa1de1e3e14b75f90dc21ae87"
+    },
+    {
+      "id": "pal_rom",
+      "profile": "pal",
+      "build_target": "verify-revision PROFILE=pal",
+      "size": 40976,
+      "sha1": "ab30029efec6ccfc5d65dfda7fbc6e6489a80805",
+      "sha256": "ec299b990e8bfee8ba46e3f61d63b2e1ae5b8a2e431de84e2e4bbd692dc53586"
+    },
+    {
+      "id": "vs_smb_rom",
+      "profile": "vs_smb",
+      "build_target": "verify-platform PLATFORM=vs_smb",
+      "size": 49168,
+      "sha1": "3546486ba461536545daf9f27c9bcf275fc162da",
+      "sha256": "60098a93322a9e07a2b164a02e5517bc22664ca33f6323c2ae23a62941ad393b"
+    },
+    {
+      "id": "fds_smb_disk",
+      "profile": "fds_smb",
+      "build_target": "verify-platform PLATFORM=fds_smb",
+      "size": 65500,
+      "sha1": "383ad8e3890a95de9595f0a6087648f51177da13",
+      "sha256": "56ba4c39fd7f9628bffac4c6ee0d5364f86de36d27c904ffc70f0abc97ae0d3a"
+    },
+    {
+      "id": "ann_fds_disk",
+      "profile": "ann_fds",
+      "build_target": "verify-platform PLATFORM=ann_fds",
+      "size": 65500,
+      "sha1": "f30bdd3c556604d7eaa6d0f4864d5566e519b5d4",
+      "sha256": "a762d0a90d16c84b5f2b014816b37675cf5115320be7e815effbb64d91b2014d"
+    },
+    {
+      "id": "smb2_jp_fds_disk",
+      "profile": "smb2_jp_fds",
+      "build_target": "verify-smb2",
+      "size": 65500,
+      "sha1": "20e50128742162ee47561db9e82b2836399c880c",
+      "sha256": "ff8afb9ae6b705b4e51dbcb193dcebadf4c049800a71003d3a45052648e52eda"
+    }
+  ],
+  "layout_deviations": [
+    {
+      "rule_id": "standard_unittest_discovery",
+      "actual_path": "tests",
+      "reason": "Mirrored test package names intentionally match tool package names.",
+      "equivalent_control": "make test supplies the project top-level directory so tests import as tests.<owner> and cannot shadow scripts packages."
+    }
+  ],
+  "licensing": [
+    {
+      "component": "project_tools_and_documentation",
+      "origin": "this_repository",
+      "license_id_or_status": "license_not_granted",
+      "redistribution": "no_license_granted"
+    },
+    {
+      "component": "reconstructed_game_source",
+      "origin": "user_supplied_reference_images",
+      "license_id_or_status": "license_not_granted",
+      "redistribution": "subject_to_rightsholder_terms"
+    },
+    {
+      "component": "bundled_cc65_tools",
+      "origin": "cc65",
+      "license_id_or_status": "Zlib",
+      "redistribution": "permitted_under_bundled_license"
+    },
+    {
+      "component": "reference_images_and_fds_bios",
+      "origin": "private_user_supplied",
+      "license_id_or_status": "private_user_supplied",
+      "redistribution": "not_committed"
+    },
+    {
+      "component": "fceux_runtime",
+      "origin": "external_unbundled",
+      "license_id_or_status": "external_unbundled",
+      "redistribution": "not_committed"
+    }
+  ],
+  "provenance": {
+    "references": [
+      "docs/provenance.md",
+      "config/reconstruction/label_renames.json",
+      "movies/README.md",
+      "docs/toolchain.md"
+    ],
+    "private_inputs_tracked": false
+  },
+  "aggregate_gates": {
+    "development": [
+      "make source-3-check"
+    ],
+    "pre_tag": [
+      "make source-3-check"
+    ],
+    "post_tag": [
+      "make source-3-audit"
+    ]
+  },
+  "functional_gate": "make source-2-2-functional-check"
+}

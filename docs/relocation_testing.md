@@ -15,7 +15,7 @@ uses two independently checked budgets:
 | Game and rendering | 6 | `$F2CA..$F2CF`, source-declared unused space | Audio at `$F2D0` |
 | Audio | 3 | `$FEFD..$FEFF`, unread victory-stream tail | Synthesis tables at `$FF00` |
 
-The Sound Studio decoder establishes that victory music lasts 384 frames and
+The music decoder (`scripts/validation/music_decoder.py`) establishes that victory music lasts 384 frames and
 reads square 2 through `$FEDC`, square 1 through `$FEEC`, and triangle through
 `$FEFD`, with all end addresses exclusive. The three `$FF` bytes beginning at
 `$FEFD` are therefore outside every decoded channel. Runtime validation adds

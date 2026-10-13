@@ -69,7 +69,7 @@ def validate_release(project_root: Path, manifest_path: Path) -> list[str]:
     assets = load_json(project_root / "assets" / "manifest.json")
     runtime = load_json(project_root / "scenarios" / "runtime_scenarios.json")
     formats = load_json(
-        project_root / "config" / "authoring" / "data_formats.json"
+        project_root / "config" / "data_formats.json"
     )
     errors = validate_hash_contracts(release, assets, runtime)
 

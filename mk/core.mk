@@ -31,17 +31,15 @@ SEMANTIC_RUNTIME_TRACE_DIR ?= $(PROJECT_DIR)build/evidence/runtime
 SCORING_RUNTIME_SCENARIOS ?= $(PROJECT_DIR)scenarios/scoring_runtime_scenarios.json
 SCORING_RUNTIME_TRACE_LUA ?= $(PROJECT_DIR)scripts/workflow/capture_scoring_transaction.lua
 SCORING_RUNTIME_TRACE_DIR ?= $(PROJECT_DIR)build/evidence/scoring
-DATA_FORMAT_MANIFEST ?= $(PROJECT_DIR)config/authoring/data_formats.json
+DATA_FORMAT_MANIFEST ?= $(PROJECT_DIR)config/data_formats.json
 DATA_FORMAT_SUMMARY ?= $(PROJECT_DIR)build/data_formats.json
-CONTENT_FORMAT_MANIFEST ?= $(PROJECT_DIR)config/authoring/content_formats_2_1.json
-CONTENT_PROFILE_MANIFEST ?= $(PROJECT_DIR)config/authoring/content_authoring_profiles.json
 
 help:
 	@echo Core: build verify lint format test scaffold-check release-check source-2-check
 	@echo Profiles: verify-revisions validate-revisions verify-platforms validate-platforms
-	@echo Authoring: list-content-profiles check-content-profiles world-studio level-studio graphics-studio sound-studio
+	@echo Retrolarium: studio-check source-3-audit source-3-check
 	@echo Evidence: trace semantic-evidence validate-relocation-revisions
-	@echo Releases: source-2-1-check source-2-2-check source-2-minor-check
+	@echo Releases: source-2-2-functional-check source-3-check scaffold-check
 	@echo Advanced: verify-smb2 validate-smb2-relocation
 build: _require-assets
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.build_native \

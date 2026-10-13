@@ -13,16 +13,24 @@ and must never weaken its byte-identity gate.
 This project is not a C rewrite. The original 6502 instruction stream, memory
 layout, timing behavior, and data formats remain the source of truth.
 
-## Source Reconstruction 2.2 Modernization
+## Source Reconstruction 3.0 — Retrolarium
 
-Version 2.2 keeps the published 2.1 gameplay, profile, relocation, and sibling
-engine boundaries unchanged. Its release delta modularizes Make orchestration,
-assigns configuration and tests to explicit responsibility packages, enforces
-English public text, and replaces review-specific metadata with a self-contained
-project release contract. The refreshed delta also inventories and consolidates
-the documentation corpus and establishes one configuration-owned label-rename
-registry. `make source-2-2-check` is the aggregate gate; the candidate is
-tag-ready after that command passes on the complete candidate tree.
+Version 3.0 moves editing to Retrolarium. The four Tkinter studios, their
+models, the content workspace and its composer leave the repository; every
+revision opens in Retrolarium Studio through `super_mario_bros.rlj`, and the
+last comparison of the kit's resources with the retired studios matched in all
+seven revisions. The codecs the repository's own gates prove stay here
+(`scripts/build/data_formats.py`, `scripts/validation/music_decoder.py`). The
+2.0, 2.1 and 2.2 manifests describe their tags, so their audits run in a
+checkout of those tags. `make source-3-check` runs the functional 2.2 gate and
+then `studio-check` of every revision against the pinned kit; see
+[`retrolarium.md`](retrolarium.md).
+
+Version 2.2 kept the published 2.1 gameplay, profile, relocation, and sibling
+engine boundaries unchanged while it modularized Make orchestration, assigned
+configuration and tests to responsibility packages, enforced English public
+text, consolidated the documentation corpus and established one
+configuration-owned label-rename registry.
 
 ## Preservation Contract
 
@@ -518,8 +526,9 @@ metatiles, full game text, area palettes, and editable CHR into a ten-artifact
 2.0 workspace. Dependency-free Tkinter applications expose semantic controls
 and visual previews over the same codec registry. Validation enforces exact
 fixed-layout capacity and canonical values, reports byte differences, and
-builds an isolated ROM without touching source or preservation outputs. See
-docs/content_authoring.md.
+builds an isolated ROM without touching source or preservation outputs. The
+studios were retired in Source Reconstruction 3.0, when Retrolarium took over
+every view they offered; they remain in history at the 2.2 tag and earlier.
 
 Level Studio reconstructs its map with the engine's CHR, palette, metatile,
 scenery, terrain, object, and actor tables. Normal enemies, group commands,
@@ -737,6 +746,18 @@ The detailed sequence, fixed-layout constraints, and release boundaries are in
 `docs/source_reconstruction_2_1.md`. `make source-2-1-check` defines the completed
 aggregate static, build, round-trip, and runtime boundary and requires the
 explicitly tag-ready manifest as its final step.
+
+### 16. Source Reconstruction 2.2 - Complete
+
+The compatible modernization release: Make fragments, responsibility packages
+for configuration and tests, the English-only policy, the documentation corpus
+review and the label-rename registry. `docs/source_reconstruction_2_2.md` holds
+its boundary.
+
+### 17. Source Reconstruction 3.0 - Complete
+
+Editing moves to Retrolarium; see the section at the top and
+[`retrolarium.md`](retrolarium.md). `make source-3-check` is the aggregate gate.
 
 ## Permanent Project Invariants
 

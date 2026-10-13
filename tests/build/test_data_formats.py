@@ -7,7 +7,7 @@ from pathlib import Path
 
 sys.path.insert(0, str(Path(__file__).resolve().parents[2] / "scripts"))
 
-from authoring.data_formats import (  # noqa: E402
+from build.data_formats import (  # noqa: E402
     decode_area_object_stream,
     decode_enemy_object_stream,
     decode_music_channels,

@@ -37,7 +37,8 @@ class MakeContractTests(unittest.TestCase):
         )
         self.assertIn("release-check", result.stdout)
         self.assertIn("verify-revisions", result.stdout)
-        self.assertIn("source-2-1-check", result.stdout)
+        self.assertIn("source-3-check", result.stdout)
+        self.assertIn("studio-check", result.stdout)
 
 if __name__ == "__main__":
     unittest.main()
