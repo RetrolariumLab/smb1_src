@@ -35,7 +35,7 @@ DATA_FORMAT_MANIFEST ?= $(PROJECT_DIR)config/data_formats.json
 DATA_FORMAT_SUMMARY ?= $(PROJECT_DIR)build/data_formats.json
 
 help:
-	@echo Core: build verify lint format test scaffold-check release-check source-2-check
+	@echo Core: build verify lint format hooks test scaffold-check release-check source-2-check
 	@echo Profiles: verify-revisions validate-revisions verify-platforms validate-platforms
 	@echo Retrolarium: studio-check source-3-audit source-3-check
 	@echo Evidence: trace semantic-evidence validate-relocation-revisions

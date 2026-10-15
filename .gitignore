@@ -36,3 +36,6 @@ content/workspace/
 
 # Test corpora made from your own ROM (game data)
 /tests/retrolarium/
+
+# The stop-word list (retrolarium_core.stop_words) never enters a repository
+/.stopwords

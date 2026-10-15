@@ -17,3 +17,10 @@ include mk/relocation.mk
 include mk/variants.mk
 include mk/profiles.mk
 include mk/runtime.mk
+
+# `make hooks`, once per clone, makes Git check every commit and push for stop
+# words and run `make lint` first (Retrolarium Kit's rltool hooks; the
+# stop-word list lives outside the repositories).
+.PHONY: hooks
+hooks:
+	$(RLTOOL) hooks install --project .
