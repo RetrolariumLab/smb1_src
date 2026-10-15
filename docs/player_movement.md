@@ -129,32 +129,6 @@ window. The death task also enters the same handler after its initial delay;
 task `$0B` bypasses fresh controller splitting, and airborne movement installs
 the death-specific active gravity before vertical integration.
 
-## Deterministic Static Trace
-
-Run the default fastest-ground-jump trace with:
-
-```text
-make trace-player
-```
-
-The command parses the table bytes directly from `physics.asm`, models the
-relevant 6502 carry and N-flag behavior, holds A for eight frames, and prints 24
-frames. Selected reference rows are:
-
-| Frame | A | Gravity | Absolute Y | Y speed | Speed fraction |
-| ---: | ---: | ---: | ---: | ---: | ---: |
-| 0 | 1 | `$28` | `$017B` | -5 | `$28` |
-| 7 | 1 | `$28` | `$015C` | -4 | `$40` |
-| 8 | 0 | `$90` | `$0158` | -4 | `$D0` |
-| 14 | 0 | `$90` | `$014D` | 0 | `$30` |
-| 23 | 0 | `$90` | `$0163` | 4 | `$00` |
-
-The model has unit tests for source-table decoding, exact profile thresholds,
-water selection, button-release gravity, fixed-point carry, and signed-speed
-handling. It is a deterministic static reference, not yet an emulator trace;
-the milestone-6 jump scenario now anchors the modeled subsystem to the live
-`handler_player_jumping_or_swimming` entry and captured player RAM state.
-
 ## Source Map
 
 | Responsibility | Source |

@@ -17,10 +17,6 @@ Run `make split-platform-assets PLATFORM=vs_smb` once to extract the private
 16-byte header and 16 KiB CHR into the ignored asset directory. Then
 `make verify-platform PLATFORM=vs_smb` reconstructs and compares the complete
 iNES image at SHA-1 `3546486ba461536545daf9f27c9bcf275fc162da`.
-`make validate-platform PLATFORM=vs_smb` additionally checks the deterministic
-arcade title state in FCEUX without applying the console input movie. The
-ignored reference repositories and their generated binaries remain evidence,
-not build dependencies.
 
 The splitter also extracts the 1,745-byte Vs. music-data range from PRG. Its
 additional star and game-over streams, lookup tables, and envelopes retain
@@ -50,11 +46,8 @@ in that private template. `make verify-platform PLATFORM=fds_smb` then builds
 65,500-byte disk side at SHA-1
 `383ad8e3890a95de9595f0a6087648f51177da13`.
 
-This profile is supported at the strongest container identity boundary.
-`make validate-platform PLATFORM=fds_smb` verifies exact disk reconstruction,
-checks the local 8 KiB FDS BIOS contract, and observes the deterministic title
-startup state at frame 1200. The BIOS is never stored in the repository; FCEUX
-expects the private file as `disksys.rom` beside its executable.
+This profile is supported at the strongest container identity boundary:
+`make verify-platform PLATFORM=fds_smb` requires the exact disk.
 
 ## All Night Nippon Super Mario Bros.
 
@@ -124,11 +117,9 @@ library. The profile has no standalone victory stream, so that semantic
 boundary is retained as an explicit zero-size alias rather than hidden by a
 profile-specific source layout.
 
-This profile is supported at the complete-container identity boundary.
-`make validate-platform PLATFORM=ann_fds` verifies all four payloads and the
-complete disk before checking the deterministic ANN title startup state at
-frame 1200. The gate uses the same ignored private FDS BIOS contract as FDS
-SMB1.
+This profile is supported at the complete-container identity boundary:
+`make verify-platform PLATFORM=ann_fds` requires all four payloads and the
+complete disk.
 
 The supplied GoodNES `.nes` image with SHA-1 `51db085d...` remains classified
 as an unofficial FDS-to-NROM conversion. It is useful as auxiliary behavioral

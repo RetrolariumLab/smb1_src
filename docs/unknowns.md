@@ -28,7 +28,7 @@ and the smallest useful next experiment.
 - **Location:** `src/game/enemies/stream_and_initialization.asm`
 - **Evidence:** The masked value is `con_power_up_object`, but power-ups are
   created by the dynamic block-object path rather than enemy-stream data.
-  `make audit-enemy-streams` decodes 3,530 records from all 235 streams used by
+  An audit of the streams (tag 3.0's `make audit-enemy-streams`) decodes 3,530 records from all 235 streams used by
   JU, PC10, PAL, Vs., FDS SMB, and the three ANN course sets. No non-entrance
   command selects `$2E`, so the equality branch cannot change control flow for
   any supported source profile.
@@ -41,7 +41,7 @@ and the smallest useful next experiment.
 - **Status:** Resolved
 - **Confidence:** High
 - **Location:** `src/game/collisions/bounding_boxes.asm`
-- **Evidence:** `make audit-unreachable-code` finds no ca65 symbolic references
+- **Evidence:** An audit (tag 3.0's `make audit-unreachable-code`) finds no ca65 symbolic references
   and no raw little-endian `$E392` address anywhere in the canonical PRG. The
   preceding routine ends immediately before the entry with the unconditional
   `JMP $E3A5`, so execution cannot fall through. The full 17,862-frame trace

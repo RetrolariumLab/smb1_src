@@ -1,65 +1,40 @@
 # Documentation Index
 
-This index is the starting point for the repository's preservation, source,
-runtime-evidence, data format, and Retrolarium documentation. Contributors should also read
-[`CONTRIBUTING.md`](../CONTRIBUTING.md) before changing emitted bytes or release
-contracts.
+Start here; read [`CONTRIBUTING.md`](../CONTRIBUTING.md) before changing emitted
+bytes.
 
-## Releases and Project Direction
+## Project
 
-- [`preservation_source_1_0.md`](preservation_source_1_0.md) — stable preservation baseline and acceptance boundary.
-- [`source_reconstruction_2_0.md`](source_reconstruction_2_0.md) — 2.0 source-reconstruction contract.
-- [`source_reconstruction_2_1.md`](source_reconstruction_2_1.md) — published 2.1 contract, milestones, and aggregate gate.
-- [`source_reconstruction_2_2.md`](source_reconstruction_2_2.md) — compatible repository modernization and release evidence.
-- [`retrolarium.md`](retrolarium.md) — Source Reconstruction 3.0: editing in Retrolarium, `studio-check`, and the 3.0 manifest.
-- [`roadmap.md`](roadmap.md) — completed work, remaining work, and project policy.
-- [`smb2_reconstruction.md`](smb2_reconstruction.md) — Super Mario Bros. 2 FDS reconstruction scope.
-- [`later_engine.md`](later_engine.md) — later-engine feasibility, source-overlap evidence, and architectural decision.
+- [`retrolarium.md`](retrolarium.md) — editing every revision in Retrolarium
+  Studio, the game's names and tables, `make studio-check`.
+- [`licensing.md`](licensing.md) — licensing and distribution status.
+- [`toolchain.md`](toolchain.md) — the cc65 Retrolarium Kit ships and the
+  released toolchains.
 
-## Source Architecture
+## Source
 
-- [`source_layout.md`](source_layout.md) — address-ordered module map and linker boundaries.
-- [`subsystems.md`](subsystems.md) — runtime ownership and subsystem interactions.
-- [`ram_fields.md`](ram_fields.md) — verified RAM symbol registry.
-- [`naming.md`](naming.md) — semantic symbol vocabulary and evidence rules.
-- [`assembly_style.md`](assembly_style.md) — mechanically checked assembly conventions.
-- [`6502_reference.md`](6502_reference.md) — local 6502 instruction reference.
-- [`unknowns.md`](unknowns.md) — unresolved and closed evidence records.
-- [`provenance.md`](provenance.md) — imported-source provenance and canonical label history.
-- [`licensing.md`](licensing.md) — licensing and distribution status for source, tools, and private inputs.
-- [`toolchain.md`](toolchain.md) — the cc65 Retrolarium Kit ships and the released toolchains.
+- [`source_layout.md`](source_layout.md) — address-ordered module map and linker
+  boundaries.
+- [`subsystems.md`](subsystems.md) — runtime ownership and subsystem
+  interactions.
+- [`ram_fields.md`](ram_fields.md) — RAM symbol registry.
+- [`naming.md`](naming.md) — symbol vocabulary.
+- [`assembly_style.md`](assembly_style.md) — assembly conventions.
+- [`6502_reference.md`](6502_reference.md) — 6502 instruction reference.
+- [`unknowns.md`](unknowns.md) — open and closed questions.
+- [`player_movement.md`](player_movement.md) — input, physics, collision.
 
-## Builds, Profiles, and Debugging
+## Builds and profiles
 
-- [`revision_profiles.md`](revision_profiles.md) — cartridge revision matrix.
-- [`platform_profiles.md`](platform_profiles.md) — NES, Vs. System, and FDS profiles.
-- [`variants.md`](variants.md) — fixed-layout and expanded-ROM variant contracts.
-- [`relocation_testing.md`](relocation_testing.md) — relocation generation and runtime proof.
-- [`debugger_workflow.md`](debugger_workflow.md) — Mesen/FCEUX symbols, watches, and breakpoints.
+- [`revision_profiles.md`](revision_profiles.md) — the cartridge revisions.
+- [`platform_profiles.md`](platform_profiles.md) — NES, Vs. System and FDS
+  profiles, All Night Nippon.
+- [`smb2_reconstruction.md`](smb2_reconstruction.md) — Super Mario Bros. 2 (FDS).
+- [`variants.md`](variants.md) — the fixed-layout and expanded variants.
+- [`modding_examples.md`](modding_examples.md) — practical source changes.
 
-## Runtime Evidence and Gameplay
+## Checks
 
-- [`runtime_evidence.md`](runtime_evidence.md) — deterministic gameplay and semantic traces.
-- [`player_movement.md`](player_movement.md) — input, physics, collision, and movement traces.
-
-## Content and Retrolarium
-
-- [`retrolarium.md`](retrolarium.md) — editing every revision in Retrolarium Studio, the game's names and tables.
-- [`data_formats.md`](data_formats.md) — typed codecs and byte-identical round trips.
-- [`modding_examples.md`](modding_examples.md) — practical source modifications.
-
-## Tool Layout
-
-Python tools are grouped under `scripts/build/`, `scripts/validation/`,
-`scripts/runtime/`, and `scripts/workflow/`. Make targets
-are grouped by the same responsibilities under `mk/`, and tests mirror those
-packages under `tests/`. Project configuration is grouped under
-`config/debugger/`, `config/linker/`,
-`config/reconstruction/`, and the release-facing manifests in `config/`.
-
-Run `make help` for the stable public command groups. For direct tool execution,
-use the stable launcher:
-
-```text
-python scripts/run.py <category.module> [arguments ...]
-```
+`make test` must pass after every change: among other things it rebuilds every
+image that is present and requires it byte for byte. `make test-full` also plays
+the TAS in MAME on the relocated and CNROM builds (see the README).

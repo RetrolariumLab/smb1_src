@@ -56,28 +56,7 @@ requiring the FDS image. `make verify-smb2` additionally composes the source-bui
 programs with the private license, CHR, and save records and requires SHA-1
 `20e50128742162ee47561db9e82b2836399c880c` for the complete disk side.
 
-## Runtime Evidence
-
-`make validate-smb2-runtime` starts the complete source-built FDS image through
-the pinned 8 KiB BIOS and waits 1,200 frames. It requires the stable title-mode
-RAM contract recorded in `config/smb2_platform_profile.json`; this proves that
-the independent reconstruction reaches the ordinary engine rather than merely
-forming the right disk bytes.
-
-`make validate-smb2-overlays` performs three additional clean emulator boots.
-Each run selects one normal operating-mode transition and lets the game's own
-FDS loader fetch `SM2DATA2`, `SM2DATA3`, or `SM2DATA4`. The validator derives a
-16-byte distinguishing signature from the already hash-checked source payload,
-observes it at the payload's declared CPU load address, and requires the disk
-task to finish. Signatures are selected against the resident `SM2MAIN` bytes,
-which avoids treating the shared prefix of `SM2DATA4` as evidence of a load.
-
-`make validate-smb2-gameplay` presses Start through the emulated controller,
-enters World 1-1 through the normal mode tree, and supplies a deterministic
-Right+B input sequence with two jumps. The accepted 360-frame slice remains in
-the active game loop throughout and advances Mario by 472 pixels into page 2.
-
-## Relocation Evidence
+## Relocation
 
 The main program contains 83 source-declared unused `$FF` bytes immediately
 before the save byte at `$D29F`. `make test-smb2-relocation` generates an
@@ -90,13 +69,7 @@ follow the shifted NMI, RESET, and IRQ handlers.
 The accepted candidate moves 1,860 `SM2MAIN` labels and preserves 316 overlay
 label addresses. All four program hashes change because imports in
 `SM2DATA2`, `SM2DATA3`, and `SM2DATA4` follow the shifted main engine within the
-same ca65 scope. `make validate-smb2-relocation` then repeats title startup,
-all three real FDS overlay loads, and the deterministic World 1-1 slice with
-execute traps at every probe. The final gameplay state must match the
-byte-identical baseline exactly.
-
-These gates prove all four executable programs participate in the running disk
-image and survive controlled address movement independently from ANN.
+same ca65 scope.
 
 Executable payloads must be visible assembly; `.incbin` is forbidden for code.
 CHR, license data, and the save byte remain ignored private assets extracted
@@ -113,12 +86,9 @@ reference. It is a verification oracle and naming aid, not a directory layout
 to copy. The much more fragmented `segaloco-smb` meta-disassembly remains a
 secondary cross-check for relationships between SMB2 and ANN.
 
-`scripts/workflow/import_smb2_source.py` pins the SHA-1 of each reference listing and
-records all 2,383 original colon labels plus three callable FDS BIOS constants
-in `config/reconstruction/label_renames.json`. Records use payload, original name,
-current semantic name, and current path; line numbers are intentionally omitted
-so comment and formatting changes cannot invalidate provenance. Exact original
-matches reuse 1,935 already reviewed SMB1 semantic stems while recomputing their
+The import (tag 3.0 keeps its tool and the mapping of all 2,383 original
+colon labels plus three callable FDS BIOS constants) reused, for exact original
+matches, reuse 1,935 already reviewed SMB1 semantic stems while recomputing their
 roles for SMB2; another 112 later-engine-only abbreviations have direct reviewed
 expansions. The remaining records retain descriptive SMB2 reference semantics,
 primarily course, message, and music data, instead of inventing unsupported
@@ -138,6 +108,5 @@ interpretations.
    composition are proven for all relevant payloads.
 
 Code is shared only after independent static and runtime evidence establishes
-equivalence. `make later-engine-source-overlap` supplies the instruction-level
-promotion map; similar bytes, matching addresses, or a common historical
-ancestor are not sufficient promotion criteria.
+equivalence; similar bytes, matching addresses, or a common historical ancestor
+are not sufficient promotion criteria.

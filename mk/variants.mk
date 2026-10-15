@@ -26,8 +26,6 @@ HACK_LABELS ?= $(HACK_BUILD_DIR)/smb.lbl
 HACK_MAP ?= $(HACK_BUILD_DIR)/smb.map
 HACK_DEBUG ?= $(HACK_BUILD_DIR)/smb.dbg
 HACK_ROM ?= $(HACK_BUILD_DIR)/smb.nes
-HACK_RUNTIME_LUA ?= $(PROJECT_DIR)scripts/workflow/validate_fixed_variant.lua
-HACK_RUNTIME_RESULT ?= $(HACK_BUILD_DIR)/runtime.txt
 EXPANDED_MANIFEST ?= $(PROJECT_DIR)config/expanded_rom.json
 EXPANDED_SOURCE ?= $(PROJECT_DIR)src/expanded/cnrom.asm
 EXPANDED_CFG ?= $(PROJECT_DIR)config/linker/expanded/cnrom_prg_only.cfg
@@ -38,8 +36,6 @@ EXPANDED_LABELS ?= $(EXPANDED_BUILD_DIR)/smb.lbl
 EXPANDED_MAP ?= $(EXPANDED_BUILD_DIR)/smb.map
 EXPANDED_DEBUG ?= $(EXPANDED_BUILD_DIR)/smb.dbg
 EXPANDED_ROM ?= $(EXPANDED_BUILD_DIR)/smb.nes
-EXPANDED_RUNTIME_LUA ?= $(PROJECT_DIR)scripts/workflow/validate_expanded_runtime.lua
-EXPANDED_RUNTIME_RESULT ?= $(EXPANDED_BUILD_DIR)/runtime.txt
 build-hack: _require-assets
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.build_native \
 		--source "$(HACK_SOURCE)" \
@@ -63,16 +59,6 @@ verify-hack: build build-hack
 		--candidate-prg "$(HACK_PRG)" \
 		--baseline-rom "$(NATIVE_ROM)" \
 		--candidate-rom "$(HACK_ROM)"
-
-validate-hack: verify-hack
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.validate_fixed_variant \
-		--manifest "$(FIXED_VARIANT_MANIFEST)" \
-		--variant "$(FIXED_VARIANT)" \
-		--fceux "$(FCEUX_EXE)" \
-		--rom "$(HACK_ROM)" \
-		--movie "$(RUNTIME_MOVIE)" \
-		--lua "$(HACK_RUNTIME_LUA)" \
-		--result "$(HACK_RUNTIME_RESULT)"
 
 build-expanded: _require-assets
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.build_native \
@@ -99,15 +85,6 @@ verify-expanded: build-expanded
 		--chr "$(GENERATED_CHR)" \
 		--output "$(EXPANDED_ROM)" \
 		--verify
-
-validate-expanded: verify-expanded
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" runtime.validate_expanded_runtime \
-		--manifest "$(EXPANDED_MANIFEST)" \
-		--fceux "$(FCEUX_EXE)" \
-		--rom "$(EXPANDED_ROM)" \
-		--movie "$(RUNTIME_MOVIE)" \
-		--lua "$(EXPANDED_RUNTIME_LUA)" \
-		--result "$(EXPANDED_RUNTIME_RESULT)"
 
 verify-ann-audio: prepare-ann-supplemental-assets
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.build_asm_range \

@@ -64,6 +64,5 @@
   "fixed_ranges": [
     {"start": "0xff00", "end": "0xfff9", "meaning": "Synthesis tables"}
   ],
-  "minimum_shifted_labels": 1800,
-  "runtime_scenarios": "scenarios/runtime_scenarios.json"
+  "minimum_shifted_labels": 1800
 }

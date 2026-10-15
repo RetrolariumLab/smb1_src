@@ -23,9 +23,6 @@ presence in the repository does not by itself grant redistribution rights.
   builds and ships them with the notice; this repository stores no
   executables. The released 2.1 and 2.2 binaries, notice, and provenance stay
   at their tags, as `docs/toolchain.md` records.
-- FCEUX is an external, unbundled dependency. Its source commit and the tested
-  binary hash are pinned by `config/release_toolchain_2_1.json`; FCEUX remains
-  governed by its upstream licenses.
 - Runtime movie provenance and its CC BY 2.0 source are recorded in
   `movies/README.md`.
 - Referenced editors and research sources are evidence only. Their license

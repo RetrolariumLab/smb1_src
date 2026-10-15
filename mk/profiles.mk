@@ -10,7 +10,6 @@ REVISION_MAP ?= $(REVISION_BUILD_DIR)/smb.map
 REVISION_DEBUG ?= $(REVISION_BUILD_DIR)/smb.dbg
 REVISION_ROM ?= $(REVISION_BUILD_DIR)/smb.nes
 REVISION_ASSET_DIR ?= $(GENERATED_ASSET_DIR)/revisions
-REVISION_RUNTIME_RESULT ?= $(REVISION_BUILD_DIR)/runtime.txt
 ifeq ($(PROFILE),pc10)
 REVISION_REFERENCE ?= $(PROJECT_DIR)Super Mario Bros. (PC10).nes
 else ifeq ($(PROFILE),ju)
@@ -29,8 +28,6 @@ PLATFORM_PRG ?= $(PLATFORM_BUILD_DIR)/smb.prg
 PLATFORM_LABELS ?= $(PLATFORM_BUILD_DIR)/smb.lbl
 PLATFORM_MAP ?= $(PLATFORM_BUILD_DIR)/smb.map
 PLATFORM_DEBUG ?= $(PLATFORM_BUILD_DIR)/smb.dbg
-PLATFORM_RUNTIME_RESULT ?= $(PLATFORM_BUILD_DIR)/runtime.txt
-PLATFORM_RUNTIME_LUA ?= $(PROJECT_DIR)scripts/workflow/validate_platform_runtime.lua
 PLATFORM_BIN_INCLUDE_ARGS =
 ifeq ($(PLATFORM),vs_smb)
 PLATFORM_SOURCE ?= $(PROJECT_DIR)src/revisions/vs.asm
@@ -97,25 +94,10 @@ verify-revision: build-revision
 		--chr "$(GENERATED_CHR)" \
 		--output "$(REVISION_ROM)"
 
-validate-revision: verify-revision
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" runtime.validate_revision_runtime \
-		--manifest "$(REVISION_MANIFEST)" \
-		--profile "$(PROFILE)" \
-		--fceux "$(FCEUX_EXE)" \
-		--rom "$(REVISION_ROM)" \
-		--movie "$(RUNTIME_MOVIE)" \
-		--lua "$(EXPANDED_RUNTIME_LUA)" \
-		--result "$(REVISION_RUNTIME_RESULT)"
-
 verify-revisions:
 	$(MAKE) verify-revision PROFILE=ju
 	$(MAKE) verify-revision PROFILE=pc10
 	$(MAKE) verify-revision PROFILE=pal
-
-validate-revisions:
-	$(MAKE) validate-revision PROFILE=ju
-	$(MAKE) validate-revision PROFILE=pc10
-	$(MAKE) validate-revision PROFILE=pal
 
 ifeq ($(PLATFORM),ann_fds)
 build-platform: build-ann-payloads
@@ -152,16 +134,6 @@ verify-platform: build-platform
 		$(PLATFORM_PAYLOAD_ARGS) \
 		--output "$(PLATFORM_OUTPUT)"
 
-validate-platform: verify-platform
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" runtime.validate_platform_runtime \
-		--manifest "$(PLATFORM_MANIFEST)" \
-		--profile "$(PLATFORM)" \
-		--fceux "$(FCEUX_EXE)" \
-		--fds-bios "$(FDS_BIOS)" \
-		--image "$(PLATFORM_OUTPUT)" \
-		--lua "$(PLATFORM_RUNTIME_LUA)" \
-		--result "$(PLATFORM_RUNTIME_RESULT)"
-
 verify-platforms:
 	$(MAKE) verify-platform PLATFORM=vs_smb
 	$(MAKE) verify-platform PLATFORM=fds_smb
@@ -179,8 +151,3 @@ verify-all:
 		--step "verify-platform PLATFORM=vs_smb" \
 		--step "verify-platform PLATFORM=fds_smb" \
 		--step "verify-platform PLATFORM=ann_fds"
-
-validate-platforms:
-	$(MAKE) validate-platform PLATFORM=vs_smb
-	$(MAKE) validate-platform PLATFORM=fds_smb
-	$(MAKE) validate-platform PLATFORM=ann_fds

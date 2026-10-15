@@ -29,8 +29,7 @@ its victory padding, pitch periods, and note-length tables differ, while the
 1,602-byte Japan/USA pack is byte-identical in FDS SMB1.
 
 Run make verify-revisions to assemble and compare all complete images against
-their own private references. Run make validate-revisions for the common FCEUX
-startup observation. The PAL profile explicitly enables PAL emulation timing;
+their own private references. The PAL profile explicitly enables PAL emulation timing;
 Japan/USA and PlayChoice-10 retain the NTSC engine path.
 
 The locally available European images were evaluated by payload identity rather

@@ -80,22 +80,8 @@ original ROM or disk side byte for byte. It needs the revisions' ROMs and the
 Retrolarium kit (`rltool` on `PATH`, or `RLTOOL=...`), and never reads or writes
 `hack/` or `.retrolarium/`.
 
-The data formats the repository's own gates prove stay here:
-`scripts/build/data_formats.py` decodes and round-trips the representative
-formats listed in `config/data_formats.json` (`make roundtrip-formats`), and the
-relocation gate reads the music bank through
+The relocation build reads the music bank through
 `scripts/validation/music_decoder.py`.
-
-## Source Reconstruction 3.0
-
-`config/source_reconstruction_3_0.json` is the 3.0 release manifest. It names the
-descriptor, the profile and the revisions, the kit and studio versions the
-release is checked with, and every removed editor with the view that replaced it.
-`make source-3-audit` runs studio-check with `--release`, which also checks that
-section against the descriptor and the running kit; `make source-3-check` runs
-the functional Source 2.2 gate first. The 2.0, 2.1 and 2.2 manifests describe
-their tags, so their audits run in a checkout of those tags
-(`validation.tag_audit`).
 
 ## Reference editors
 

@@ -1,7 +1,7 @@
 # Runtime Input Fixture
 
-`smb1_any_percent.fm2` is a deterministic FCEUX controller-input movie used by
-`make trace-runtime`. It is a third-party test fixture, not part of the Super
+`smb1_any_percent.fm2` is a deterministic FCEUX controller-input movie that
+`make test-full` plays in MAME (`smb1_any_percent.check.json`). It is a third-party test fixture, not part of the Super
 Mario Bros. program or asset reconstruction.
 
 ## Provenance and License
@@ -28,9 +28,5 @@ FM2 is a text input log. This fixture contains controller states and emulator
 metadata, including the expected ROM filename and checksum. It does not contain
 the ROM, PRG, CHR, screenshots, audio, or an emulator save state.
 
-The natural runtime scenarios replay this input from power-on. Two explicitly
-controlled scenarios add manifest-declared RAM patches for transactions absent
-from the movie; those patches are generated at runtime and are not modifications
-to the tracked FM2 file. See
-[`docs/runtime_evidence.md`](../docs/runtime_evidence.md) for the evidence
-boundary and scenario details.
+The full test replays this input from power-on and compares the game's state at
+six checkpoints with what the original ROM gives.

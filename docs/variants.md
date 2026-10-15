@@ -16,20 +16,17 @@ The first demonstrator is `five_lives`. Its separate entrypoint defines
 starts with five total lives. The preservation entrypoint defines no variant
 flag and retains the original `$02` default.
 
-Use the three independent acceptance layers:
+Build and check it with:
 
 ```text
 make build-hack
 make verify-hack
-make validate-hack
 ```
 
 `build-hack` writes only beneath `build/variants/five_lives`. `verify-hack`
 compares both PRG and complete ROM against the preservation build and accepts
 only the byte declared in `config/fixed_layout_variants.json`. It therefore also
-proves that header and CHR data are unchanged. `validate-hack` plays the tracked
-FM2 in FCEUX and observes `ram_numberof_lives` immediately after primary game
-setup, proving that the declared operand has the intended runtime effect.
+proves that header and CHR data are unchanged.
 
 Future fixed-layout variants must use their own source entrypoint and output
 directory, declare every changed byte with its original value and reason, and
@@ -50,8 +47,8 @@ The `make verify-expanded` command enforces the reviewed layout in
 and exact hashes for both CHR banks. Comparing the entire CPU window also
 validates vectors, interrupt code, reset code, and every fixed operand.
 
-The `make validate-expanded` command plays the tracked FM2 and observes active
-World 1-1 RAM state in FCEUX. The expanded build has its own entrypoint, linker
+`make test-full` plays the TAS on it in MAME and compares the game's state with
+the original's. The expanded build has its own entrypoint, linker
 configuration, manifest, and output directory. It does not alter or replace the
 default Mapper 0 preservation build.
 
@@ -86,7 +83,7 @@ graphics variant must add bus-conflict-safe switching.
 The separate entrypoint, linker configuration, manifest, output directory, and
 iNES header isolate this decision from preservation builds. Acceptance verifies
 the mapper header, complete canonical PRG, vectors through that PRG comparison,
-every CHR-bank hash, and an FCEUX World 1-1 startup observation. The result adds
+every CHR-bank hash, and the TAS played in MAME. The result adds
 graphics capacity without claiming that safe PRG banking is solved. A future
 CNROM content variant may replace bank 1 and add reviewed selection logic through
 the fixed-layout patch contract; PRG expansion requires a separate architecture

@@ -14,33 +14,7 @@ NATIVE_LABELS ?= $(NATIVE_BUILD_DIR)/smb.lbl
 NATIVE_MAP ?= $(NATIVE_BUILD_DIR)/smb.map
 NATIVE_DEBUG ?= $(NATIVE_BUILD_DIR)/smb.dbg
 NATIVE_ROM ?= $(NATIVE_BUILD_DIR)/smb.nes
-DEBUG_BREAKPOINTS ?= $(PROJECT_DIR)config/debugger/breakpoints.json
-DEBUG_WATCHES ?= $(PROJECT_DIR)config/debugger/watches.json
-DEBUG_SUMMARY ?= $(NATIVE_BUILD_DIR)/debug_symbols.json
-FCEUX_SYMBOL_DIR ?= $(NATIVE_BUILD_DIR)
-FCEUX_EXE ?= $(PROJECT_DIR)../fceux_automation/vc/x64/Release/fceux64.exe
-FDS_BIOS ?= $(dir $(FCEUX_EXE))disksys.rom
-DEBUG_RUNTIME_LUA ?= $(PROJECT_DIR)scripts/workflow/validate_debug_symbols.lua
-DEBUG_RUNTIME_RESULT ?= $(NATIVE_BUILD_DIR)/debug_symbols_runtime.txt
-RUNTIME_MOVIE ?= $(PROJECT_DIR)movies/smb1_any_percent.fm2
-RUNTIME_SCENARIOS ?= $(PROJECT_DIR)scenarios/runtime_scenarios.json
-RUNTIME_TRACE_LUA ?= $(PROJECT_DIR)scripts/workflow/capture_runtime_scenario.lua
-RUNTIME_TRACE_DIR ?= $(PROJECT_DIR)build/runtime
-SEMANTIC_RUNTIME_SCENARIOS ?= $(PROJECT_DIR)scenarios/semantic_runtime_scenarios.json
-SEMANTIC_RUNTIME_TRACE_DIR ?= $(PROJECT_DIR)build/evidence/runtime
-SCORING_RUNTIME_SCENARIOS ?= $(PROJECT_DIR)scenarios/scoring_runtime_scenarios.json
-SCORING_RUNTIME_TRACE_LUA ?= $(PROJECT_DIR)scripts/workflow/capture_scoring_transaction.lua
-SCORING_RUNTIME_TRACE_DIR ?= $(PROJECT_DIR)build/evidence/scoring
-DATA_FORMAT_MANIFEST ?= $(PROJECT_DIR)config/data_formats.json
-DATA_FORMAT_SUMMARY ?= $(PROJECT_DIR)build/data_formats.json
 
-help:
-	@echo Core: build verify lint format hooks test scaffold-check release-check source-2-check
-	@echo Profiles: verify-revisions validate-revisions verify-platforms validate-platforms
-	@echo Retrolarium: studio-check source-3-audit source-3-check
-	@echo Evidence: trace semantic-evidence validate-relocation-revisions
-	@echo Releases: source-2-2-functional-check source-3-check scaffold-check
-	@echo Advanced: verify-smb2 validate-smb2-relocation
 build: _require-assets
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.build_native \
 		--source "$(NATIVE_SOURCE)" \
@@ -121,22 +95,12 @@ check-assets:
 		--manifest "$(ASSET_MANIFEST)" \
 		--asset-dir "$(GENERATED_ASSET_DIR)"
 
-# House style (config/lint.json) from Retrolarium Kit; the source invariants
-# below are this game's own.
+# House style (config/lint.json) from Retrolarium Kit.
 lint:
 	$(RLTOOL) lint --project "$(PROJECT_DIR)."
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.lint_source "$(PROJECT_DIR)"
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" validation.lint_project "$(PROJECT_DIR)"
 
 format:
 	$(RLTOOL) lint --project "$(PROJECT_DIR)." --fix
-	$(MAKE) lint
-
-test:
-	$(PYTHON) -m unittest discover -s "$(PROJECT_DIR)tests" -t "$(PROJECT_DIR)" -p "test_*.py"
-
-trace-player:
-	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" runtime.player_physics
 
 _require-assets:
 	$(PYTHON) "$(PROJECT_DIR)scripts/run.py" build.check_assets \

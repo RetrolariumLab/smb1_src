@@ -49,9 +49,8 @@ unknown until static or runtime evidence supports a semantic name.
 1. Prefer a role such as `sub_update_player_movement` over a ROM address.
 2. Include subsystem context when a short local description would collide.
 3. Keep state or opcode values only when they are part of a decoded format.
-4. Preserve original doppelganger names in the direct provenance map at
-   `config/reconstruction/label_renames.json`, and keep addresses in generated maps
-   rather than embedding either in active identifiers.
+4. Keep addresses in generated maps rather than in active identifiers; Git
+   history keeps the earlier names.
 5. Treat a plausible interpretation as insufficient evidence for a rename.
 6. Run `make verify` after every rename batch; symbol cleanup must not alter a
    single emitted byte.

@@ -1,0 +1,102 @@
+{
+  "schema": "retrolarium.movie-check",
+  "schema_version": 1,
+  "movie": "smb1_any_percent.fm2",
+  "cells": {
+    "oper_mode": {
+      "address": "0x0770"
+    },
+    "world": {
+      "address": "0x075F"
+    },
+    "level": {
+      "address": "0x075C"
+    },
+    "area": {
+      "address": "0x0760"
+    },
+    "lives": {
+      "address": "0x075A"
+    },
+    "player_status": {
+      "address": "0x0756"
+    },
+    "coins": {
+      "address": "0x075E"
+    },
+    "score": {
+      "address": "0x07DD",
+      "length": 6
+    }
+  },
+  "frames": [
+    3000,
+    6000,
+    9000,
+    12000,
+    15000,
+    "end"
+  ],
+  "expected": {
+    "3000": {
+      "oper_mode": "01",
+      "world": "00",
+      "level": "01",
+      "area": "02",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "12",
+      "score": "000002020405"
+    },
+    "6000": {
+      "oper_mode": "01",
+      "world": "03",
+      "level": "00",
+      "area": "00",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "1f",
+      "score": "000004020105"
+    },
+    "9000": {
+      "oper_mode": "01",
+      "world": "07",
+      "level": "00",
+      "area": "00",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "1f",
+      "score": "000004030305"
+    },
+    "12000": {
+      "oper_mode": "01",
+      "world": "07",
+      "level": "01",
+      "area": "01",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "29",
+      "score": "000006000205"
+    },
+    "15000": {
+      "oper_mode": "01",
+      "world": "07",
+      "level": "02",
+      "area": "02",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "29",
+      "score": "000009070205"
+    },
+    "end": {
+      "oper_mode": "01",
+      "world": "07",
+      "level": "03",
+      "area": "03",
+      "lives": "02",
+      "player_status": "00",
+      "coins": "29",
+      "score": "000009080305"
+    }
+  }
+}
