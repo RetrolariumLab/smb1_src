@@ -8,7 +8,7 @@ from pathlib import Path
 PROJECT_ROOT = Path(__file__).resolve().parents[2]
 sys.path.insert(0, str(PROJECT_ROOT / "scripts"))
 
-from validation.verify_platform_range import verify_range
+from build.verify_platform_range import verify_range
 
 
 class VerifyPlatformRangeTests(unittest.TestCase):

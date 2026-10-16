@@ -59,17 +59,12 @@ programs with the private license, CHR, and save records and requires SHA-1
 ## Relocation
 
 The main program contains 83 source-declared unused `$FF` bytes immediately
-before the save byte at `$D29F`. `make test-smb2-relocation` generates an
-isolated candidate with eight `$EA` probes distributed across the system,
-frame, area, player, enemy, collision, disk, and course boundaries. It consumes
-only eight bytes of that padding and keeps the save byte and `$D29F..$DFF9`
-audio ABI fixed. The vector slots remain at `$DFFA..$DFFF`, while their operands
-follow the shifted NMI, RESET, and IRQ handlers.
-
-The accepted candidate moves 1,860 `SM2MAIN` labels and preserves 316 overlay
-label addresses. All four program hashes change because imports in
-`SM2DATA2`, `SM2DATA3`, and `SM2DATA4` follow the shifted main engine within the
-same ca65 scope.
+before the save byte at `$D29F`. Releases 2.x and 3.0 built a candidate with
+eight `$EA` probes across the system, frame, area, player, enemy, collision,
+disk and course boundaries, absorbed by that padding, and checked that 1,860
+`SM2MAIN` labels moved while the save byte, the `$D29F..$DFF9` audio ABI and
+316 overlay labels stayed put. That check remains at those tags; no movie
+plays SMB2 yet.
 
 Executable payloads must be visible assembly; `.incbin` is forbidden for code.
 CHR, license data, and the save byte remain ignored private assets extracted

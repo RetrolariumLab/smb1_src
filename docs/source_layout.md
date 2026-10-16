@@ -5,7 +5,7 @@ The native linker contract in `config/linker/nrom256_prg_only.cfg` fixes the `PR
 is a bare 32 KiB PRG image; header and CHR handling remain outside ld65.
 
 All linker contracts live under `config/linker/`. Shared native and FDS layouts
-remain at its root, the expanded CNROM layout lives under `expanded/`, and the
+remain at its root, the relocated JU layout beside them, and the
 fixed-address All Night Nippon payload layouts live under `ann/`.
 
 This document records the address-ordered modularization of the native SMB1

@@ -14,7 +14,7 @@ from pathlib import Path
 from typing import Any
 
 from build.kit_tools import kit_tool_path
-from validation.debug_symbols import normalize_dbg_for_ines
+from build.debug_info import normalize_dbg_for_ines
 
 
 def fail(message: str) -> None:

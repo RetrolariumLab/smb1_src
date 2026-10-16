@@ -1,0 +1,73 @@
+{
+  "schema_version": 1,
+  "profile_id": 0,
+  "source": "src/main.asm",
+  "linker_config": "config/linker/relocated_nrom256_prg_only.cfg",
+  "generated_root": "build/relocated",
+  "container": {
+    "kind": "revision",
+    "manifest": "config/revision_profiles.json",
+    "profile": "ju"
+  },
+  "game_padding_override": {
+    "source": "src/rendering/positioning.asm",
+    "include_path": "rendering/positioning.asm",
+    "original_statement": "    .byte $ff, $ff, $ff, $ff, $ff, $ff",
+    "replacement_statement": "    .assert * = $f2d0, error, \"game relocation budget differs\""
+  },
+  "music_padding_override": {
+    "original_statement": "con_music_victory_size = $038",
+    "replacement_statement": "con_music_victory_size = $035"
+  },
+  "audio_fixed_tail": {
+    "label": "tbl_music_note_periods",
+    "address": "0xff00"
+  },
+  "insertions": [
+    {
+      "region": "game_and_rendering",
+      "id": "game_origin",
+      "before": ".include \"system/boot_and_frame.asm\""
+    },
+    {
+      "region": "game_and_rendering",
+      "id": "after_frame_system",
+      "after": ".include \"system/boot_and_frame.asm\""
+    },
+    {
+      "region": "game_and_rendering",
+      "id": "after_screen_renderer",
+      "after": ".include \"rendering/screens.asm\""
+    },
+    {
+      "region": "game_and_rendering",
+      "id": "after_terrain_parser",
+      "after": ".include \"game/level/terrain_objects.asm\""
+    },
+    {
+      "region": "game_and_rendering",
+      "id": "after_block_runtime",
+      "after": ".include \"game/objects/blocks.asm\""
+    },
+    {
+      "region": "game_and_rendering",
+      "id": "after_goal_runtime",
+      "after": ".include \"game/enemies/bowser_and_goals.asm\""
+    },
+    {
+      "region": "audio",
+      "id": "audio_origin",
+      "before": ".include \"audio/sound_effects.asm\""
+    },
+    {
+      "region": "audio",
+      "id": "after_sound_effects",
+      "after": ".include \"audio/sound_effects.asm\""
+    },
+    {
+      "region": "audio",
+      "id": "after_music_engine",
+      "after": ".include \"audio/music_engine.asm\""
+    }
+  ]
+}

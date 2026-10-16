@@ -24,8 +24,7 @@ make test
 ```
 
 Run `make test-full` (MAME) after changing control flow, physics or anything
-timing-sensitive. Behaviour-changing work belongs to the variant entrypoints
-(`docs/variants.md`) and must not weaken the default builds. Data is edited in
+timing-sensitive. Behaviour-changing work must not weaken the default builds. Data is edited in
 Retrolarium Studio (`docs/retrolarium.md`).
 
 `make hooks` installs Git hooks that check commits and pushes for words that

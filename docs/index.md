@@ -30,11 +30,10 @@ bytes.
 - [`platform_profiles.md`](platform_profiles.md) — NES, Vs. System and FDS
   profiles, All Night Nippon.
 - [`smb2_reconstruction.md`](smb2_reconstruction.md) — Super Mario Bros. 2 (FDS).
-- [`variants.md`](variants.md) — the fixed-layout and expanded variants.
 - [`modding_examples.md`](modding_examples.md) — practical source changes.
 
 ## Checks
 
 `make test` must pass after every change: among other things it rebuilds every
 image that is present and requires it byte for byte. `make test-full` also plays
-the TAS in MAME on the relocated and CNROM builds (see the README).
+the TAS in MAME on the relocated build (see the README).

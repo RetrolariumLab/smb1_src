@@ -14,7 +14,9 @@ its builds and checks, the game's names and the tables the kit reads.
 
 3.1 keeps only what builds and checks the source. The earlier releases' audits,
 runtime traces, semantic evidence, analysis tools and the FCEUX tooling remain
-in the history (tags `source-reconstruction-1.0` to `3.0`).
+in the history (tags `source-reconstruction-1.0` to `3.0`). Expanded ROMs and
+hacks return with extended editing in Retrolarium in a later release; 3.0 had
+a CNROM variant and a five-lives hack.
 
 ## Quick start
 
@@ -43,9 +45,7 @@ make verify-platform PLATFORM=vs_smb|fds_smb|ann_fds
 make verify-all                                     # every image that is here
 make build-smb2 / verify-smb2                       # Super Mario Bros. 2 (Japan)
 make build-ann-payloads                             # the ANN courses and ending
-make build-hack / verify-hack                       # the five-lives variant
-make build-expanded / verify-expanded               # the CNROM variant
-make test-relocation [RELOCATION_PROFILE=...]       # every module moved
+make build-relocated                                # the JU ROM with its code moved
 make studio-check                                   # open and rebuild every revision
 make test / test-full / golden                      # the checks
 make lint / format / hooks / clean / help
@@ -53,14 +53,15 @@ make lint / format / hooks / clean / help
 
 ## Tests
 
-`make test` (about forty seconds) runs the unit tests of the build scripts,
-verifies every image that is present byte for byte, the SMB2 disk, the variants
-and the ANN payloads, builds the relocated JU ROM (every module moved, checked
-label by label) and runs the studio check.
+`make test` (about half a minute) runs the unit tests of the build scripts,
+verifies every image that is present byte for byte, the SMB2 disk and the
+ANN payloads, builds the relocated JU ROM (a byte inserted at
+nine points, absorbed by the padding before the audio code and the synthesis
+tables) and runs the studio check.
 
 `make test-full` (about a minute and a half) adds the any% TAS
-`movies/smb1_any_percent.fm2`, played in MAME on the relocated build and on the
-CNROM build. At six checkpoints, the last at the end of World 8-4, the game's
+`movies/smb1_any_percent.fm2`, played in MAME on the relocated build. At six
+checkpoints, the last at the end of World 8-4, the game's
 state (mode, world, level, area, lives, status, coins, score) must equal what
 the original ROM gives, as `movies/smb1_any_percent.check.json` records. Name
 MAME with `MAME=<path>` or `RETROLARIUM_MAME`; `make golden` records the
@@ -69,9 +70,9 @@ reference values again.
 ## Layout
 
 ```text
-src/              ca65 source: main.asm, the game, platforms, revisions, variants
-config/           profiles, linker layouts, relocation and variant manifests,
-                  lint, the Retrolarium profile and names
+src/              ca65 source: main.asm, the game, platforms, revisions
+config/           profiles, linker layouts, the relocation manifest, lint,
+                  the Retrolarium profile and names
 assets/           manifest.json (the generated assets are ignored)
 scripts/          build, split, relocation and verification scripts (scripts/run.py runs them)
 tests/            their unit tests

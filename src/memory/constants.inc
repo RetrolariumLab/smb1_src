@@ -2,9 +2,7 @@
 
 ; CONSTANTS
 
-.ifndef con_initial_lives
 con_initial_lives = $02
-.endif
 
 .if con_revision_profile = con_revision_profile_pal
 con_interval_timer_reload = $11

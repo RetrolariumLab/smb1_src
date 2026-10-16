@@ -80,9 +80,6 @@ original ROM or disk side byte for byte. It needs the revisions' ROMs and the
 Retrolarium kit (`rltool` on `PATH`, or `RLTOOL=...`), and never reads or writes
 `hack/` or `.retrolarium/`.
 
-The relocation build reads the music bank through
-`scripts/validation/music_decoder.py`.
-
 ## Reference editors
 
 The data formats were implemented independently from the documented SMB1
