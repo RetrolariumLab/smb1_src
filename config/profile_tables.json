@@ -17,22 +17,22 @@
     },
     "vs_smb": {
       "engine": "smb1",
-      "dbg": "build/platforms/vs_smb/smb.dbg",
+      "dbg": "build/revisions/vs_smb/smb.dbg",
       "offsets": "payload"
     },
     "fds_smb": {
       "engine": "smb1",
-      "dbg": "build/platforms/fds_smb/smb.dbg",
+      "dbg": "build/revisions/fds_smb/smb.dbg",
       "offsets": "payload"
     },
     "ann_fds": {
       "engine": "smb1",
-      "dbg": "build/platforms/ann_fds/smb.dbg",
+      "dbg": "build/revisions/ann_fds/smb.dbg",
       "offsets": "payload"
     },
     "smb2_jp_fds": {
       "engine": "smb2",
-      "dbg": "build/smb2/source/smb2.dbg",
+      "dbg": "build/revisions/smb2_jp_fds/smb2.dbg",
       "offsets": "payload"
     }
   },

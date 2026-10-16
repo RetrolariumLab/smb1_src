@@ -19,8 +19,6 @@ import sys
 from pathlib import Path
 from typing import Any
 
-from build.revision_profiles import load_profile, split_rom
-
 INCBIN_PATTERN = re.compile(r'(?P<prefix>\.incbin\s+")(?P<path>[^"]+)(?P<suffix>")')
 
 
@@ -103,39 +101,28 @@ def prepare_source(project_root: Path, manifest: dict[str, Any]) -> Path:
     return main_path
 
 
-def build(project_root: Path, manifest: dict[str, Any], source: Path, original_rom: Path) -> Path:
+def build(project_root: Path, manifest: dict[str, Any], source: Path) -> Path:
     output_root = rooted(project_root, manifest["generated_root"])
-    prg = output_root / "smb.prg"
-    rom = output_root / "smb.nes"
+    generated = project_root / "assets" / "generated"
     subprocess.run([
         sys.executable, str(project_root / "scripts" / "run.py"), "build.build_native",
         "--source", str(source),
         "--config", str(rooted(project_root, manifest["linker_config"])),
-        "--manifest", str(project_root / "assets" / "manifest.json"),
-        "--object", str(output_root / "smb.o"),
-        "--prg", str(prg),
-        "--labels", str(output_root / "smb.lbl"),
-        "--map", str(output_root / "smb.map"),
-        "--debug-info", str(output_root / "smb.dbg"),
-        "--output-rom", str(rom),
-        "--prg-only",
+        "--output-dir", str(output_root),
+        "--header", str(generated / "header" / "smb.hdr"),
+        "--chr", str(generated / "chr" / "smb.chr"),
     ], cwd=project_root, check=True)
-    container = manifest["container"]
-    profile = load_profile(rooted(project_root, container["manifest"]), container["profile"])
-    header, _reference_prg, chr_data, extra = split_rom(original_rom.read_bytes(), profile)
-    rom.write_bytes(header + prg.read_bytes() + chr_data + extra)
-    return rom
+    return output_root / "smb.nes"
 
 
 def main() -> int:
     project_root = Path(__file__).resolve().parents[2]
     parser = argparse.ArgumentParser(description=__doc__.split("\n", 1)[0])
     parser.add_argument("--manifest", type=Path, default=project_root / "config" / "relocation.json")
-    parser.add_argument("--original-rom", type=Path, required=True)
     args = parser.parse_args()
     manifest = json.loads(args.manifest.read_text(encoding="utf-8"))
     try:
-        rom = build(project_root, manifest, prepare_source(project_root, manifest), args.original_rom.resolve())
+        rom = build(project_root, manifest, prepare_source(project_root, manifest))
     except (OSError, ValueError, KeyError, subprocess.CalledProcessError) as error:
         raise SystemExit(f"[ERROR] Relocated build failed: {error}") from error
     print(f"[OK] Relocated build ({len(manifest['insertions'])} moved parts): {rom}")

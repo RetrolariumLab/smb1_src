@@ -27,24 +27,26 @@ You need Python 3, GNU Make and Retrolarium Kit (`rltool` on `PATH`, or
 `ea343f4e445a9050d4b4fbac2c77d0693b1d0922`) into the repository root, then:
 
 ```bash
-make split     # unpack header, CHR, courses, music, palettes and metatiles (once)
+make split     # cut header, CHR, courses, music, palettes and metatiles out (once)
 make verify    # build and compare byte for byte
 ```
 
-The ROM and the extracted files under `assets/generated/` are ignored.
-`make split-all` unpacks every other image that is present (PAL, PlayChoice-10,
-Vs., FDS, ANN; their names are in [`docs/revision_profiles.md`](docs/revision_profiles.md)
-and [`docs/platform_profiles.md`](docs/platform_profiles.md)).
+`make split` cuts the assets out of every ROM and disk image that is here
+(PAL, PlayChoice-10, Vs., FDS, ANN, SMB2; their names are in
+[`docs/revision_profiles.md`](docs/revision_profiles.md) and
+[`docs/platform_profiles.md`](docs/platform_profiles.md)).
+`assets/manifest.json` names the images and the assets (`rltool assets`,
+Retrolarium Kit). The images and the extracted files under `assets/generated/`
+are ignored.
 
 ## Targets
 
 ```bash
 make build / verify                                 # the JU ROM
-make verify-revision PROFILE=pal|pc10               # the other cartridge revisions
-make verify-platform PLATFORM=vs_smb|fds_smb|ann_fds
-make verify-all                                     # every image that is here
-make build-smb2 / verify-smb2                       # Super Mario Bros. 2 (Japan)
-make build-ann-payloads                             # the ANN courses and ending
+make build-revision REVISION=<id> / verify-revision # one image (ju, pal, pc10,
+                                                    # vs_smb, fds_smb, ann_fds,
+                                                    # smb2_jp_fds)
+make verify-revisions                               # every image that is here
 make build-relocated                                # the JU ROM with its code moved
 make studio-check                                   # open and rebuild every revision
 make test / test-full / golden                      # the checks
@@ -54,8 +56,8 @@ make lint / format / hooks / clean / help
 ## Tests
 
 `make test` (about half a minute) runs the unit tests of the build scripts,
-verifies every image that is present byte for byte, the SMB2 disk and the
-ANN payloads, builds the relocated JU ROM (a byte inserted at
+verifies every image that is present byte for byte (the cartridges, the
+Vs. ROM and the three disks), builds the relocated JU ROM (a byte inserted at
 nine points, absorbed by the padding before the audio code and the synthesis
 tables) and runs the studio check.
 
@@ -71,10 +73,10 @@ reference values again.
 
 ```text
 src/              ca65 source: main.asm, the game, platforms, revisions
-config/           profiles, linker layouts, the relocation manifest, lint,
+config/           linker layouts, the relocation manifest, lint,
                   the Retrolarium profile and names
 assets/           manifest.json (the generated assets are ignored)
-scripts/          build, split, relocation and verification scripts (scripts/run.py runs them)
+scripts/          build and relocation scripts (scripts/run.py runs them)
 tests/            their unit tests
 movies/           the TAS, its provenance and its check
 docs/             how the game works and how the source is written

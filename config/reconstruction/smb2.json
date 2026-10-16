@@ -45,7 +45,6 @@
     "src/platforms/late_fds/smb2/overlays/shared_gameplay_interface.inc",
     "src/platforms/late_fds/smb2/overlays/hard_courses/shared_interface.inc"
   ],
-  "platform_manifest": "config/smb2_platform_profile.json",
   "reference": {
     "path": "Super Mario Brothers 2 (Japan).fds",
     "format": "fds_raw_side",
@@ -66,8 +65,7 @@
     "combined_size": 43594,
     "payload_order": ["SM2MAIN", "SM2DATA2", "SM2DATA3", "SM2DATA4"],
     "build_target": "build-smb2-source",
-    "payload_verify_target": "verify-smb2-source",
-    "image_verify_target": "verify-smb2"
+    "image_verify_target": "verify-revision REVISION=smb2_jp_fds"
   },
   "payloads": [
     {"name": "SM2MAIN", "file_id": 5, "load_address": "0x6000", "size": 32768, "sha1": "511bdb385ae63f07e6077e33786b172caaf46806", "source": "src/revisions/smb2/main.asm"},

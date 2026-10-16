@@ -8,7 +8,8 @@ the baseline: every supported image must keep building byte for byte.
 Use a legally obtained ROM matching SHA-1
 `ea343f4e445a9050d4b4fbac2c77d0693b1d0922` and run `make split` once. Never add
 ROMs, disk images, extracted assets or anything under `build/` to Git. The other
-revisions and platforms are optional local inputs (`make split-all`).
+revisions and platforms are optional local inputs (`make split` takes every
+image that is here).
 
 ## Source changes
 

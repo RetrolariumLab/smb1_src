@@ -45,7 +45,8 @@ id = "smb2_jp_fds"
 label = "Super Mario Bros. 2 (Japan, Disk System)"
 rom = "Super Mario Brothers 2 (Japan).fds"
 
+# The assets every revision builds from: the kit cuts them out of the JU ROM
+# by assets/manifest.json, as `make split` does.
 [split]
 revision = "ju"
-command = ["scripts/run.py", "build.split_assets", "--rom", "{rom}", "--manifest", "assets/manifest.json", "--output-dir", "assets/generated"]
-check = ["scripts/run.py", "build.check_assets", "--manifest", "assets/manifest.json", "--asset-dir", "assets/generated"]
+manifest = "assets/manifest.json"

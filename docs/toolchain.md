@@ -64,6 +64,7 @@ and `source-reconstruction-2.2`, pinned as:
 | `ca65.exe` | 721,629 bytes | `9109d7118ff070e78f031bee4eb776061e56b74e7c8f9f40c70fd6707ea0ac5a` |
 | `ld65.exe` | 575,874 bytes | `5f68367a135c578c88744e27ba0b1234604d87ef1ff6294b46fcb031ff984db4` |
 
-`make check-source-2-1-toolchain` and `make check-source-2-2-toolchain` read the
+At those tags, `make check-source-2-1-toolchain` and
+`make check-source-2-2-toolchain` read the
 pinned files from their tags, check size, hash, and version, and require the
 kit's programs to report the same cc65 version.

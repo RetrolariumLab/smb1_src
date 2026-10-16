@@ -1,68 +1,247 @@
 {
+  "schema": "retrolarium.assets",
   "schema_version": 1,
-  "reference_rom": {
-    "name": "Super Mario Bros. (Japan, USA)",
-    "sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922",
-    "prg_cpu_base": "0x8000",
-    "prg_size": 32768,
-    "prg_sha1": "fefa1097449a3a11ebf8c6199e905996c5dc8fbd",
-    "chr_size": 8192,
-    "chr_sha1": "394badaf0b0bdd0ea279a1bca89a9d9ddc00b1b5",
-    "header_size": 16,
-    "header_sha1": "40c71db0dc29b16057ec159bca7008241fc3a9f6",
-    "trainer_size": 0,
-    "mapper": 0,
-    "mirroring": "vertical"
-  },
+  "output": "assets/generated",
+  "images": [
+    {
+      "id": "ju",
+      "file": "Super Mario Bros. (JU) [!].nes",
+      "size": 40976,
+      "sha1": "ea343f4e445a9050d4b4fbac2c77d0693b1d0922"
+    },
+    {
+      "id": "pal",
+      "file": "Super Mario Bros. (E) (REV0) [!p].nes",
+      "size": 40976,
+      "sha1": "ab30029efec6ccfc5d65dfda7fbc6e6489a80805"
+    },
+    {
+      "id": "pc10",
+      "file": "Super Mario Bros. (PC10).nes",
+      "size": 49168,
+      "sha1": "d48d2c65fda380217ead73ffa6a46cae62939194"
+    },
+    {
+      "id": "vs_smb",
+      "file": "VS. Super Mario Bros. (VS).nes",
+      "size": 49168,
+      "sha1": "3546486ba461536545daf9f27c9bcf275fc162da"
+    },
+    {
+      "id": "fds_smb",
+      "file": "Super Mario Brothers (Japan).fds",
+      "size": 65500,
+      "sha1": "383ad8e3890a95de9595f0a6087648f51177da13"
+    },
+    {
+      "id": "ann_fds",
+      "file": "All Night Nippon Super Mario Brothers (Japan) (Promotion Card).fds",
+      "size": 65500,
+      "sha1": "f30bdd3c556604d7eaa6d0f4864d5566e519b5d4"
+    },
+    {
+      "id": "smb2_jp_fds",
+      "file": "Super Mario Brothers 2 (Japan).fds",
+      "size": 65500,
+      "sha1": "20e50128742162ee47561db9e82b2836399c880c"
+    }
+  ],
   "assets": [
     {
       "path": "header/smb.hdr",
-      "region": "header",
+      "image": "ju",
       "offset": 0,
       "size": 16,
       "sha1": "40c71db0dc29b16057ec159bca7008241fc3a9f6"
     },
     {
       "path": "chr/smb.chr",
-      "region": "chr",
-      "offset": 0,
+      "image": "ju",
+      "offset": 32784,
       "size": 8192,
       "sha1": "394badaf0b0bdd0ea279a1bca89a9d9ddc00b1b5"
     },
     {
       "path": "source/base_course_enemy_streams.bin",
-      "region": "prg",
-      "offset": 7536,
+      "image": "ju",
+      "offset": 7552,
       "size": 1087,
       "sha1": "16bd5a146588d7731f254e7722bab5467111c7c2"
     },
     {
       "path": "source/base_course_area_streams.bin",
-      "region": "prg",
-      "offset": 8623,
+      "image": "ju",
+      "offset": 8639,
       "size": 3373,
       "sha1": "63119cee5b53a6c64ef4a203bdbb9fcd7c0a2f42"
     },
     {
       "path": "source/base_music_data.bin",
-      "region": "prg",
-      "offset": 31160,
+      "image": "ju",
+      "offset": 31176,
       "size": 1602,
       "sha1": "40a353b3e6f86c206e37033680d4e15fe8710808"
     },
     {
       "path": "source/base_area_palette_packets.bin",
-      "region": "prg",
-      "offset": 3236,
+      "image": "ju",
+      "offset": 3252,
       "size": 176,
       "sha1": "8fb62e91761a355d8d017c38c4c6e2762d5c4de9"
     },
     {
       "path": "source/base_metatile_graphics.bin",
-      "region": "prg",
-      "offset": 2832,
+      "image": "ju",
+      "offset": 2848,
       "size": 404,
       "sha1": "00a6a7493ac875ae00192f68216b01ccf03ed1cc"
+    },
+    {
+      "path": "revisions/pal/source/pal_course_enemy_streams.bin",
+      "image": "pal",
+      "offset": 7552,
+      "size": 1087,
+      "sha1": "80ae72c153673a3e5ee8ba9a20a69ed41d16b180"
+    },
+    {
+      "path": "revisions/pal/source/pal_course_area_streams.bin",
+      "image": "pal",
+      "offset": 8639,
+      "size": 3373,
+      "sha1": "bca7dcdef9a1346c5cd92511ead44d0892b33664"
+    },
+    {
+      "path": "revisions/pal/source/pal_music_data.bin",
+      "image": "pal",
+      "offset": 31177,
+      "size": 1601,
+      "sha1": "db3e33f719f0294413998b189e1cb039dff409c4"
+    },
+    {
+      "path": "revisions/pc10/platform.extra",
+      "image": "pc10",
+      "offset": 40976,
+      "size": 8192,
+      "sha1": "c39c90f9503c4692af4a8fdb3e18ef7cf04e897f"
+    },
+    {
+      "path": "platforms/vs_smb/header.bin",
+      "image": "vs_smb",
+      "offset": 0,
+      "size": 16,
+      "sha1": "218f56c3299525c56d49bfd23f511fcae7185818"
+    },
+    {
+      "path": "platforms/vs_smb/chr.bin",
+      "image": "vs_smb",
+      "offset": 32784,
+      "size": 16384,
+      "sha1": "19385a81d2abea3ad6ff6b0d220390950ac9d2ee"
+    },
+    {
+      "path": "platforms/vs_smb/source/vs_music_data.bin",
+      "image": "vs_smb",
+      "offset": 31033,
+      "size": 1745,
+      "sha1": "7d744d43e8ae6e77ac23968e031649df62cc09b6"
+    },
+    {
+      "path": "platforms/vs_smb/source/vs_area_palette_packets.bin",
+      "image": "vs_smb",
+      "offset": 3765,
+      "size": 176,
+      "sha1": "ba51b532be6fe7de5c7823d1913768c88599a21e"
+    },
+    {
+      "path": "platforms/fds_smb/disk.fds",
+      "image": "fds_smb",
+      "offset": 0,
+      "size": 65500,
+      "sha1": "383ad8e3890a95de9595f0a6087648f51177da13"
+    },
+    {
+      "path": "platforms/ann_fds/disk.fds",
+      "image": "ann_fds",
+      "offset": 0,
+      "size": 65500,
+      "sha1": "f30bdd3c556604d7eaa6d0f4864d5566e519b5d4"
+    },
+    {
+      "path": "platforms/ann_fds/source/ann_metatile_graphics.bin",
+      "image": "ann_fds",
+      "offset": 12357,
+      "size": 408,
+      "sha1": "25957486e9bdee0bdaa84e10df123e876b1a35f4"
+    },
+    {
+      "path": "platforms/ann_fds/source/ann_music_data.bin",
+      "image": "ann_fds",
+      "offset": 40878,
+      "size": 1546,
+      "sha1": "05646319c3031fdd7f155af5a94c32ad03d7e735"
+    },
+    {
+      "path": "platforms/ann_fds/source/primary_course_enemy_streams.bin",
+      "image": "ann_fds",
+      "offset": 36099,
+      "size": 566,
+      "sha1": "913675dd93b0964ca24ceb54cbd32791e445a42e"
+    },
+    {
+      "path": "platforms/ann_fds/source/primary_course_area_streams.bin",
+      "image": "ann_fds",
+      "offset": 36665,
+      "size": 1987,
+      "sha1": "bef449c01457c26a34fba0486125e7e140c2885f"
+    },
+    {
+      "path": "platforms/ann_fds/source/guest_chr.bin",
+      "image": "ann_fds",
+      "offset": 38652,
+      "size": 384,
+      "sha1": "8b1721dc53856c29637ca03f96b43eb104330ea3"
+    },
+    {
+      "path": "platforms/ann_fds/source/supplemental_guest_chr.bin",
+      "image": "ann_fds",
+      "offset": 45742,
+      "size": 288,
+      "sha1": "139bb17536ed774e1f4742087f2fe17212492897"
+    },
+    {
+      "path": "platforms/ann_fds/source/supplemental_course_enemy_streams.bin",
+      "image": "ann_fds",
+      "offset": 42799,
+      "size": 680,
+      "sha1": "45b3075279c15e331daa6baf26778e2d4adbfa75"
+    },
+    {
+      "path": "platforms/ann_fds/source/supplemental_course_area_streams.bin",
+      "image": "ann_fds",
+      "offset": 43479,
+      "size": 2263,
+      "sha1": "b2b8727f8dcab03e6974f8e88c4ed4965fcaadd5"
+    },
+    {
+      "path": "platforms/ann_fds/source/extended_course_enemy_streams.bin",
+      "image": "ann_fds",
+      "offset": 50237,
+      "size": 654,
+      "sha1": "45af61d18a3d07f808f3e2e21caa8ec9be18a41e"
+    },
+    {
+      "path": "platforms/ann_fds/source/extended_course_area_streams.bin",
+      "image": "ann_fds",
+      "offset": 50891,
+      "size": 2009,
+      "sha1": "ac98ed793315cfdcd5f6059d66341a34faceb9d8"
+    },
+    {
+      "path": "platforms/smb2_jp_fds/disk.fds",
+      "image": "smb2_jp_fds",
+      "offset": 0,
+      "size": 65500,
+      "sha1": "20e50128742162ee47561db9e82b2836399c880c"
     }
   ]
 }

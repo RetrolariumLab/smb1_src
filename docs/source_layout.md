@@ -84,7 +84,6 @@ inventory with the actual tree so new exceptions cannot appear silently.
 - CHR size: 8,192 bytes
 - CHR SHA-1: `394badaf0b0bdd0ea279a1bca89a9d9ddc00b1b5`
 - Full ROM SHA-1: `ea343f4e445a9050d4b4fbac2c77d0693b1d0922`
-- PRG-only verification command: `make verify-prg`
 - Full byte-identity verification command: `make verify`
 
 ## Modular Baseline Result

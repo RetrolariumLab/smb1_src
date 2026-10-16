@@ -35,5 +35,5 @@ bytes.
 ## Checks
 
 `make test` must pass after every change: among other things it rebuilds every
-image that is present and requires it byte for byte. `make test-full` also plays
+image that is present (`assets/manifest.json` names them) and requires it byte for byte. `make test-full` also plays
 the TAS in MAME on the relocated build (see the README).

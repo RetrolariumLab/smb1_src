@@ -4,11 +4,6 @@
   "source": "src/main.asm",
   "linker_config": "config/linker/relocated_nrom256_prg_only.cfg",
   "generated_root": "build/relocated",
-  "container": {
-    "kind": "revision",
-    "manifest": "config/revision_profiles.json",
-    "profile": "ju"
-  },
   "game_padding_override": {
     "source": "src/rendering/positioning.asm",
     "include_path": "rendering/positioning.asm",

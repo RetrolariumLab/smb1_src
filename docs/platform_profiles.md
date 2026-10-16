@@ -13,12 +13,12 @@ SHA-1 `f25ab9354e24e3cd99b6cfd8331f9be40b603c5b`. VS System input, coin,
 DIP-switch, PPU, title, game-over, level, rendering, and audio alternatives are
 selected from reviewed source by `src/revisions/vs.asm`.
 
-Run `make split-platform-assets PLATFORM=vs_smb` once to extract the private
-16-byte header and 16 KiB CHR into the ignored asset directory. Then
-`make verify-platform PLATFORM=vs_smb` reconstructs and compares the complete
+`make split` cuts the private 16-byte header and 16 KiB CHR out of the image
+into the ignored asset directory. Then
+`make verify-revision REVISION=vs_smb` reconstructs and compares the complete
 iNES image at SHA-1 `3546486ba461536545daf9f27c9bcf275fc162da`.
 
-The splitter also extracts the 1,745-byte Vs. music-data range from PRG. Its
+The split also cuts out the 1,745-byte Vs. music-data range from PRG. Its
 additional star and game-over streams, lookup tables, and envelopes retain
 semantic ASM labels, while all address-bearing music headers remain
 relocatable source. A separate 176-byte source asset holds the eight arcade
@@ -38,16 +38,16 @@ The project-native `src/revisions/fds_smb.asm` entrypoint reconstructs the full
 with the cartridge profiles while selecting the `$6000-$DFFF` load map, FDS
 reset and interrupt contract, BIOS stack workspace, and exact alignment bytes.
 
-Run `make split-platform-assets PLATFORM=fds_smb` once. The extractor validates
-the complete private disk and writes an ignored template with both `SMMAIN`
-file records zeroed; disk metadata, license data, and CHR-RAM source files stay
-in that private template. `make verify-platform PLATFORM=fds_smb` then builds
-`SMMAIN` from source, restores its two records, and compares the entire rebuilt
+`make split` checks the complete private disk and keeps a copy of the side
+among the ignored assets; disk metadata, license data, and CHR-RAM source files
+come from it. `make verify-revision REVISION=fds_smb` then builds `SMMAIN` from
+source, writes it over its two file records (`scripts/build/fds_image.py`), and
+compares the entire rebuilt
 65,500-byte disk side at SHA-1
 `383ad8e3890a95de9595f0a6087648f51177da13`.
 
 This profile is supported at the strongest container identity boundary:
-`make verify-platform PLATFORM=fds_smb` requires the exact disk.
+`make verify-revision REVISION=fds_smb` requires the exact disk.
 
 ## All Night Nippon Super Mario Bros.
 
@@ -71,19 +71,13 @@ reproduce all four program payloads exactly: the 32,768-byte `NSMMAIN` at SHA-1
 `8941894b39a959aab87338728919a8b475e4f691`, and the 3,568-byte `NSMDATA4` at
 `eec327d5ebde3891439971986ae23afeefbdd1a7`.
 
-Run `make split-platform-assets PLATFORM=ann_fds` to prepare every ANN source
-asset explicitly. The extractor validates the complete private disk and writes
-an ignored template with all four program payloads zeroed. The supplemental-course
-build validates the disk and writes all profile-declared source assets directly
-to the assembly-owned generated cache, independently of any redirected general
-platform asset directory. The supplemental, ending, and hard-course targets each
-depend on that preparation and are reproducible from an empty generated-asset
-directory. `make verify-platform PLATFORM=ann_fds`
-then assembles each payload from reviewed semantic source, restores the
-corresponding FDS records, and compares the complete rebuilt disk side against
-the reference.
+`make split` cuts every ANN source asset out of the private disk and keeps a
+copy of the side. `make verify-revision REVISION=ann_fds` assembles each payload
+from reviewed semantic source (the three data overlays first,
+`make build-ann-payloads`), writes them over the corresponding FDS file
+records, and compares the complete rebuilt disk side against the reference.
 
-`make split-platform-assets PLATFORM=ann_fds` also extracts private authored
+`make split` also cuts private authored
 content into `assets/generated/platforms/ann_fds/source/`. The 384-byte
 `NSMMAIN` guest CHR region becomes `guest_chr.bin`, and the 288-byte
 `NSMDATA2` guest CHR region becomes `supplemental_guest_chr.bin`. Their
@@ -104,8 +98,8 @@ Six typed course packs use the same private extraction boundary:
 | `extended_course_enemy_streams.bin` | `NSMDATA4` | 654 bytes | Extended-course enemy streams |
 | `extended_course_area_streams.bin` | `NSMDATA4` | 2,009 bytes | Extended-course area-object streams |
 
-The manifest validates every payload-relative range and SHA-1 before writing
-it. Git ignores the extracted bytes. ASM retains the semantic boundary label,
+`assets/manifest.json` records every range (as an offset in the disk side)
+and its SHA-1, and the split checks them before writing. Git ignores the extracted bytes. ASM retains the semantic boundary label,
 offset, and protected capacity of every stream, while loaders, pointer tables,
 tile maps, executable code, and the initialized save record remain reviewed
 source. The streams retain the formats the level codec decodes, providing
@@ -118,7 +112,7 @@ boundary is retained as an explicit zero-size alias rather than hidden by a
 profile-specific source layout.
 
 This profile is supported at the complete-container identity boundary:
-`make verify-platform PLATFORM=ann_fds` requires all four payloads and the
+`make verify-revision REVISION=ann_fds` requires all four payloads and the
 complete disk.
 
 The supplied GoodNES `.nes` image with SHA-1 `51db085d...` remains classified

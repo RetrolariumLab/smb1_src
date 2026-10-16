@@ -10,17 +10,17 @@ The profile system supports three locally verified official configurations:
 
 Each profile has a separate assembly entrypoint defining con_revision_profile,
 but all include the same semantic src/main.asm engine. Their outputs live under
-build/revisions/PROFILE. No post-link PRG patch is permitted.
+build/revisions/<id> (`make build-revision REVISION=<id>`). No post-link PRG
+patch is permitted.
 
 The PlayChoice-10 container has an extra 8 KiB payload after the ordinary iNES
-header, PRG, and CHR regions. It is treated like CHR: the repository records
-only its size and SHA-1. Run make split-revision-assets PROFILE=pc10 once with
-the matching private ROM to create the ignored local platform asset. Ordinary
-profile builds validate but never overwrite it.
+header, PRG, and CHR regions. It is treated like CHR: `assets/manifest.json`
+records only its size and SHA-1, and `make split` cuts it out of the matching
+private ROM into an ignored asset. Builds only read it.
 
 The PAL PRG contains two enemy-stream byte changes and twelve area-stream byte
 changes relative to Japan/USA. They are content differences, not executable
-code or addresses. `make split-revision-assets PROFILE=pal` therefore extracts
+code or addresses. `make split` therefore extracts
 two ignored, checksum-validated PAL course packs. The shared ASM keeps every
 semantic stream label and capacity while selecting the PAL pack at assembly
 time; Japan/USA, PlayChoice-10, and FDS SMB1 share the canonical base packs.
@@ -28,8 +28,8 @@ The same boundary is used for music: PAL has its own 1,601-byte pack because
 its victory padding, pitch periods, and note-length tables differ, while the
 1,602-byte Japan/USA pack is byte-identical in FDS SMB1.
 
-Run make verify-revisions to assemble and compare all complete images against
-their own private references. The PAL profile explicitly enables PAL emulation timing;
+Run `make verify-revisions` to assemble every revision whose image is here and
+compare it with that image byte for byte (`rltool assets verify`). The PAL profile explicitly enables PAL emulation timing;
 Japan/USA and PlayChoice-10 retain the NTSC engine path.
 
 The locally available European images were evaluated by payload identity rather
@@ -47,7 +47,6 @@ payload, but its uncertain provenance must never be promoted to an official
 revision merely because it can be reproduced byte for byte. It remains an
 evaluated unsupported input and is not required by Source Reconstruction 2.0.
 
-Platform-specific descendants are tracked separately in
-`config/platform_profiles.json` and `docs/platform_profiles.md`. This keeps
-ordinary NROM revision facts separate from VS System and Famicom Disk System
-layout facts.
+Platform-specific descendants are described in `docs/platform_profiles.md`.
+Every image's size and SHA-1, and the assets cut out of it, are in
+`assets/manifest.json`.

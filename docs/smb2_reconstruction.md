@@ -37,23 +37,21 @@ Each program payload has an independent entrypoint and linker contract:
 | `SM2DATA3` | `$C5D0` | 3,279 | Ending, World 9, and FDS music |
 | `SM2DATA4` | `$C2B4` | 3,916 | Worlds A-D and loaded gameplay extensions |
 
-The private identity boundary remains available as a bootstrap check. Run
-`make split-smb2-assets` explicitly to hash-check the original disk, create a
-zeroed private template, and retain its records beneath ignored
-`assets/generated/smb2/`. Ordinary builds never split or overwrite those inputs.
-`make build-smb2-identity` and `make verify-smb2-identity` reproduce the complete
-65,500-byte disk side from those retained payloads.
+`make split` hash-checks the original disk and keeps a copy of the side
+beneath the ignored `assets/generated/platforms/smb2_jp_fds/`; ordinary builds
+never split or overwrite it.
 
-The normal reconstruction no longer uses private program payloads. The pinned
+The reconstruction uses no private program payloads. The pinned
 listings are normalized into 52 source files across the SMB2 revision and
 late-FDS platform trees, with the largest responsibility-owned module remaining
 below 700 lines. Implementation modules use `.asm`; `.inc` is reserved for
 declarations and interfaces. `make build-smb2-source`
 assembles one scoped ca65 unit so cross-overlay imports retain their original
 meaning, then emits `SM2MAIN`, `SM2DATA2`, `SM2DATA3`, and `SM2DATA4` as four
-separate files. `make verify-smb2-source` checks every payload identity without
-requiring the FDS image. `make verify-smb2` additionally composes the source-built
-programs with the private license, CHR, and save records and requires SHA-1
+separate files, and reports each payload's identity.
+`make verify-revision REVISION=smb2_jp_fds` writes the source-built programs over
+their file records in the private side, which keeps the license, CHR, and save
+records, and requires SHA-1
 `20e50128742162ee47561db9e82b2836399c880c` for the complete disk side.
 
 ## Relocation
