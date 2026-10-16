@@ -4,7 +4,8 @@ PYTHON ?= python
 # The kit command that names cc65 (rltool build-tools path nes ca65).
 RLTOOL ?= rltool
 export RLTOOL
-# MAME for `make test-full` and `make golden`.
+# MAME for `make test-full`, `make golden` and `make play`; with none named,
+# the one `rltool movie mame <path>` remembered.
 MAME ?= $(RETROLARIUM_MAME)
 RUN := $(PYTHON) scripts/run.py
 
@@ -52,12 +53,15 @@ BEFORE_smb2_jp_fds := build-smb2-source
 
 # The JU revision with its code moved (scripts/build/relocate.py).
 RELOCATED_ROM := build/relocated/smb.nes
-# The movies test-full plays, in this order: the TAS first, then a longplay.
-MOVIE_CHECKS := movies/smb1_any_percent.check.json
+# The movies by name (make play MOVIE=<name>); test-full plays them in this
+# order: the TAS first, then the longplay, then the attract mode.
+MOVIE_tas := movies/smb1_any_percent.check.json
+MOVIES := tas
+MOVIE_CHECKS := $(foreach movie,$(MOVIES),$(MOVIE_$(movie)))
 
 .DEFAULT_GOAL := build
 
-.PHONY: help build verify build-revision verify-revision verify-revisions split \
+.PHONY: play help build verify build-revision verify-revision verify-revisions split \
 	_require-assets build-ann-payloads build-smb2-source build-relocated studio-check \
 	lint format test test-full golden hooks clean
 
@@ -146,6 +150,24 @@ test-full: test
 golden:
 	$(RLTOOL) movie golden $(MOVIE_CHECKS) --rom "$(ORIGINAL_ROM)" --mame "$(MAME)"
 
+# Watch a movie in a MAME window at the game's speed, on the relocated build
+# or on ROM=<image>; once the window is closed, its cells are compared with
+# the original's. In MAME, F10 lifts the speed limit and Insert fast-forwards.
+#   make play MOVIE=<name> [ROM=<image>] [FRAMES=<frame>] [CLOSE=1]
+# FRAMES closes MAME at that frame (only the start of the movie), CLOSE=1 when
+# the movie ends (else it stays open to play on, the credits say).
+MOVIE ?= $(firstword $(MOVIES))
+PLAY_ROM = $(if $(filter command line,$(origin ROM)),$(ROM),$(RELOCATED_ROM))
+ifneq ($(filter play,$(MAKECMDGOALS)),)
+ifeq ($(MOVIE_$(MOVIE)),)
+$(error unknown MOVIE "$(MOVIE)": this game has $(MOVIES))
+endif
+endif
+
+play: $(if $(filter command line,$(origin ROM)),,build-relocated)
+	$(RLTOOL) movie play $(MOVIE_$(MOVIE)) --rom "$(PLAY_ROM)" --mame "$(MAME)" \
+		$(if $(FRAMES),--stop-at $(FRAMES)) $(if $(CLOSE),--close)
+
 # `make hooks`, once per clone, makes Git check every commit and push for stop
 # words and run `make lint` first (Retrolarium Kit's rltool hooks; the
 # stop-word list lives outside the repositories).
@@ -166,6 +188,7 @@ help:
 	@echo "  make test                   the quick suite"
 	@echo "  make test-full              test, then the movies in MAME (MAME=<path>)"
 	@echo "  make golden                 record the movies' checkpoints from the original"
+	@echo "  make play MOVIE=tas         watch a movie in MAME (ROM=<image> for another build)"
 	@echo "  make lint / format          the house style (Retrolarium Kit)"
 	@echo "  make hooks                  install the Git hooks"
 	@echo "  make clean                  remove the build output"

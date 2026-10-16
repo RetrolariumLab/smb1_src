@@ -50,6 +50,7 @@ make verify-revisions                               # every image that is here
 make build-relocated                                # the JU ROM with its code moved
 make studio-check                                   # open and rebuild every revision
 make test / test-full / golden                      # the checks
+make play MOVIE=tas                                 # watch a movie in MAME
 make lint / format / hooks / clean / help
 ```
 
@@ -65,9 +66,15 @@ tables) and runs the studio check.
 `movies/smb1_any_percent.fm2`, played in MAME on the relocated build. At six
 checkpoints, the last at the end of World 8-4, the game's
 state (mode, world, level, area, lives, status, coins, score) must equal what
-the original ROM gives, as `movies/smb1_any_percent.check.json` records. Name
-MAME with `MAME=<path>` or `RETROLARIUM_MAME`; `make golden` records the
+the original ROM gives, as `movies/smb1_any_percent.check.json` records. Name MAME once with `rltool movie mame <path>`
+(or `MAME=<path>`); `make golden` records the
 reference values again.
+
+`make play MOVIE=tas` shows a movie in a MAME window at the game's
+speed, on the relocated build (or on `ROM=<image>`), and compares its cells
+with the original's once the window is closed; in MAME, F10 lifts the speed
+limit and Insert fast-forwards. `FRAMES=<frame>` closes MAME at that frame, `CLOSE=1`
+when the movie ends. `make play` alone plays `tas`.
 
 ## Layout
 
