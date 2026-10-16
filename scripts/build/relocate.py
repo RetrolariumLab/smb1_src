@@ -62,7 +62,7 @@ def rebase_incbin_paths(text: str, source: Path, destination: Path) -> str:
 def prepare_source(project_root: Path, manifest: dict[str, Any]) -> Path:
     """Write the relocated main source and the two padding modules it
     overrides; return the main source."""
-    source_root = rooted(project_root, manifest["generated_root"]) / "generated"
+    source_root = rooted(project_root, manifest["generated_root"]) / "source"
     source_root.mkdir(parents=True, exist_ok=True)
     main_text = rooted(project_root, manifest["source"]).read_text(encoding="utf-8")
     main_text = f"con_revision_profile = {int(manifest['profile_id'])}\n\n{main_text}"
@@ -104,7 +104,7 @@ def prepare_source(project_root: Path, manifest: dict[str, Any]) -> Path:
 
 
 def build(project_root: Path, manifest: dict[str, Any], source: Path, original_rom: Path) -> Path:
-    output_root = rooted(project_root, manifest["generated_root"]) / "candidate"
+    output_root = rooted(project_root, manifest["generated_root"])
     prg = output_root / "smb.prg"
     rom = output_root / "smb.nes"
     subprocess.run([

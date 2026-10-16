@@ -7,9 +7,10 @@ export RLTOOL
 # MAME for `make test-full` and `make golden`.
 MAME ?= $(RETROLARIUM_MAME)
 PROJECT_DIR := $(dir $(abspath $(lastword $(MAKEFILE_LIST))))
-TAS_CHECK ?= $(PROJECT_DIR)movies/smb1_any_percent.check.json
+# The movies test-full plays, in this order: the TAS first, then a longplay.
+MOVIE_CHECKS ?= $(PROJECT_DIR)movies/smb1_any_percent.check.json
 # The JU revision with its code moved (scripts/build/relocate.py).
-RELOCATED_ROM ?= $(PROJECT_DIR)build/relocated/candidate/smb.nes
+RELOCATED_ROM ?= $(PROJECT_DIR)build/relocated/smb.nes
 
 .DEFAULT_GOAL := build
 
@@ -512,11 +513,11 @@ test:
 # build, compared with what the original ROM gives
 # (movies/smb1_any_percent.check.json, written by `make golden`).
 test-full: test
-	$(RLTOOL) movie check "$(TAS_CHECK)" --rom "$(RELOCATED_ROM)" --mame "$(MAME)"
+	$(RLTOOL) movie check $(MOVIE_CHECKS) --rom "$(RELOCATED_ROM)" --mame "$(MAME)"
 
 # What the original ROM gives at the TAS's checkpoints.
 golden:
-	$(RLTOOL) movie golden "$(TAS_CHECK)" --rom "$(ORIGINAL_ROM)" --mame "$(MAME)"
+	$(RLTOOL) movie golden $(MOVIE_CHECKS) --rom "$(ORIGINAL_ROM)" --mame "$(MAME)"
 
 # `make hooks`, once per clone, makes Git check every commit and push for stop
 # words and run `make lint` first (Retrolarium Kit's rltool hooks; the
