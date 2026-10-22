@@ -69,5 +69,4 @@ object-slot index at the access site.
 | `ram_alt_spr_data_offset` | `$06EC` | Semantic alias for fireball explosions and floating scores reusing those OAM regions |
 
 These roles are `!(OBS)` observations from direct reads, writes, and arithmetic
-in the movement and collision modules. Broader RAM documentation will extend
-this registry during milestone 5.
+in the movement and collision modules; `src/memory/ram.inc` names the rest.

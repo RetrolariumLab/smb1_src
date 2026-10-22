@@ -60,3 +60,12 @@ when control flow, data flow, encoded structure, or runtime evidence supports th
 new role, then run both `make lint` and `make verify`. Every rename must update
 the existing provenance entry; every genuinely new label must add one
 `project_additions` record.
+
+## The Super Mario Bros. 2 tree
+
+The code under `src/platforms/late_fds/smb2/` keeps the names of
+doppelganger's SMB2J disassembly (`Enemy_State`, `Sfx_SmallJump`), and each of
+its program files defines the RAM names it uses. Code shared with All Night
+Nippon binds the two vocabularies in
+`src/platforms/late_fds/smb2/overlays/shared_gameplay_interface.inc`. New SMB2
+names follow this page; renaming the rest is future work.

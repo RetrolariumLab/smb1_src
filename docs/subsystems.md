@@ -69,10 +69,10 @@ rewind page/column progress for castle maze behavior.
 Enemy streams are also page-relative. `sub_enemies_and_loops_core` compares the
 next encoded position with the current screen window, handles page changes and
 loop commands, finds a free enemy slot, and dispatches initialization by enemy
-ID. The source keeps area streams and enemy streams as explicit byte data so
-their encoded order remains reviewable. The complete cross-profile stream audit
-proves the residual `CODE-002` power-up comparison unreachable for all accepted
-content while preserving its original bytes.
+ID. The streams come from the ROM (`.incbin` slices behind their labels);
+[data formats](data_formats.md) gives their encoding. The residual `CODE-002`
+power-up comparison is unreachable for the original content and keeps its
+bytes.
 
 ## Gameplay Objects and Transactions
 
@@ -182,5 +182,5 @@ local asset appended after the reproduced 32 KiB PRG.
 | `sub_sound_engine` | Arbitrate requests and advance all audio channels once per NMI |
 
 Detailed player contracts and fixed-point behavior are in
-`docs/player_movement.md`. Data codecs and formal binary round trips are owned
-by milestone 8.
+[player movement](player_movement.md); the data formats are in
+[data formats](data_formats.md).
