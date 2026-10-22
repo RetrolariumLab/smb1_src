@@ -1,7 +1,7 @@
 # Modding Examples
 
-This file keeps a few practical examples of small gameplay edits you can make
-in `src/game/player/physics.asm` and the other subsystem modules.
+This file keeps a few practical examples of small gameplay edits you can make in
+`src/game/player/physics.asm` and the other subsystem modules.
 
 ## Changing Mario's Physics
 
@@ -31,11 +31,15 @@ tbl_horizontal_friction:
     .byte $e4, $98, $d0
 ```
 
-- **tbl_jump_gravity** - Controls jump arc decay when moving upward. Larger values = shorter jumps
+- **tbl_jump_gravity** - Controls jump arc decay when moving upward. Larger
+  values = shorter jumps
 - **tbl_fall_gravity** - Controls fall speed. Larger values = faster falling
-- **tbl_initial_player_y_speed** - Initial jump force (negative signed value) based on running speed. Values below `$fa` result in very high jumps
-- **tbl_maximum_left_speed** / **tbl_maximum_right_speed** - Running, walking, and water-walking speeds
-- **tbl_horizontal_friction** - Friction applied at different speeds (fastest to slowest)
+- **tbl_initial_player_y_speed** - Initial jump force (negative signed value)
+  based on running speed. Values below `$fa` result in very high jumps
+- **tbl_maximum_left_speed** / **tbl_maximum_right_speed** - Running, walking,
+  and water-walking speeds
+- **tbl_horizontal_friction** - Friction applied at different speeds (fastest to
+  slowest)
 
 ## Enabling Mid-Air Jumping
 
@@ -58,10 +62,10 @@ With:
 
 This allows Mario to jump unlimited times in mid-air (like in the Air hack).
 
-**Note:** The source is relocatable, so the replacement need not keep the
-byte count; five `NOP`s keep it here only so that the rest of the program stays
-where it was. Any edit makes `make verify` fail on purpose; build with `make
-build` and play `build/revisions/ju/smb.nes`.
+**Note:** The source is relocatable, so the replacement need not keep the byte
+count; five `NOP`s keep it here only so that the rest of the program stays where
+it was. Any edit makes `make verify` fail on purpose; build with `make build`
+and play `build/revisions/ju/smb.nes`.
 
 ## Creating Reviving Goombas
 
@@ -72,4 +76,6 @@ tbl_enemy_revival_delays:
     .byte $10, $0b
 ```
 
-The first value determines how long a stomped enemy takes to change state. Set it to `$0d` or lower to make Goombas revive after being stomped. The second value is used in Second Quest.
+The first value determines how long a stomped enemy takes to change state. Set
+it to `$0d` or lower to make Goombas revive after being stomped. The second
+value is used in Second Quest.

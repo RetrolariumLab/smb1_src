@@ -41,8 +41,7 @@ handler_demo_entry:
   see `naming.md` for the accepted prefixes.
 - Preserve the declared case of constants and operands.
 - Keep every active colon label unique across all ASM and INC modules.
-- Do not keep historical names in repeated
-  inline `was:` comments.
+- Do not keep historical names in repeated inline `was:` comments.
 
 ## Comments
 
@@ -55,8 +54,8 @@ handler_demo_entry:
 - Do not put a period at the end of a comment. The formatter removes terminal
   periods, while periods separating multiple sentences inside one comment are
   preserved.
-- Prefer comments that explain intent, constraints, or side effects over comments
-  that merely restate the instruction.
+- Prefer comments that explain intent, constraints, or side effects over
+  comments that merely restate the instruction.
 - Use concise `Inputs`, `Outputs`, `Side effects`, and `Clobbers` notes where a
   routine contract is useful.
 

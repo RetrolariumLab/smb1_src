@@ -9,8 +9,8 @@ residual instruction has a known historical purpose.
 `vec_reset_handler` disables interrupts and decimal mode, initializes the stack,
 waits for two vblanks, and chooses a warm- or cold-clear range. Warm boot is
 accepted only when all six top-score digits are decimal and the validation byte
-is `$A5`. Reset then initializes APU/PPU state, hides OAM, clears nametables, and
-enables NMI before entering a permanent foreground loop.
+is `$A5`. Reset then initializes APU/PPU state, hides OAM, clears nametables,
+and enables NMI before entering a permanent foreground loop.
 
 `!(OBS)` `vec_nmi_handler` is the sole frame scheduler. Its stable order is:
 
@@ -26,8 +26,8 @@ enables NMI before entering a permanent foreground loop.
 
 PPU writes outside reset are expressed as buffered command streams. NMI selects
 the stream through `ram_vram_buffer_addr_ctrl`; `sub_update_screen` consumes it
-while rendering is disabled. Gameplay code writes the buffer and never races
-the visible-frame PPU directly.
+while rendering is disabled. Gameplay code writes the buffer and never races the
+visible-frame PPU directly.
 
 ## Operating Modes and Game Tasks
 
@@ -39,8 +39,8 @@ transformation, injury, death, and fire-flower tasks.
 Title mode owns menu input, world select, demo startup, and the demo action
 stream. Victory mode owns automatic walking, castle messages, retainers,
 fireworks, and world advancement. Game-over mode handles timeout/start input and
-two-player handoff. These are cooperative frame tasks: they update a small
-state value and return to NMI rather than blocking.
+two-player handoff. These are cooperative frame tasks: they update a small state
+value and return to NMI rather than blocking.
 
 ## Scrolling, Screens, HUD, and Background Rendering
 
@@ -48,10 +48,11 @@ The screen task dispatcher builds palettes, text packets, title transfers, and
 area setup over multiple frames. `sub_scroll_handler` derives player-relative
 scroll, while the area parser produces one metatile column at a time.
 
-`handler_render_area_column` expands the metatile buffer into four pattern-table indexes
-per metatile and accumulates palette quadrants into attribute bytes. The result
-is appended to a VRAM update buffer. The HUD uses decimal digit arrays in RAM;
-score operations update those arrays first and emit display packets separately.
+`handler_render_area_column` expands the metatile buffer into four pattern-table
+indexes per metatile and accumulates palette quadrants into attribute bytes. The
+result is appended to a VRAM update buffer. The HUD uses decimal digit arrays in
+RAM; score operations update those arrays first and emit display packets
+separately.
 
 Palette rotation, block replacement, bridge removal, messages, and status output
 all use the same buffered PPU ownership. The world/lives packet ends by clearing
@@ -71,8 +72,7 @@ next encoded position with the current screen window, handles page changes and
 loop commands, finds a free enemy slot, and dispatches initialization by enemy
 ID. The streams come from the ROM (`.incbin` slices behind their labels);
 [data formats](data_formats.md) gives their encoding. The residual `CODE-002`
-power-up comparison is unreachable for the original content and keeps its
-bytes.
+power-up comparison is unreachable for the original content and keeps its bytes.
 
 ## Gameplay Objects and Transactions
 
@@ -96,9 +96,9 @@ and graphics flags.
 
 Runtime dispatch reads the same ID/state and selects movement or special
 behavior. Common movement and gravity live in `game/physics/movement.asm`;
-firebars, Lakitu/Spiny, Bowser, flame, bridge, goal, and platform behavior remain
-in cohesive subsystem modules. Defeat changes state and usually reuses shared
-gravity/horizontal motion rather than allocating a new object type.
+firebars, Lakitu/Spiny, Bowser, flame, bridge, goal, and platform behavior
+remain in cohesive subsystem modules. Defeat changes state and usually reuses
+shared gravity/horizontal motion rather than allocating a new object type.
 
 `CODE-004` records an attribute write proven to be overwritten before rendering.
 The instruction remains because preservation is byte-exact.
@@ -107,25 +107,26 @@ The instruction remains because preservation is byte-exact.
 
 Collision work is layered:
 
-- `bounding_boxes.asm` builds screen-relative boxes and performs generic overlap.
-- `projectiles.asm` resolves fireball/enemy, hammer/player, and power-up contact.
+- `bounding_boxes.asm` builds screen-relative boxes and performs generic
+  overlap.
+- `projectiles.asm` resolves fireball/enemy, hammer/player, and power-up
+  contact.
 - `actors.asm` resolves player/enemy, enemy/enemy, and player/platform contact.
 - `player_background.asm` probes head, feet, and sides against the block buffer.
 - `enemy_background.asm` applies metatile rules to enemies and fireballs.
 
 Bounding boxes are derived from size-control tables, then clipped or adjusted by
 offscreen state. Collision routines update gameplay state; renderer modules only
-consume the resulting state. `CODE-003` proves the preserved miscellaneous-object
-background-collision entry has no symbolic, raw-address, or fallthrough path in
-the canonical program.
+consume the resulting state. `CODE-003` proves the preserved
+miscellaneous-object background-collision entry has no symbolic, raw-address, or
+fallthrough path in the canonical program.
 
 ## Sprite Composition and OAM
 
-World coordinates are first converted to screen-relative positions and
-offscreen bits. Actor renderers select tile/attribute layouts and write OAM
-staging records under `$0200`. The player renderer selects action, size,
-animation, and palette; enemy and miscellaneous renderers perform equivalent
-ID/state dispatch.
+World coordinates are first converted to screen-relative positions and offscreen
+bits. Actor renderers select tile/attribute layouts and write OAM staging
+records under `$0200`. The player renderer selects action, size, animation, and
+palette; enemy and miscellaneous renderers perform equivalent ID/state dispatch.
 
 Sprite shuffling rotates OAM offsets to distribute scanline overflow rather than
 always hiding the same actor. Sprite zero is reserved for the status/playfield
@@ -170,16 +171,16 @@ local asset appended after the reproduced 32 KiB PRG.
 
 ## Principal Contracts
 
-| Entry | Contract |
-| --- | --- |
-| `vec_reset_handler` | Establish a deterministic machine state and enable NMI |
-| `vec_nmi_handler` | Own all vblank I/O and advance exactly one cooperative frame |
-| `sub_dispatch_inline_handler` | Consume A as an inline word-table index and tail-enter the selected handler |
-| `handler_player_control` | Run input, movement, scroll, bounds, and background collision transaction |
-| `sub_area_parser_task_handler` | Advance one staged area-column parsing/rendering task |
-| `sub_enemies_and_loops_core` | Consume eligible enemy commands and initialize fixed slots |
-| `sub_bounding_box_core` | Materialize the selected actor box from relative position and size |
-| `sub_sound_engine` | Arbitrate requests and advance all audio channels once per NMI |
+| Entry                          | Contract                                                                    |
+| ------------------------------ | --------------------------------------------------------------------------- |
+| `vec_reset_handler`            | Establish a deterministic machine state and enable NMI                      |
+| `vec_nmi_handler`              | Own all vblank I/O and advance exactly one cooperative frame                |
+| `sub_dispatch_inline_handler`  | Consume A as an inline word-table index and tail-enter the selected handler |
+| `handler_player_control`       | Run input, movement, scroll, bounds, and background collision transaction   |
+| `sub_area_parser_task_handler` | Advance one staged area-column parsing/rendering task                       |
+| `sub_enemies_and_loops_core`   | Consume eligible enemy commands and initialize fixed slots                  |
+| `sub_bounding_box_core`        | Materialize the selected actor box from relative position and size          |
+| `sub_sound_engine`             | Arbitrate requests and advance all audio channels once per NMI              |
 
 Detailed player contracts and fixed-point behavior are in
 [player movement](player_movement.md); the data formats are in

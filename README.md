@@ -31,10 +31,9 @@ make verify    # build JU and compare it byte for byte
 `make` alone lists the targets. `make split` cuts the assets out of every ROM
 and disk image that is here (PAL, PlayChoice-10, Vs., FDS, ANN, SMB2; see
 [`docs/revisions.md`](docs/revisions.md)); start the documentation at
-[`docs/index.md`](docs/index.md).
-`assets/manifest.json` names the images and the assets (`rltool assets`,
-Retrolarium Kit). The images and the extracted files under `assets/generated/`
-are ignored.
+[`docs/index.md`](docs/index.md). `assets/manifest.json` names the images and
+the assets (`rltool assets`, Retrolarium Kit). The images and the extracted
+files under `assets/generated/` are ignored.
 
 ## Targets
 
@@ -52,25 +51,24 @@ make lint / format / hooks / clean
 
 ## Tests
 
-`make test` (about half a minute) verifies every image that is present byte
-for byte (the cartridges, the Vs. ROM and the three disks), builds the
-relocated JU ROM (a byte inserted at nine points of `src/main.asm`, absorbed by
-the padding before the audio code and the synthesis tables), checks the
-profile's table places and runs the studio check.
+`make test` (about half a minute) verifies every image that is present byte for
+byte (the cartridges, the Vs. ROM and the three disks), builds the relocated JU
+ROM (a byte inserted at nine points of `src/main.asm`, absorbed by the padding
+before the audio code and the synthesis tables), checks the profile's table
+places and runs the studio check.
 
 `make test-full` (about a minute and a half) adds the any% TAS
-`movies/tas.rlmovie`, played in MAME on the relocated build. At six
-checkpoints, the last at the end of World 8-4, the game's state (mode, world,
-level, area, lives, status, coins, score) must equal what the original ROM
-gives, as `movies/tas.check.json` records. Name MAME once with `rltool movie
-mame <path>` (or `MAME=<path>`); `make golden` records the reference values
-again.
+`movies/tas.rlmovie`, played in MAME on the relocated build. At six checkpoints,
+the last at the end of World 8-4, the game's state (mode, world, level, area,
+lives, status, coins, score) must equal what the original ROM gives, as
+`movies/tas.check.json` records. Name MAME once with `rltool movie mame <path>`
+(or `MAME=<path>`); `make golden` records the reference values again.
 
-`make play MOVIE=tas` shows a movie in a MAME window at the game's
-speed, on the relocated build (or on `ROM=<image>`), and compares its cells
-with the original's once the window is closed; in MAME, F10 lifts the speed
-limit and Insert fast-forwards. `FRAMES=<frame>` closes MAME at that frame, `CLOSE=1`
-when the movie ends. `make play` alone plays `tas`.
+`make play MOVIE=tas` shows a movie in a MAME window at the game's speed, on the
+relocated build (or on `ROM=<image>`), and compares its cells with the
+original's once the window is closed; in MAME, F10 lifts the speed limit and
+Insert fast-forwards. `FRAMES=<frame>` closes MAME at that frame, `CLOSE=1` when
+the movie ends. `make play` alone plays `tas`.
 
 ## Layout
 
@@ -93,7 +91,8 @@ For a few practical modification examples, see
 
 - **Disassembly** - doppelganger (doppelheathen@gmail.com)
 - **Original source** - https://gist.github.com/1wErt3r/4048722
-- **ca65-adapted source and build instructions** - https://xynosan.neocities.org/smb/
+- **ca65-adapted source and build instructions** -
+  https://xynosan.neocities.org/smb/
 - **cc65 toolchain** - http://www.cc65.org/
 - **TAS** - DJ Incendration, [fixture provenance](movies/README.md),
   [TASVideos user file 68410246126700593](https://tasvideos.org/UserFiles/Info/68410246126700593)
@@ -108,7 +107,7 @@ your own copy of Super Mario Bros. to build anything.
 
 ## License
 
-This is a work of reverse engineering for educational and preservation
-purposes. The original game is copyright Nintendo, and this repository grants
-no license to Nintendo's game code or assets. Tool and imported-material status
-is detailed in [docs/licensing.md](docs/licensing.md).
+This is a work of reverse engineering for educational and preservation purposes.
+The original game is copyright Nintendo, and this repository grants no license
+to Nintendo's game code or assets. Tool and imported-material status is detailed
+in [docs/licensing.md](docs/licensing.md).

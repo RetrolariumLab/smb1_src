@@ -27,27 +27,26 @@ and the smallest useful next experiment.
 - **Confidence:** High
 - **Location:** `src/game/enemies/stream_and_initialization.asm`
 - **Evidence:** The masked value is `con_power_up_object`, but power-ups are
-  created by the dynamic block-object path rather than enemy-stream data.
-  An audit of the streams (at tag 3.0) decodes 3,530 records from all 235 streams used by
-  JU, PC10, PAL, Vs., FDS SMB, and the three ANN course sets. No non-entrance
-  command selects `$2E`, so the equality branch cannot change control flow for
-  any supported source profile.
-- **Resolution:** Preserve the comparison as original residual behavior and
-  mark it `!(UNUSED)`. Custom content that introduces a stream object `$2E`
-  remains outside this evidence claim.
+  created by the dynamic block-object path rather than enemy-stream data. An
+  audit of the streams (at tag 3.0) decodes 3,530 records from all 235 streams
+  used by JU, PC10, PAL, Vs., FDS SMB, and the three ANN course sets. No
+  non-entrance command selects `$2E`, so the equality branch cannot change
+  control flow for any supported source profile.
+- **Resolution:** Preserve the comparison as original residual behavior and mark
+  it `!(UNUSED)`. Custom content that introduces a stream object `$2E` remains
+  outside this evidence claim.
 
 ### CODE-003 Residual miscellaneous-object collision entry
 
 - **Status:** Resolved
 - **Confidence:** High
 - **Location:** `src/game/collisions/bounding_boxes.asm`
-- **Evidence:** An audit (at tag 3.0) finds no ca65 symbolic references
-  and no raw little-endian `$E392` address anywhere in the canonical PRG. The
-  preceding routine ends immediately before the entry with the unconditional
-  `JMP $E3A5`, so execution cannot fall through. The full 17,862-frame trace
-  traps execution at `$E392` without firing while observing the active
-  miscellaneous-object bounding-box path at frame 304 and hammer processing at
-  frame 13,477.
+- **Evidence:** An audit (at tag 3.0) finds no ca65 symbolic references and no
+  raw little-endian `$E392` address anywhere in the canonical PRG. The preceding
+  routine ends immediately before the entry with the unconditional `JMP $E3A5`,
+  so execution cannot fall through. The full 17,862-frame trace traps execution
+  at `$E392` without firing while observing the active miscellaneous-object
+  bounding-box path at frame 304 and hammer processing at frame 13,477.
 - **Resolution:** Preserve the bytes and `unused_` label as unreachable residual
   code. Its historical intended use remains unknown and is not needed for the
   reachability claim.
@@ -99,8 +98,8 @@ and the smallest useful next experiment.
 - **Confidence:** High
 - **Location:** `src/audio/sound_effects.asm`
 - **Evidence:** Timer tick and coin intentionally share register setup and the
-  continuation/decrement path. Isolated traces start both from a cleared square-2
-  SFX state at frame 250. At frame 251 timer tick loads
+  continuation/decrement path. Isolated traces start both from a cleared
+  square-2 SFX state at frame 250. At frame 251 timer tick loads
   `$98,$7F,$71,$08` into `$4004..$4007` with counter `$06`, while coin loads
   `$8D,$7F,$71,$08` with counter `$35`. Timer tick releases the channel at frame
   256 without reaching `$30`; coin reaches `$30` at frame 256, writes its second
@@ -115,11 +114,11 @@ and the smallest useful next experiment.
 - **Confidence:** High
 - **Location:** `src/audio/music_engine.asm`
 - **Evidence:** The area-header search writes `$08` to
-  `ram_music_offset_square2`, performs only the header-index loop and header-field
-  loads, then writes `$00` before square-2 playback can read the offset. A memory
-  watch observes the `$08 -> $00` pair in the same frame (first at frame 37),
-  while a forbidden read trap remains silent through the full 17,862-frame
-  movie and controlled event/SFX interruptions.
+  `ram_music_offset_square2`, performs only the header-index loop and
+  header-field loads, then writes `$00` before square-2 playback can read the
+  offset. A memory watch observes the `$08 -> $00` pair in the same frame (first
+  at frame 37), while a forbidden read trap remains silent through the full
+  17,862-frame movie and controlled event/SFX interruptions.
 - **Resolution:** Preserve and mark the `$08` store as overwritten residual
   behavior. The effective square-2 stream offset always begins at zero after a
   header load.

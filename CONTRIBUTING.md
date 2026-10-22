@@ -5,18 +5,17 @@ the baseline: every supported image must keep building byte for byte.
 
 ## Local inputs
 
-Use a legally obtained JU ROM (`assets/manifest.json` gives its name and
-hash) and run `make split` once. Never add
-ROMs, disk images, extracted assets or anything under `build/` to Git. The other
-revisions and platforms are optional local inputs (`make split` takes every
-image that is here).
+Use a legally obtained JU ROM (`assets/manifest.json` gives its name and hash)
+and run `make split` once. Never add ROMs, disk images, extracted assets or
+anything under `build/` to Git. The other revisions and platforms are optional
+local inputs (`make split` takes every image that is here).
 
 The source holds the game's code and its engine tables, never its content: the
 course streams, music, palettes, metatiles, screens, texts and ending scenes
-come from your ROM or disk. The source names each of them with a label and
-takes its bytes with `.incbin` from a program file `make split` cuts out
-or from a content asset of `assets/manifest.json`, by its path under
-`assets/generated/`; never write them out as `.byte`.
+come from your ROM or disk. The source names each of them with a label and takes
+its bytes with `.incbin` from a program file `make split` cuts out or from a
+content asset of `assets/manifest.json`, by its path under `assets/generated/`;
+never write them out as `.byte`.
 
 ## Source changes
 

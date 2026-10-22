@@ -6,21 +6,21 @@ must not be the identity of an active semantic symbol.
 
 ## Code Symbols
 
-6502 assembly has no function declaration, so the prefix records how an entry
-is reached:
+6502 assembly has no function declaration, so the prefix records how an entry is
+reached:
 
-| Prefix | Meaning |
-| --- | --- |
-| `sub_` | Callable subroutine entered with `JSR` and returned from with `RTS` |
-| `handler_` | Entry selected by a jump table or another indirect dispatcher |
-| `loc_` | Shared code entry reached with `JMP` |
-| `bra_` | Internal conditional branch target |
-| `vec_` | CPU interrupt or reset vector entry |
+| Prefix     | Meaning                                                             |
+| ---------- | ------------------------------------------------------------------- |
+| `sub_`     | Callable subroutine entered with `JSR` and returned from with `RTS` |
+| `handler_` | Entry selected by a jump table or another indirect dispatcher       |
+| `loc_`     | Shared code entry reached with `JMP`                                |
+| `bra_`     | Internal conditional branch target                                  |
+| `vec_`     | CPU interrupt or reset vector entry                                 |
 
 A `sub_` label must have a direct `JSR` caller, and every direct `JSR` target
-must use the `sub_` prefix. `make lint` enforces both directions. A label reached
-both by fall-through and a conditional branch remains a `bra_`; a shared entry
-reached with `JMP` uses `loc_`.
+must use the `sub_` prefix. `make lint` enforces both directions. A label
+reached both by fall-through and a conditional branch remains a `bra_`; a shared
+entry reached with `JMP` uses `loc_`.
 
 Every colon label must begin with one of the code or data prefixes above and use
 lowercase snake_case. Empty components, doubled underscores, leading or trailing
@@ -31,18 +31,18 @@ source tree.
 
 ## Data Symbols
 
-| Prefix | Meaning |
-| --- | --- |
-| `tbl_` | Indexed table or lookup data |
-| `off_` | Addressable data block referenced through a pointer table |
-| `ram_` | Persistent or domain-specific RAM field |
-| `zp_` | Neutral zero-page workspace |
-| `con_` | Assembly-time constant |
-| `unused_` | Code or data proven unreachable for the reference ROM |
+| Prefix    | Meaning                                                   |
+| --------- | --------------------------------------------------------- |
+| `tbl_`    | Indexed table or lookup data                              |
+| `off_`    | Addressable data block referenced through a pointer table |
+| `ram_`    | Persistent or domain-specific RAM field                   |
+| `zp_`     | Neutral zero-page workspace                               |
+| `con_`    | Assembly-time constant                                    |
+| `unused_` | Code or data proven unreachable for the reference ROM     |
 
-Shared zero-page workspace may keep a neutral scratch alias until each use has
-a proven contextual role. Unknown persistent state must remain explicitly
-unknown until static or runtime evidence supports a semantic name.
+Shared zero-page workspace may keep a neutral scratch alias until each use has a
+proven contextual role. Unknown persistent state must remain explicitly unknown
+until static or runtime evidence supports a semantic name.
 
 ## Naming Rules
 
@@ -56,16 +56,16 @@ unknown until static or runtime evidence supports a semantic name.
    single emitted byte.
 
 The vocabulary is mandatory for all active colon labels. Rename a symbol only
-when control flow, data flow, encoded structure, or runtime evidence supports the
-new role, then run both `make lint` and `make verify`. Every rename must update
-the existing provenance entry; every genuinely new label must add one
+when control flow, data flow, encoded structure, or runtime evidence supports
+the new role, then run both `make lint` and `make verify`. Every rename must
+update the existing provenance entry; every genuinely new label must add one
 `project_additions` record.
 
 ## The Super Mario Bros. 2 tree
 
-The code under `src/platforms/late_fds/smb2/` keeps the names of
-doppelganger's SMB2J disassembly (`Enemy_State`, `Sfx_SmallJump`), and each of
-its program files defines the RAM names it uses. Code shared with All Night
-Nippon binds the two vocabularies in
+The code under `src/platforms/late_fds/smb2/` keeps the names of doppelganger's
+SMB2J disassembly (`Enemy_State`, `Sfx_SmallJump`), and each of its program
+files defines the RAM names it uses. Code shared with All Night Nippon binds the
+two vocabularies in
 `src/platforms/late_fds/smb2/overlays/shared_gameplay_interface.inc`. New SMB2
 names follow this page; renaming the rest is future work.
