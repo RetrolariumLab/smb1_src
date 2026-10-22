@@ -1,7 +1,7 @@
 ; Profile-specific music streams, note tables, and envelope data
 
 .if con_revision_profile = con_revision_profile_vs
-    .define con_music_data_asset "../../assets/generated/platforms/vs_smb/source/vs_music_data.bin"
+    .define con_music_data_asset "platforms/vs_smb/source/vs_music_data.bin"
 con_music_common_offset = $048
 con_music_victory_offset = $558
 con_music_victory_size = $035
@@ -13,7 +13,7 @@ con_music_bowser_envelope_offset = $69d
 con_music_brick_envelope_offset = $6bd
 con_music_brick_envelope_size = $014
 .elseif con_revision_profile = con_revision_profile_ann
-    .define con_music_data_asset "ann_music_data.bin"
+    .define con_music_data_asset "platforms/ann_fds/source/ann_music_data.bin"
 con_music_common_offset = $000
 con_music_victory_offset = $510
 con_music_victory_size = $000
@@ -27,7 +27,7 @@ con_music_bowser_envelope_offset = $5da
 con_music_brick_envelope_offset = $5fa
 con_music_brick_envelope_size = $010
 .elseif con_revision_profile = con_revision_profile_pal
-    .define con_music_data_asset "../../assets/generated/revisions/pal/source/pal_music_data.bin"
+    .define con_music_data_asset "revisions/pal/source/pal_music_data.bin"
 con_music_common_offset = $000
 con_music_victory_offset = $510
 con_music_victory_size = $037
@@ -41,10 +41,15 @@ con_music_bowser_envelope_offset = $611
 con_music_brick_envelope_offset = $631
 con_music_brick_envelope_size = $010
 .else
-    .define con_music_data_asset "../../assets/generated/source/base_music_data.bin"
+    .define con_music_data_asset "source/base_music_data.bin"
 con_music_common_offset = $000
 con_music_victory_offset = $510
+    .ifdef con_relocated
+; The three audio probes take the victory music's three unused tail bytes
+con_music_victory_size = $035
+    .else
 con_music_victory_size = $038
+    .endif
 con_music_note_periods_offset = $548
 con_music_note_lengths_offset = $5ae
 con_music_note_lengths_size = $030
@@ -137,6 +142,11 @@ off_music_stream_victory:
 .if con_revision_profile = con_revision_profile_vs
 off_music_stream_vs_game_over:
     .incbin con_music_data_asset, $58d, $04a
+.endif
+
+.ifdef con_relocated
+    .assert * = $ff00, error, "audio relocation budget differs"
+    .segment "FIXED_TAIL"
 .endif
 
 tbl_music_note_periods:

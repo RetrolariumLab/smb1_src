@@ -1,8 +1,8 @@
 # Runtime Input Fixture
 
-`smb1_any_percent.fm2` is a deterministic FCEUX controller-input movie that
-`make test-full` plays in MAME (`smb1_any_percent.check.json`). It is a third-party test fixture, not part of the Super
-Mario Bros. program or asset reconstruction.
+`tas.rlmovie` is a deterministic controller-input movie that `make test-full`
+plays in MAME (`tas.check.json`). It is a third-party test fixture, not part
+of the Super Mario Bros. program or asset reconstruction.
 
 ## Provenance and License
 
@@ -17,16 +17,16 @@ Mario Bros. program or asset reconstruction.
 | Size | 268,205 bytes |
 | SHA-1 | `fbbb675af9b85146015713b8ca5c488d6c0053ab` |
 
-The tracked content is byte-for-byte identical to the uncompressed TASVideos
-download; only the repository filename differs. The author, source page, title,
-tool-assisted nature, and license are retained here to satisfy the attribution
-conditions for redistribution.
+The tracked movie is the TASVideos download (the size and SHA-1 above)
+converted from FCEUX's `.fm2` to Retrolarium's run-length `.rlmovie` with
+`rltool movie convert`; the frames and inputs are unchanged. The author,
+source page, title, tool-assisted nature, and license are retained here to
+satisfy the attribution conditions for redistribution.
 
 ## Content Boundary
 
-FM2 is a text input log. This fixture contains controller states and emulator
-metadata, including the expected ROM filename and checksum. It does not contain
-the ROM, PRG, CHR, screenshots, audio, or an emulator save state.
+The movie holds controller states only. It does not contain the ROM, PRG,
+CHR, screenshots, audio, or an emulator save state.
 
 The full test replays this input from power-on and compares the game's state at
 six checkpoints with what the original ROM gives.

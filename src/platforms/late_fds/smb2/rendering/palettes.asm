@@ -1,12 +1,12 @@
 off_smb2_main_rotating_palette_colors:
-    .incbin "SM2MAIN.bin", $08a0, $006
+    .incbin "programs/SM2MAIN.bin", $08a0, $006
 
 off_smb2_main_blank_palette_packet:
-    .incbin "SM2MAIN.bin", $08a6, $008
+    .incbin "programs/SM2MAIN.bin", $08a6, $008
 
 ; used based on area type
 off_smb2_main_area_type_palette_3_colors:
-    .incbin "SM2MAIN.bin", $08ae, $010
+    .incbin "programs/SM2MAIN.bin", $08ae, $010
 
 sub_smb2_main_color_rotation:
     LDA FrameCounter  ; get frame counter
@@ -63,7 +63,7 @@ bra_smb2_main_exit_color_rotation:
 ; $06, $07 - block buffer address low/high
 
 off_smb2_main_block_metatile_tiles:
-    .incbin "SM2MAIN.bin", $0916, $014
+    .incbin "programs/SM2MAIN.bin", $0916, $014
 
 sub_smb2_main_remove_coin_axe:
     LDY #$41  ; set low byte so offset points to second vram buffer
@@ -181,48 +181,48 @@ tbl_smb2_main_metatile_graphics_pointers_high:
     .byte >off_smb2_main_palette_0_metatiles, >off_smb2_main_palette_1_metatiles, >off_smb2_main_palette_2_metatiles, >off_smb2_main_palette_3_metatiles
 
 off_smb2_main_palette_0_metatiles:
-    .incbin "SM2MAIN.bin", $09ed, $090
+    .incbin "programs/SM2MAIN.bin", $09ed, $090
 
 off_smb2_main_palette_1_metatiles:
-    .incbin "SM2MAIN.bin", $0a7d, $0c0
+    .incbin "programs/SM2MAIN.bin", $0a7d, $0c0
 
 off_smb2_main_palette_2_metatiles:
-    .incbin "SM2MAIN.bin", $0b3d, $034
+    .incbin "programs/SM2MAIN.bin", $0b3d, $034
 
 off_smb2_main_palette_3_metatiles:
-    .incbin "SM2MAIN.bin", $0b71, $01c
+    .incbin "programs/SM2MAIN.bin", $0b71, $01c
 
 ; ------------------------------------------------------------------------------------
 
 off_smb2_main_water_area_palette_packet:
-    .incbin "SM2MAIN.bin", $0b8d, $024
+    .incbin "programs/SM2MAIN.bin", $0b8d, $024
 
 off_smb2_main_ground_area_palette_packet:
-    .incbin "SM2MAIN.bin", $0bb1, $024
+    .incbin "programs/SM2MAIN.bin", $0bb1, $024
 
 off_smb2_main_underground_area_palette_packet:
-    .incbin "SM2MAIN.bin", $0bd5, $024
+    .incbin "programs/SM2MAIN.bin", $0bd5, $024
 
 off_smb2_main_castle_area_palette_packet:
-    .incbin "SM2MAIN.bin", $0bf9, $024
+    .incbin "programs/SM2MAIN.bin", $0bf9, $024
 
 off_smb2_main_day_snow_palette_packet:
-    .incbin "SM2MAIN.bin", $0c1d, $008
+    .incbin "programs/SM2MAIN.bin", $0c1d, $008
 
 off_smb2_main_night_snow_palette_packet:
-    .incbin "SM2MAIN.bin", $0c25, $008
+    .incbin "programs/SM2MAIN.bin", $0c25, $008
 
 off_smb2_main_mushroom_palette_packet:
-    .incbin "SM2MAIN.bin", $0c2d, $008
+    .incbin "programs/SM2MAIN.bin", $0c2d, $008
 
 off_smb2_main_bowser_palette_packet:
-    .incbin "SM2MAIN.bin", $0c35, $008
+    .incbin "programs/SM2MAIN.bin", $0c35, $008
 
 off_smb2_main_thank_you_message:
-    .incbin "SM2MAIN.bin", $0c3d, $014
+    .incbin "programs/SM2MAIN.bin", $0c3d, $014
 
 off_smb2_main_mushroom_retainer_msg:
-    .incbin "SM2MAIN.bin", $0c51, $02c
+    .incbin "programs/SM2MAIN.bin", $0c51, $02c
 
 ; ------------------------------------------------------------------------------------
 

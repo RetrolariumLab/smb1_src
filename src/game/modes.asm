@@ -16,7 +16,7 @@ handler_run_title_screen_mode:
 ; -------------------------------------------------------------------------------------
 
 tbl_world_select_vram_template:
-    .incbin "ju_prg.bin", $023f, $006
+    .incbin "programs/ju_prg.bin", $023f, $006
 
 handler_game_menu:
     LDY #$00
@@ -330,17 +330,17 @@ tbl_ann_toad_palette_offsets:
     .byte $04, $02, $00, $04, $02, $00, $08
 
 off_ann_toad_palette_1:
-    .incbin "NSMMAIN.bin", $0363, $002
+    .incbin "programs/NSMMAIN.bin", $0363, $002
 off_ann_toad_palette_2:
-    .incbin "NSMMAIN.bin", $0365, $002
+    .incbin "programs/NSMMAIN.bin", $0365, $002
 off_ann_toad_palette_3:
-    .incbin "NSMMAIN.bin", $0367, $002
+    .incbin "programs/NSMMAIN.bin", $0367, $002
 off_ann_toad_palette_4:
-    .incbin "NSMMAIN.bin", $0369, $002
+    .incbin "programs/NSMMAIN.bin", $0369, $002
 off_ann_toad_palette_common:
-    .incbin "NSMMAIN.bin", $036b, $005
+    .incbin "programs/NSMMAIN.bin", $036b, $005
 ram_ann_toad_palette_buffer = *
-    .incbin "NSMMAIN.bin", $0370, $003
+    .incbin "programs/NSMMAIN.bin", $0370, $003
 .endif
 
 ; -------------------------------------------------------------------------------------

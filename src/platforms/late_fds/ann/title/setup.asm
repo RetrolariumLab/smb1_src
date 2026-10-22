@@ -76,10 +76,10 @@ handler_ann_title_init_1:
     JMP handler_secondary_game_setup
 
 tbl_ann_title_player_names:
-    .incbin "NSMMAIN.bin", $65a6, $00a
+    .incbin "programs/NSMMAIN.bin", $65a6, $00a
 
 tbl_ann_title_player_palettes:
-    .incbin "NSMMAIN.bin", $65b0, $008
+    .incbin "programs/NSMMAIN.bin", $65b0, $008
 
 tbl_ann_title_player_name_ends:
     .byte $04, $09

@@ -48,13 +48,6 @@
   ],
   "assets": [
     {
-      "path": "header/smb.hdr",
-      "image": "ju",
-      "offset": 0,
-      "size": 16,
-      "sha1": "40c71db0dc29b16057ec159bca7008241fc3a9f6"
-    },
-    {
       "path": "chr/smb.chr",
       "image": "ju",
       "offset": 32784,
@@ -130,13 +123,6 @@
       "offset": 40976,
       "size": 8192,
       "sha1": "c39c90f9503c4692af4a8fdb3e18ef7cf04e897f"
-    },
-    {
-      "path": "platforms/vs_smb/header.bin",
-      "image": "vs_smb",
-      "offset": 0,
-      "size": 16,
-      "sha1": "218f56c3299525c56d49bfd23f511fcae7185818"
     },
     {
       "path": "platforms/vs_smb/chr.bin",

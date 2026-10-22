@@ -303,13 +303,13 @@ handler_smb2_data3_award_extra_lives:
     JMP loc_smb2_main_award_end_area_points
 
 off_smb2_data3_blue_trans_palette:
-    .incbin "SM2DATA3.bin", $00d9, $014
+    .incbin "programs/SM2DATA3.bin", $00d9, $014
 
 tbl_smb2_data3_blue_tints:
-    .incbin "SM2DATA3.bin", $00ed, $004
+    .incbin "programs/SM2DATA3.bin", $00ed, $004
 
 tbl_smb2_data3_two_blank_rows:
-    .incbin "SM2DATA3.bin", $00f1, $009
+    .incbin "programs/SM2DATA3.bin", $00f1, $009
 
 handler_smb2_data3_fade_to_blue:
     INC EndControlCntr  ; increment a counter
@@ -427,16 +427,16 @@ bra_smb2_data3_go_to_world9:
     JMP loc_smb2_main_next_world  ; run world 9
 
 off_smb2_data3_flashing_mushroom_retainer_sprite_data_offsets:
-    .incbin "SM2DATA3.bin", $01d1, $006
+    .incbin "programs/SM2DATA3.bin", $01d1, $006
 
 off_smb2_data3_mushroom_retainer_sprite_data_offsets:
-    .incbin "SM2DATA3.bin", $01d7, $007
+    .incbin "programs/SM2DATA3.bin", $01d7, $007
 
 tbl_smb2_data3_mushroom_retainer_y_positions:
-    .incbin "SM2DATA3.bin", $01de, $007
+    .incbin "programs/SM2DATA3.bin", $01de, $007
 
 tbl_smb2_data3_mushroom_retainer_x_positions:
-    .incbin "SM2DATA3.bin", $01e5, $008
+    .incbin "programs/SM2DATA3.bin", $01e5, $008
 
 sub_smb2_data3_mushroom_retainers_for_w8:
     LDA MushroomRetDelay  ; wait a bit unless waiting is already done
@@ -511,7 +511,7 @@ bra_smb2_data3_advance_mushroom_retainer:
     RTS
 
 off_smb2_data3_end_player_name_data:
-    .incbin "SM2DATA3.bin", $027e, $00a
+    .incbin "programs/SM2DATA3.bin", $027e, $00a
 
 loc_smb2_data3_write_name_to_victory_msg:
     LDA #$00
@@ -534,45 +534,45 @@ bra_smb2_data3_write_victory_player_name_loop:
 ; -------------------------------------------------------------------------------------
 
 unused_smb2_data3_unused_attrib_data:
-    .incbin "SM2DATA3.bin", $02a6, $009
+    .incbin "programs/SM2DATA3.bin", $02a6, $009
 
 off_smb2_data3_final_room_palette:
-    .incbin "SM2DATA3.bin", $02af, $014
+    .incbin "programs/SM2DATA3.bin", $02af, $014
 
 off_smb2_data3_thank_you_message_final:
-    .incbin "SM2DATA3.bin", $02c3, $018
+    .incbin "programs/SM2DATA3.bin", $02c3, $018
 
 off_smb2_data3_peace_is_paved_msg:
-    .incbin "SM2DATA3.bin", $02db, $016
+    .incbin "programs/SM2DATA3.bin", $02db, $016
 
 off_smb2_data3_with_kingdom_saved_msg:
-    .incbin "SM2DATA3.bin", $02f1, $016
+    .incbin "programs/SM2DATA3.bin", $02f1, $016
 
 off_smb2_data3_hurrah_msg:
-    .incbin "SM2DATA3.bin", $0307, $014
+    .incbin "programs/SM2DATA3.bin", $0307, $014
 
 off_smb2_data3_our_only_hero_msg:
-    .incbin "SM2DATA3.bin", $031b, $011
+    .incbin "programs/SM2DATA3.bin", $031b, $011
 
 off_smb2_data3_this_ends_your_trip_msg:
-    .incbin "SM2DATA3.bin", $032c, $017
+    .incbin "programs/SM2DATA3.bin", $032c, $017
 
 off_smb2_data3_of_a_long_friendship_msg:
-    .incbin "SM2DATA3.bin", $0343, $018
+    .incbin "programs/SM2DATA3.bin", $0343, $018
 
 off_smb2_data3_points_added_msg:
-    .incbin "SM2DATA3.bin", $035b, $018
+    .incbin "programs/SM2DATA3.bin", $035b, $018
 
 off_smb2_data3_for_each_player_left_msg:
-    .incbin "SM2DATA3.bin", $0373, $019
+    .incbin "programs/SM2DATA3.bin", $0373, $019
 
 tbl_smb2_data3_princess_peachs_room:
-    .incbin "SM2DATA3.bin", $038c, $021
+    .incbin "programs/SM2DATA3.bin", $038c, $021
 
 off_smb2_data3_fantasy_world9_msg:
-    .incbin "SM2DATA3.bin", $03ad, $043
+    .incbin "programs/SM2DATA3.bin", $03ad, $043
 
 off_smb2_data3_super_player_msg:
-    .incbin "SM2DATA3.bin", $03f0, $0c0
+    .incbin "programs/SM2DATA3.bin", $03f0, $0c0
 
 ; level 9-3

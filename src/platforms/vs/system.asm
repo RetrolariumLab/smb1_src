@@ -48,10 +48,10 @@ bra_reverse_vs_dip_bits:
     RTS
 
 off_vs_credit_count_packet:
-    .incbin "vs_prg.bin", $12c5, $00e
+    .incbin "programs/vs_prg.bin", $12c5, $00e
 
 off_vs_free_play_packet:
-    .incbin "vs_prg.bin", $12d3, $00e
+    .incbin "programs/vs_prg.bin", $12d3, $00e
 
 sub_vs_display_credit_message:
     JSR sub_vs_select_low_chr_bank
@@ -268,10 +268,10 @@ tbl_vs_player_select_blink_delay:
     .byte $0a, $05
 
 off_vs_push_button_packet:
-    .incbin "vs_prg.bin", $1466, $00f
+    .incbin "programs/vs_prg.bin", $1466, $00f
 
 off_vs_clear_push_button_packet:
-    .incbin "vs_prg.bin", $1475, $005
+    .incbin "programs/vs_prg.bin", $1475, $005
 
 loc_vs_title_exit = loc_vs_start_or_continue_game
 
@@ -354,7 +354,7 @@ handler_vs_title_ppu_initialize:
     RTS
 
 off_vs_super_players_oam:
-    .incbin "vs_prg.bin", $151b, $020
+    .incbin "programs/vs_prg.bin", $151b, $020
 
 handler_vs_title_super_players:
     LDA ram_vs_arena0+$22

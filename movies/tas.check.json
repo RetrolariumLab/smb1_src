@@ -1,7 +1,7 @@
 {
   "schema": "retrolarium.movie-check",
   "schema_version": 1,
-  "movie": "smb1_any_percent.fm2",
+  "movie": "tas.rlmovie",
   "cells": {
     "oper_mode": {
       "address": "0x0770"

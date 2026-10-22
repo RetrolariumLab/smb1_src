@@ -1,15 +1,8 @@
-; Standalone ANN NSMDATA4 verification entrypoint
-
-.include "../profile_ids.inc"
-
-con_revision_profile = con_revision_profile_ann
-
-.include "../../memory/ram.inc"
-.include "main_interface.inc"
+; All Night Nippon NSMDATA4: the hard courses
 
 .p02
 
-.segment "OVERLAY"
+.segment "NSMDATA4"
 .org $c296
 
 .include "../../platforms/late_fds/ann/courses/hard/loader.asm"
@@ -26,3 +19,5 @@ con_revision_profile = con_revision_profile_ann
 
 .include "../../platforms/late_fds/ann/courses/hard/enemy_streams.asm"
 .include "../../platforms/late_fds/ann/courses/hard/area_streams.asm"
+
+.reloc

@@ -1,15 +1,8 @@
-; Standalone ANN NSMDATA2 verification entrypoint
-
-.include "../profile_ids.inc"
-
-con_revision_profile = con_revision_profile_ann
-
-.include "../../memory/ram.inc"
-.include "main_interface.inc"
+; All Night Nippon NSMDATA2: the supplemental courses and gameplay extensions
 
 .p02
 
-.segment "OVERLAY"
+.segment "NSMDATA2"
 .org $c470
 
 .include "../../platforms/late_fds/ann/gameplay/overlay.asm"
@@ -23,3 +16,5 @@ con_revision_profile = con_revision_profile_ann
 
 ; NSMDATA2 occupies the complete $C470-$D270 disk-file window
     .byte $ff
+
+.reloc

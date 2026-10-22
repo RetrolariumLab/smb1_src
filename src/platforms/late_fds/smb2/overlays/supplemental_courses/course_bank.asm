@@ -194,172 +194,172 @@ bra_smb2_data2_store_wind_state:
     RTS
 
 ; some unused bytes
-    .incbin "SM2DATA2.bin", $0158, $008
+    .incbin "programs/SM2DATA2.bin", $0158, $008
 
 ; -------------------------------------------------------------------------------------
 
 ; level 5-4
 off_smb2_data2_castle_area_5_enemies:
-    .incbin "SM2DATA2.bin", $0160, $039
+    .incbin "programs/SM2DATA2.bin", $0160, $039
 
 ; level 6-4
 off_smb2_data2_castle_area_6_enemies:
-    .incbin "SM2DATA2.bin", $0199, $027
+    .incbin "programs/SM2DATA2.bin", $0199, $027
 
 ; level 7-4
 off_smb2_data2_e_castle_area7:
-    .incbin "SM2DATA2.bin", $01c0, $03f
+    .incbin "programs/SM2DATA2.bin", $01c0, $03f
 
 ; level 8-4
 off_smb2_data2_e_castle_area8:
-    .incbin "SM2DATA2.bin", $01ff, $040
+    .incbin "programs/SM2DATA2.bin", $01ff, $040
 
 ; level 5-1
 off_smb2_data2_ground_area_12_enemies:
-    .incbin "SM2DATA2.bin", $023f, $031
+    .incbin "programs/SM2DATA2.bin", $023f, $031
 
 ; level 5-3
 off_smb2_data2_ground_area_13_enemies:
-    .incbin "SM2DATA2.bin", $0270, $028
+    .incbin "programs/SM2DATA2.bin", $0270, $028
 
 ; level 6-1
 off_smb2_data2_ground_area_14_enemies:
-    .incbin "SM2DATA2.bin", $0298, $024
+    .incbin "programs/SM2DATA2.bin", $0298, $024
 
 ; level 6-3
 off_smb2_data2_ground_area_15_enemies:
-    .incbin "SM2DATA2.bin", $02bc, $01d
+    .incbin "programs/SM2DATA2.bin", $02bc, $01d
 
 ; level 7-1
 off_smb2_data2_ground_area_16_enemies:
-    .incbin "SM2DATA2.bin", $02d9, $031
+    .incbin "programs/SM2DATA2.bin", $02d9, $031
 
 ; level 7-2
 off_smb2_data2_ground_area_17_enemies:
-    .incbin "SM2DATA2.bin", $030a, $02c
+    .incbin "programs/SM2DATA2.bin", $030a, $02c
 
 ; level 7-3
 off_smb2_data2_ground_area_18_enemies:
-    .incbin "SM2DATA2.bin", $0336, $019
+    .incbin "programs/SM2DATA2.bin", $0336, $019
 
 ; level 8-1
 off_smb2_data2_ground_area_19_enemies:
-    .incbin "SM2DATA2.bin", $034f, $028
+    .incbin "programs/SM2DATA2.bin", $034f, $028
 
 ; level 8-2
 off_smb2_data2_ground_area_22_enemies:
-    .incbin "SM2DATA2.bin", $0377, $023
+    .incbin "programs/SM2DATA2.bin", $0377, $023
 
 ; level 8-3
 off_smb2_data2_e_ground_area23:
-    .incbin "SM2DATA2.bin", $039a, $027
+    .incbin "programs/SM2DATA2.bin", $039a, $027
 ; another unused area
 off_smb2_data2_e_ground_area24:
-    .incbin "SM2DATA2.bin", $03c1, $001
+    .incbin "programs/SM2DATA2.bin", $03c1, $001
 
 ; cloud level used with level 5-1
 off_smb2_data2_e_ground_area29:
-    .incbin "SM2DATA2.bin", $03c2, $009
+    .incbin "programs/SM2DATA2.bin", $03c2, $009
 
 ; level 5-2
 off_smb2_data2_e_underground_area4:
-    .incbin "SM2DATA2.bin", $03cb, $021
+    .incbin "programs/SM2DATA2.bin", $03cb, $021
 
 ; underground bonus rooms used with worlds 5-8
 off_smb2_data2_e_underground_area5:
-    .incbin "SM2DATA2.bin", $03ec, $01a
+    .incbin "programs/SM2DATA2.bin", $03ec, $01a
 
 ; level 6-2
 off_smb2_data2_water_area_2_enemies:
-    .incbin "SM2DATA2.bin", $0406, $030
+    .incbin "programs/SM2DATA2.bin", $0406, $030
 
 ; water area used in level 8-4
 off_smb2_data2_e_water_area4:
-    .incbin "SM2DATA2.bin", $0436, $00e
+    .incbin "programs/SM2DATA2.bin", $0436, $00e
 
 ; water area used in level 6-1
 off_smb2_data2_e_water_area5:
-    .incbin "SM2DATA2.bin", $0444, $015
+    .incbin "programs/SM2DATA2.bin", $0444, $015
 
 ; level 5-4
 off_smb2_data2_castle_area_5_objects:
-    .incbin "SM2DATA2.bin", $0459, $0cd
+    .incbin "programs/SM2DATA2.bin", $0459, $0cd
 
 ; level 6-4
 off_smb2_data2_castle_area_6_objects:
-    .incbin "SM2DATA2.bin", $0526, $08f
+    .incbin "programs/SM2DATA2.bin", $0526, $08f
 
 ; level 7-4
 off_smb2_data2_l_castle_area7:
-    .incbin "SM2DATA2.bin", $05b5, $093
+    .incbin "programs/SM2DATA2.bin", $05b5, $093
 
 ; level 8-4
 off_smb2_data2_l_castle_area8:
-    .incbin "SM2DATA2.bin", $0648, $0d7
+    .incbin "programs/SM2DATA2.bin", $0648, $0d7
 
 ; level 5-1
 off_smb2_data2_ground_area_12_objects:
-    .incbin "SM2DATA2.bin", $071f, $0a1
+    .incbin "programs/SM2DATA2.bin", $071f, $0a1
 
 ; level 5-3
 off_smb2_data2_ground_area_13_objects:
-    .incbin "SM2DATA2.bin", $07c0, $05f
+    .incbin "programs/SM2DATA2.bin", $07c0, $05f
 
 ; level 6-1
 off_smb2_data2_ground_area_14_objects:
-    .incbin "SM2DATA2.bin", $081f, $07f
+    .incbin "programs/SM2DATA2.bin", $081f, $07f
 
 ; level 6-3
 off_smb2_data2_ground_area_15_objects:
-    .incbin "SM2DATA2.bin", $089e, $06d
+    .incbin "programs/SM2DATA2.bin", $089e, $06d
 
 ; level 7-1
 off_smb2_data2_ground_area_16_objects:
-    .incbin "SM2DATA2.bin", $090b, $083
+    .incbin "programs/SM2DATA2.bin", $090b, $083
 
 ; level 7-2
 off_smb2_data2_ground_area_17_objects:
-    .incbin "SM2DATA2.bin", $098e, $05d
+    .incbin "programs/SM2DATA2.bin", $098e, $05d
 
 ; level 7-3
 off_smb2_data2_ground_area_18_objects:
-    .incbin "SM2DATA2.bin", $09eb, $07b
+    .incbin "programs/SM2DATA2.bin", $09eb, $07b
 
 ; level 8-1
 off_smb2_data2_ground_area_19_objects:
-    .incbin "SM2DATA2.bin", $0a66, $075
+    .incbin "programs/SM2DATA2.bin", $0a66, $075
 
 ; level 8-2
 off_smb2_data2_ground_area_22_objects:
-    .incbin "SM2DATA2.bin", $0adb, $06b
+    .incbin "programs/SM2DATA2.bin", $0adb, $06b
 
 ; level 8-3
 off_smb2_data2_l_ground_area23:
-    .incbin "SM2DATA2.bin", $0b46, $064
+    .incbin "programs/SM2DATA2.bin", $0b46, $064
 ; another unused area
 off_smb2_data2_l_ground_area24:
-    .incbin "SM2DATA2.bin", $0baa, $001
+    .incbin "programs/SM2DATA2.bin", $0baa, $001
 
 ; cloud level used with level 5-1
 off_smb2_data2_l_ground_area29:
-    .incbin "SM2DATA2.bin", $0bab, $037
+    .incbin "programs/SM2DATA2.bin", $0bab, $037
 
 ; level 5-2
 off_smb2_data2_l_underground_area4:
-    .incbin "SM2DATA2.bin", $0be2, $0cd
+    .incbin "programs/SM2DATA2.bin", $0be2, $0cd
 
 ; underground bonus rooms used with worlds 5-8
 off_smb2_data2_l_underground_area5:
-    .incbin "SM2DATA2.bin", $0caf, $041
+    .incbin "programs/SM2DATA2.bin", $0caf, $041
 
 ; level 6-2
 off_smb2_data2_water_area_2_objects:
-    .incbin "SM2DATA2.bin", $0cf0, $0c9
+    .incbin "programs/SM2DATA2.bin", $0cf0, $0c9
 
 ; water area used in level 8-4
 off_smb2_data2_l_water_area4:
-    .incbin "SM2DATA2.bin", $0db9, $019
+    .incbin "programs/SM2DATA2.bin", $0db9, $019
 
 ; water area used in level 6-1
 off_smb2_data2_l_water_area5:
-    .incbin "SM2DATA2.bin", $0dd2, $05d
+    .incbin "programs/SM2DATA2.bin", $0dd2, $05d

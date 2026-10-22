@@ -1,6 +1,7 @@
 ; Super Mario Bros. 2 hard-courses payload
 ; Reconstructed from the pinned doppelganger ca65 listing
 
+.segment "SM2DATA4"
 .scope smb2_hard_courses
     .include "../../platforms/late_fds/smb2/system/hardware.inc"
     .org $c2b4

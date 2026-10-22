@@ -187,9 +187,9 @@ bra_exit_block_content_check:
 
 tbl_brick_and_question_block_metatiles:
 .if con_revision_profile = con_revision_profile_ann
-    .incbin "NSMMAIN.bin", $29f6, $00f
+    .incbin "programs/NSMMAIN.bin", $29f6, $00f
 .else
-    .incbin "ju_prg.bin", $3de8, $00e
+    .incbin "programs/ju_prg.bin", $3de8, $00e
 .endif
 
 sub_check_bumped_block:

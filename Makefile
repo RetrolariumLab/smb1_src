@@ -1,176 +1,136 @@
 # Super Mario Bros.: build the source back into the original images and check
-# it. `make help` lists the targets.
+# it. `make` alone lists the targets. The ROMs and disks are yours: copy them
+# next to this file under the names assets/manifest.json gives, then run
+# `make split` once.
 PYTHON ?= python
-# The kit command that names cc65 (rltool build-tools path nes ca65).
 RLTOOL ?= rltool
 export RLTOOL
-# MAME for `make test-full`, `make golden` and `make play`; with none named,
-# the one `rltool movie mame <path>` remembered.
-MAME ?= $(RETROLARIUM_MAME)
-RUN := $(PYTHON) scripts/run.py
+# cc65 from Retrolarium Kit, which verifies it; asked once, when a recipe
+# first needs it (the recipes' shell wants forward slashes).
+CA65 ?= $(eval CA65 := $$(subst \,/,$$(shell $$(RLTOOL) build-tools path nes ca65)))$(CA65)
+LD65 ?= $(eval LD65 := $$(subst \,/,$$(shell $$(RLTOOL) build-tools path nes ld65)))$(LD65)
 
-# The private assets: assets/manifest.json names the ROMs and disks and what
-# `make split` cuts out of them into assets/generated/; `rltool assets`
-# (Retrolarium Kit) splits, checks and verifies. Every revision builds from
-# the JU assets and its own.
-ASSETS = $(RLTOOL) assets $(1)
 BASE_IMAGE := ju
-GENERATED := assets/generated
-ORIGINAL_ROM ?= Super Mario Bros. (JU) [!].nes
-NATIVE_CFG := config/linker/nrom256_prg_only.cfg
-FDS_CFG := config/linker/fds_prg.cfg
-NATIVE_DIR := build/native
-
-# The revisions: the image ids of assets/manifest.json (REVISION=<id>).
-REVISION ?= pal
-REVISION_DIR = build/revisions/$(REVISION)
-FDS_REVISIONS := fds_smb ann_fds smb2_jp_fds
-REVISION_ROM = $(REVISION_DIR)/$(if $(filter $(REVISION),$(FDS_REVISIONS)),smb.fds,smb.nes)
-SOURCE_ju := src/revisions/ju.asm
-SOURCE_pal := src/revisions/pal.asm
-SOURCE_pc10 := src/revisions/pc10.asm
-SOURCE_vs_smb := src/revisions/vs.asm
-SOURCE_fds_smb := src/revisions/fds_smb.asm
-SOURCE_ann_fds := src/revisions/ann/main.asm
-# The cartridges: header, CHR and what follows it (the PlayChoice-10
-# instruction ROM).
-HEADER = $(if $(filter vs_smb,$(REVISION)),$(GENERATED)/platforms/vs_smb/header.bin,$(GENERATED)/header/smb.hdr)
-CHR = $(if $(filter vs_smb,$(REVISION)),$(GENERATED)/platforms/vs_smb/chr.bin,$(GENERATED)/chr/smb.chr)
-EXTRA_pc10 := $(GENERATED)/revisions/pc10/platform.extra
-# The disks: the side from the disk image, and the disk files (by ID) each
-# built program fills.
-ANN_ASSETS := $(GENERATED)/platforms/ann_fds/source
-# The program files the source takes its texts, palettes, screens and ending
-# data from (`make split` cuts them out of the ROMs and disks).
-PROGRAMS := $(GENERATED)/programs
-ANN_DIR := build/revisions/ann_fds
-FILES_fds_smb = 3,4=$(REVISION_DIR)/smb.prg
-FILES_ann_fds = 5=$(REVISION_DIR)/smb.prg 32=$(ANN_DIR)/supplemental_courses/payload.bin \
-	48=$(ANN_DIR)/ending/payload.bin 64=$(ANN_DIR)/hard_courses/payload.bin
-FILES_smb2_jp_fds = 5=$(REVISION_DIR)/SM2MAIN.bin 32=$(REVISION_DIR)/SM2DATA2.bin \
-	48=$(REVISION_DIR)/SM2DATA3.bin 64=$(REVISION_DIR)/SM2DATA4.bin
-# What a revision builds first: the All Night Nippon disk's three overlays,
-# and Super Mario Bros. 2's four program files from their own source.
-BEFORE_ann_fds := build-ann-payloads
-BEFORE_smb2_jp_fds := build-smb2-source
-
-# The JU revision with its code moved (scripts/build/relocate.py).
-RELOCATED_ROM := build/relocated/smb.nes
-# The movies by name (make play MOVIE=<name>); test-full plays them in this
-# order: the TAS first, then the longplay, then the attract mode.
-MOVIE_tas := movies/smb1_any_percent.check.json
+# The revisions, by image id of assets/manifest.json, and the entry file each
+# builds from; REVISION picks one. Every revision also takes JU's assets.
+REVISIONS := ju pal pc10 vs_smb fds_smb ann_fds smb2_jp_fds
+ENTRY_ju := src/revisions/ju.asm
+ENTRY_pal := src/revisions/pal.asm
+ENTRY_pc10 := src/revisions/pc10.asm
+ENTRY_vs_smb := src/revisions/vs.asm
+ENTRY_fds_smb := src/revisions/fds_smb.asm
+ENTRY_ann_fds := src/revisions/ann/build.asm
+ENTRY_smb2_jp_fds := src/revisions/smb2/build.asm
+REVISION ?= $(BASE_IMAGE)
+OUT = build/revisions/$(REVISION)
+# The disks: their sides take the built program files by disk file ID.
+DISKS := fds_smb ann_fds smb2_jp_fds
+FILES_fds_smb = 3,4=$(OUT)/smb.prg
+FILES_ann_fds = 5=$(OUT)/smb.prg 32=$(OUT)/NSMDATA2.bin 48=$(OUT)/NSMDATA3.bin 64=$(OUT)/NSMDATA4.bin
+FILES_smb2_jp_fds = 5=$(OUT)/SM2MAIN.bin 32=$(OUT)/SM2DATA2.bin 48=$(OUT)/SM2DATA3.bin 64=$(OUT)/SM2DATA4.bin
+# The linker config of each kind of image.
+LINKER_CONFIG = $(if $(filter fds_smb,$(REVISION)),config/linker/fds_prg.cfg,$(if $(filter ann_fds,$(REVISION)),config/linker/ann.cfg,$(if $(filter smb2_jp_fds,$(REVISION)),config/linker/smb2.cfg,config/linker/nrom256.cfg)))
+NAME = $(if $(filter smb2_jp_fds,$(REVISION)),smb2,smb)
+LINKED = $(OUT)/$(NAME).$(if $(filter $(REVISION),$(DISKS)),prg,nes)
+IMAGE = $(OUT)/$(NAME).$(if $(filter $(REVISION),$(DISKS)),fds,nes)
+RELOCATED_OUT := build/relocated
+RELOCATED_ROM := $(RELOCATED_OUT)/smb.nes
+# The revisions whose ROM or disk is here (assets/manifest.json names them).
+PRESENT = $(filter $(REVISIONS),$(shell $(RLTOOL) assets images --present))
+# The movies JU's relocated build plays in `make test-full`, by name
+# (movies/<name>.check.json, written by `make golden`).
 MOVIES := tas
-MOVIE_CHECKS := $(foreach movie,$(MOVIES),$(MOVIE_$(movie)))
+MOVIE_CHECKS = $(foreach movie,$(MOVIES),movies/$(movie).check.json)
+MAME_OPTION = $(if $(MAME),--mame "$(MAME)")
 
-.DEFAULT_GOAL := build
+define newline
 
-.PHONY: play help build verify build-revision verify-revision verify-revisions split \
-	_require-assets build-ann-payloads build-smb2-source build-relocated studio-check \
-	lint format test test-full golden hooks clean
+
+endef
+
+# Assemble and link: $(call link,<entry>,<output folder>,<name>,<linker config>,<ca65 options>)
+link = $(PYTHON) -c "from pathlib import Path; Path('$(2)').mkdir(parents=True, exist_ok=True)"$(newline)\
+	$(CA65) -I src -I $(dir $(1)) --bin-include-dir assets/generated $(5) --debug-info -g \
+		-o "$(2)/$(3).o" -l "$(2)/$(3).lst" "$(1)"$(newline)\
+	$(LD65) -C $(4) -o "$(2)/$(3).$(if $(filter $(REVISION),$(DISKS)),prg,nes)" "$(2)/$(3).o" \
+		-Ln "$(2)/$(3).lbl" -m "$(2)/$(3).map" --dbgfile "$(2)/$(3).dbg"
+
+.PHONY: help split build verify verify-revisions build-relocated studio-check profile-check \
+	lint format test test-full golden play hooks clean _revision
+.DEFAULT_GOAL := help
 
 split:
-	$(call ASSETS,split)
+	$(RLTOOL) assets split
 
-_require-assets:
-	$(call ASSETS,check) --image $(BASE_IMAGE)
+_revision:
+	$(if $(filter $(REVISION),$(REVISIONS)),,$(error REVISION=$(REVISION) is not one of: $(REVISIONS)))
+	$(RLTOOL) assets check --image $(BASE_IMAGE) --image $(REVISION)
 
-build: _require-assets
-	$(RUN) build.build_native --source src/main.asm --config $(NATIVE_CFG) \
-		--bin-include-dir $(PROGRAMS) --output-dir $(NATIVE_DIR) --header $(GENERATED)/header/smb.hdr --chr $(GENERATED)/chr/smb.chr
+# Every build assembles anew: it takes a second, and nothing it reads
+# (source, linker config, assets) can be missed. A disk's program files then
+# go into its side.
+build: _revision
+	$(call link,$(ENTRY_$(REVISION)),$(OUT),$(NAME),$(LINKER_CONFIG))
+	$(if $(filter $(REVISION),$(DISKS)),$(RLTOOL) fds write --disk assets/generated/platforms/$(REVISION)/disk.fds \
+		$(foreach file,$(FILES_$(REVISION)),--file $(file)) --output "$(IMAGE)")
 
 verify: build
-	$(call ASSETS,verify) --image $(BASE_IMAGE) --built "$(NATIVE_DIR)/smb.nes"
+	$(RLTOOL) assets verify --image $(REVISION) --built "$(IMAGE)"
 
-# One revision (REVISION=<id>).
-build-revision: $(BEFORE_$(REVISION))
-	$(call ASSETS,check) --image $(BASE_IMAGE) --image $(REVISION)
-ifneq ($(SOURCE_$(REVISION)),)
-ifeq ($(filter $(REVISION),$(FDS_REVISIONS)),)
-	$(RUN) build.build_native --source $(SOURCE_$(REVISION)) --config $(NATIVE_CFG) \
-		--bin-include-dir $(PROGRAMS) --output-dir $(REVISION_DIR) --header $(HEADER) --chr $(CHR) \
-		$(if $(EXTRA_$(REVISION)),--extra $(EXTRA_$(REVISION)))
-else
-	$(RUN) build.build_native --source $(SOURCE_$(REVISION)) --config $(FDS_CFG) \
-		--bin-include-dir $(PROGRAMS) --output-dir $(REVISION_DIR) \
-		$(if $(filter ann_fds,$(REVISION)),--bin-include-dir $(ANN_ASSETS))
-endif
-endif
-ifneq ($(filter $(REVISION),$(FDS_REVISIONS)),)
-	$(RUN) build.fds_image --disk $(GENERATED)/platforms/$(REVISION)/disk.fds \
-		$(foreach file,$(FILES_$(REVISION)),--file $(file)) --output $(REVISION_ROM)
-endif
-
-verify-revision: build-revision
-	$(call ASSETS,verify) --image $(REVISION) --built "$(REVISION_ROM)"
-
-# Every revision whose ROM or disk is here.
+# Every revision whose ROM or disk is here, byte for byte.
 verify-revisions:
-	@for revision in $$($(call ASSETS,images) --present); do \
-		$(MAKE) --no-print-directory verify-revision REVISION=$$revision || exit 1; \
-	done
+	$(if $(PRESENT),,$(error none of the images of $(REVISIONS) is here: copy them beside this Makefile and make split))
+	$(foreach revision,$(PRESENT),$(MAKE) --no-print-directory verify REVISION=$(revision)$(newline))
 
-# The All Night Nippon overlays: $(call ann_overlay,<name>)
-ann_overlay = $(RUN) build.build_asm_range --source src/revisions/ann/$(1).asm \
-	--config config/linker/ann/$(1).cfg --bin-include-dir $(ANN_ASSETS) --bin-include-dir $(PROGRAMS) \
-	--object $(ANN_DIR)/$(1)/payload.o --output $(ANN_DIR)/$(1)/payload.bin \
-	--labels $(ANN_DIR)/$(1)/payload.lbl --map $(ANN_DIR)/$(1)/payload.map
+# JU with its code moved: the source's relocation probes (src/main.asm) and
+# the relocated linker config, which keeps the audio tables and vectors put.
+build-relocated:
+	$(MAKE) --no-print-directory _revision REVISION=$(BASE_IMAGE)
+	$(call link,$(ENTRY_ju),$(RELOCATED_OUT),smb,config/linker/nrom256_relocated.cfg,-D con_relocated=1)
 
-build-ann-payloads:
-	$(call ASSETS,check) --image ann_fds
-	$(call ann_overlay,supplemental_courses)
-	$(call ann_overlay,ending)
-	$(call ann_overlay,hard_courses)
-
-build-smb2-source:
-	$(call ASSETS,check) --image smb2_jp_fds
-	$(RUN) build.build_smb2_source --output-dir build/revisions/smb2_jp_fds
-
-build-relocated: _require-assets
-	$(RUN) build.relocate
-
-# Open every revision of super_mario_bros.rlj in a throwaway copy of the
-# repository the way Retrolarium Studio does, and rebuild each without edits.
+# Open the revisions of super_mario_bros.rlj whose image is here in a
+# throwaway copy of the repository the way Retrolarium Studio does, and
+# rebuild each without edits.
 studio-check:
-	$(RLTOOL) studio check super_mario_bros.rlj
+	$(RLTOOL) studio check super_mario_bros.rlj --present
 
-# House style (config/lint.json) from Retrolarium Kit.
+# The table places config/game_profile.json records, against the builds.
+profile-check:
+	$(RLTOOL) profile tables --check $(foreach revision,$(PRESENT),--revision $(revision))
+
 lint:
 	$(RLTOOL) lint
 
 format:
 	$(RLTOOL) lint --fix
 
-# The quick suite: the unit tests, every revision byte for byte whose image
-# is here, the relocated JU build and the studio check.
+# The quick suite: every revision here byte for byte, JU relocated, the
+# profile's table places and the studio check.
 test:
-	$(PYTHON) -m unittest discover -s tests -t . -p "test_*.py"
-	$(MAKE) --no-print-directory verify verify-revisions build-relocated studio-check
+	$(MAKE) --no-print-directory verify-revisions
+	$(MAKE) --no-print-directory build-relocated profile-check studio-check
 
-# The full suite: the quick one, then the movies in MAME on the relocated JU
-# build in turn (the first that differs stops it), compared with what the
-# original ROM gives (movies/*.check.json, written by `make golden`).
+# The full suite: the quick one, then the TAS in MAME on the relocated JU
+# build, compared with what the original ROM gives (`make golden`).
 test-full: test
-	$(RLTOOL) movie check $(MOVIE_CHECKS) --rom "$(RELOCATED_ROM)" --mame "$(MAME)"
+	$(RLTOOL) movie check $(MOVIE_CHECKS) --rom "$(RELOCATED_ROM)" $(MAME_OPTION)
 
 golden:
-	$(RLTOOL) movie golden $(MOVIE_CHECKS) --rom "$(ORIGINAL_ROM)" --mame "$(MAME)"
+	$(RLTOOL) movie golden $(MOVIE_CHECKS) --rom "$(shell $(RLTOOL) assets path --image $(BASE_IMAGE))" $(MAME_OPTION)
 
 # Watch a movie in a MAME window at the game's speed, on the relocated build
 # or on ROM=<image>; once the window is closed, its cells are compared with
 # the original's. In MAME, F10 lifts the speed limit and Insert fast-forwards.
-#   make play MOVIE=<name> [ROM=<image>] [FRAMES=<frame>] [CLOSE=1]
+#   make play [MOVIE=<name>] [ROM=<image>] [FRAMES=<frame>] [CLOSE=1]
 # FRAMES closes MAME at that frame (only the start of the movie), CLOSE=1 when
 # the movie ends (else it stays open to play on, the credits say).
 MOVIE ?= $(firstword $(MOVIES))
 PLAY_ROM = $(if $(filter command line,$(origin ROM)),$(ROM),$(RELOCATED_ROM))
-ifneq ($(filter play,$(MAKECMDGOALS)),)
-ifeq ($(MOVIE_$(MOVIE)),)
-$(error unknown MOVIE "$(MOVIE)": this game has $(MOVIES))
-endif
-endif
 
 play: $(if $(filter command line,$(origin ROM)),,build-relocated)
-	$(RLTOOL) movie play $(MOVIE_$(MOVIE)) --rom "$(PLAY_ROM)" --mame "$(MAME)" \
+	$(if $(wildcard movies/$(MOVIE).check.json),,$(error unknown MOVIE "$(MOVIE)": movies/ has \
+		$(basename $(basename $(notdir $(wildcard movies/*.check.json))))))
+	$(RLTOOL) movie play movies/$(MOVIE).check.json --rom "$(PLAY_ROM)" $(MAME_OPTION) \
 		$(if $(FRAMES),--stop-at $(FRAMES)) $(if $(CLOSE),--close)
 
 # `make hooks`, once per clone, makes Git check every commit and push for stop
@@ -183,17 +143,15 @@ clean:
 	$(PYTHON) -c "import shutil; shutil.rmtree('build', ignore_errors=True)"
 
 help:
-	@echo "Super Mario Bros. source reconstruction"
-	@echo "  make split                  cut the assets out of the ROMs and disks that are here (once)"
-	@echo "  make build / verify         the JU ROM / and byte for byte"
-	@echo "  make build-revision REVISION=<id> / verify-revision / verify-revisions"
-	@echo "                              ju pal pc10 vs_smb fds_smb ann_fds smb2_jp_fds"
-	@echo "  make build-relocated        the JU revision with its code moved"
-	@echo "  make studio-check           open and rebuild every super_mario_bros.rlj revision"
-	@echo "  make test                   the quick suite"
-	@echo "  make test-full              test, then the movies in MAME (MAME=<path>)"
-	@echo "  make golden                 record the movies' checkpoints from the original"
-	@echo "  make play MOVIE=tas         watch a movie in MAME (ROM=<image> for another build)"
-	@echo "  make lint / format          the house style (Retrolarium Kit)"
-	@echo "  make hooks                  install the Git hooks"
-	@echo "  make clean                  remove the build output"
+	$(info Super Mario Bros. source reconstruction: $(REVISIONS), REVISION=$(BASE_IMAGE) unless given)
+	$(info   make split                  cut the assets out of the ROMs and disks that are here, once)
+	$(info   make build [REVISION=id]    build a revision into build/revisions/id/)
+	$(info   make verify [REVISION=id]   build it and compare it with its image byte for byte)
+	$(info   make verify-revisions       every revision whose image is here)
+	$(info   make build-relocated        JU with its code moved)
+	$(info   make test                   the quick suite)
+	$(info   make test-full              test, then the TAS in MAME: MAME=path or the kit's)
+	$(info   make golden                 record the movie's checkpoints from the original ROM)
+	$(info   make play [MOVIE=name]      watch a movie in MAME; ROM=image for another build)
+	$(info   make studio-check / profile-check / lint / format / hooks / clean)
+	@exit 0

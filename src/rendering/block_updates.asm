@@ -7,7 +7,7 @@
 ; $06, $07 - block buffer address low/high
 
 tbl_block_metatile_tiles:
-    .incbin "ju_prg.bin", $0a39, $014
+    .incbin "programs/ju_prg.bin", $0a39, $014
 
 sub_remove_coin_axe:
     LDY #$41  ; set low byte so offset points to $0341

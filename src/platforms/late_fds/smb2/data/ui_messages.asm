@@ -1,8 +1,8 @@
 off_smb2_main_player_name_data:
-    .incbin "SM2MAIN.bin", $65eb, $00a
+    .incbin "programs/SM2MAIN.bin", $65eb, $00a
 
 off_smb2_main_player_palette_data:
-    .incbin "SM2MAIN.bin", $65f5, $008
+    .incbin "programs/SM2MAIN.bin", $65f5, $008
 
 tbl_smb2_main_player_name_offsets:
     .byte $04, $09  ; note that offsets point to last byte
@@ -38,7 +38,7 @@ bra_smb2_main_pal_patch:
 ; -------------------------------------------------------------------------------------
 
 off_smb2_main_title_screen_gfx_data:
-    .incbin "SM2MAIN.bin", $662b, $165
+    .incbin "programs/SM2MAIN.bin", $662b, $165
 
 ; -------------------------------------------------------------------------------------
 

@@ -1,6 +1,7 @@
 ; Super Mario Bros. 2 main payload
 ; Reconstructed from the pinned doppelganger ca65 listing
 
+.segment "SM2MAIN"
 .scope smb2_main
     .include "../../platforms/late_fds/smb2/system/hardware.inc"
     .org $6000

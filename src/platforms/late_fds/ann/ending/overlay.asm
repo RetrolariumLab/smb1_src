@@ -1,5 +1,7 @@
 ; All Night Nippon ending sequence, guest procession, and ending text
 
+sub_ann_award_end_area_points = loc_award_end_area_points
+
 handler_ann_ending_background:
     LDA ram_screen_routine_task
     JSR sub_dispatch_inline_handler
@@ -106,19 +108,19 @@ handler_ann_convert_extra_lives:
     RTS
 
 tbl_ann_ending_palette:
-    .incbin "NSMDATA3.bin", $00c0, $003
+    .incbin "programs/NSMDATA3.bin", $00c0, $003
 
 tbl_ann_ending_palette_bytes:
-    .incbin "NSMDATA3.bin", $00c3, $010
+    .incbin "programs/NSMDATA3.bin", $00c3, $010
 
 tbl_ann_ending_palette_bytes_end:
-    .incbin "NSMDATA3.bin", $00d3, $001
+    .incbin "programs/NSMDATA3.bin", $00d3, $001
 
 tbl_ann_ending_palette_variants:
-    .incbin "NSMDATA3.bin", $00d4, $004
+    .incbin "programs/NSMDATA3.bin", $00d4, $004
 
 tbl_ann_ending_lives_display:
-    .incbin "NSMDATA3.bin", $00d8, $009
+    .incbin "programs/NSMDATA3.bin", $00d8, $009
 
 handler_ann_cycle_ending_palette:
     INC ram_offscreen_player_info
@@ -216,22 +218,22 @@ loc_ann_finish_save:
     JMP handler_run_ann_disk_loader
 
 tbl_ann_guest_sprite_offsets:
-    .incbin "NSMDATA3.bin", $01aa, $006
+    .incbin "programs/NSMDATA3.bin", $01aa, $006
 
 tbl_ann_guest_sprite_next_offsets:
-    .incbin "NSMDATA3.bin", $01b0, $007
+    .incbin "programs/NSMDATA3.bin", $01b0, $007
 
 tbl_ann_guest_sprite_y:
-    .incbin "NSMDATA3.bin", $01b7, $007
+    .incbin "programs/NSMDATA3.bin", $01b7, $007
 
 tbl_ann_guest_sprite_x:
-    .incbin "NSMDATA3.bin", $01be, $008
+    .incbin "programs/NSMDATA3.bin", $01be, $008
 
 tbl_ann_guest_sprite_tiles:
-    .incbin "NSMDATA3.bin", $01c6, $007
+    .incbin "programs/NSMDATA3.bin", $01c6, $007
 
 tbl_ann_guest_sprite_attributes:
-    .incbin "NSMDATA3.bin", $01cd, $007
+    .incbin "programs/NSMDATA3.bin", $01cd, $007
 
 sub_ann_render_ending_guest_sprites:
     LDA ram_off_scr_hidden1_up_flag
@@ -320,7 +322,7 @@ sub_ann_render_ending_guest_sprites:
     RTS
 
 tbl_ann_ending_player_names:
-    .incbin "NSMDATA3.bin", $0295, $00a
+    .incbin "programs/NSMDATA3.bin", $0295, $00a
 
 handler_ann_set_ending_player_name:
     LDA #$00
@@ -339,46 +341,46 @@ handler_ann_set_ending_player_name:
     RTS
 
 tbl_ann_ending_attributes:
-    .incbin "NSMDATA3.bin", $02bd, $009
+    .incbin "programs/NSMDATA3.bin", $02bd, $009
 
 tbl_ann_ending_palette_nmi:
-    .incbin "NSMDATA3.bin", $02c6, $014
+    .incbin "programs/NSMDATA3.bin", $02c6, $014
 
 tbl_ann_msg_thank_you:
-    .incbin "NSMDATA3.bin", $02da, $00d
+    .incbin "programs/NSMDATA3.bin", $02da, $00d
 
 tbl_ann_thank_you_player_name:
-    .incbin "NSMDATA3.bin", $02e7, $00b
+    .incbin "programs/NSMDATA3.bin", $02e7, $00b
 
 tbl_ann_msg_peace_is_paved:
-    .incbin "NSMDATA3.bin", $02f2, $016
+    .incbin "programs/NSMDATA3.bin", $02f2, $016
 
 tbl_ann_msg_kingdom_saved:
-    .incbin "NSMDATA3.bin", $0308, $016
+    .incbin "programs/NSMDATA3.bin", $0308, $016
 
 tbl_ann_msg_hurrah_to:
-    .incbin "NSMDATA3.bin", $031e, $00e
+    .incbin "programs/NSMDATA3.bin", $031e, $00e
 
 tbl_ann_hurrah_player_name:
-    .incbin "NSMDATA3.bin", $032c, $006
+    .incbin "programs/NSMDATA3.bin", $032c, $006
 
 tbl_ann_msg_only_hero:
-    .incbin "NSMDATA3.bin", $0332, $011
+    .incbin "programs/NSMDATA3.bin", $0332, $011
 
 tbl_ann_msg_trip_end:
-    .incbin "NSMDATA3.bin", $0343, $017
+    .incbin "programs/NSMDATA3.bin", $0343, $017
 
 tbl_ann_msg_long_friendship:
-    .incbin "NSMDATA3.bin", $035a, $018
+    .incbin "programs/NSMDATA3.bin", $035a, $018
 
 tbl_ann_msg_bonus_points:
-    .incbin "NSMDATA3.bin", $0372, $018
+    .incbin "programs/NSMDATA3.bin", $0372, $018
 
 tbl_ann_msg_players_left:
-    .incbin "NSMDATA3.bin", $038a, $019
+    .incbin "programs/NSMDATA3.bin", $038a, $019
 
 tbl_ann_ending_palette_extension:
-    .incbin "NSMDATA3.bin", $03a3, $010
+    .incbin "programs/NSMDATA3.bin", $03a3, $010
 
 tbl_ann_throne_room_map:
-    .incbin "NSMDATA3.bin", $03b3, $021
+    .incbin "programs/NSMDATA3.bin", $03b3, $021

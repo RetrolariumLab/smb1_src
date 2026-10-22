@@ -1,6 +1,7 @@
 ; Super Mario Bros. 2 ending payload
 ; Reconstructed from the pinned doppelganger ca65 listing
 
+.segment "SM2DATA3"
 .scope smb2_ending
     .include "../../platforms/late_fds/smb2/system/hardware.inc"
     .org $c5d0

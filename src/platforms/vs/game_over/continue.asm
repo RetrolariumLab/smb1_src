@@ -101,7 +101,7 @@ sub_initialize_vs_score_countdown:
     RTS
 ; ----------------------------------
 off_vs_blank_name_packet:
-    .incbin "vs_prg.bin", $1e12, $003
+    .incbin "programs/vs_prg.bin", $1e12, $003
 
 tbl_vs_high_score_row_addresses_high:
     .byte >(PPU_NAMETABLE_0+$0E5)
@@ -238,25 +238,25 @@ sub_toggle_vs_score_phase_long:
     RTS
 ; ----------------------------------
 off_vs_continue_prompt_tiles:
-    .incbin "vs_prg.bin", $1eec, $00e
+    .incbin "programs/vs_prg.bin", $1eec, $00e
 
 off_vs_insert_coin_prompt_tiles:
-    .incbin "vs_prg.bin", $1efa, $00e
+    .incbin "programs/vs_prg.bin", $1efa, $00e
 
 off_vs_countdown_packet:
-    .incbin "vs_prg.bin", $1f08, $003
+    .incbin "programs/vs_prg.bin", $1f08, $003
 
 off_vs_continue_prompt_header:
-    .incbin "vs_prg.bin", $1f0b, $004
+    .incbin "programs/vs_prg.bin", $1f0b, $004
 
 off_vs_insert_coin_prompt_header:
-    .incbin "vs_prg.bin", $1f0f, $004
+    .incbin "programs/vs_prg.bin", $1f0f, $004
 
 off_vs_continue_palette_packet:
-    .incbin "vs_prg.bin", $1f13, $008
+    .incbin "programs/vs_prg.bin", $1f13, $008
 
 off_vs_continue_attributes_packet:
-    .incbin "vs_prg.bin", $1f1b, $009
+    .incbin "programs/vs_prg.bin", $1f1b, $009
 ; ----------------------------------
 handler_prepare_vs_continue_attributes:
     LDX #9-1

@@ -37,19 +37,19 @@ bra_smb2_main_modify_player_physics_loop:
 off_smb2_main_ground_area_10_enemies:
 off_smb2_main_ground_area_21_enemies:
 off_smb2_main_e_ground_area28:
-    .incbin "SM2MAIN.bin", $6260, $001
+    .incbin "programs/SM2MAIN.bin", $6260, $001
 
 ; exit area used in levels 1-2, 3-2, 5-2, 6-2, A-2 and B-2
 off_smb2_main_l_ground_area28:
-    .incbin "SM2MAIN.bin", $6261, $013
+    .incbin "programs/SM2MAIN.bin", $6261, $013
 
 ; pipe intro area
 off_smb2_main_ground_area_10_objects:
-    .incbin "SM2MAIN.bin", $6274, $009
+    .incbin "programs/SM2MAIN.bin", $6274, $009
 
 ; warp zone area used in levels 1-2 and 5-2
 off_smb2_main_ground_area_21_objects:
-    .incbin "SM2MAIN.bin", $627d, $027
+    .incbin "programs/SM2MAIN.bin", $627d, $027
 
 sub_smb2_main_load_area_pointer:
     JSR sub_smb2_main_find_area_pointer  ; find it and store it here

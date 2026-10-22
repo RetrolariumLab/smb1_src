@@ -5,3 +5,4 @@
 con_revision_profile = con_revision_profile_pc10
 
 .include "../main.asm"
+.include "cartridge.inc"

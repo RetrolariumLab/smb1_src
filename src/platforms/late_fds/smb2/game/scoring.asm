@@ -168,10 +168,10 @@ tbl_smb2_main_background_color_buffer_controls:
     .byte $00, $09, $0a, $04
 
 tbl_smb2_main_background_colors:
-    .incbin "SM2MAIN.bin", $052f, $008
+    .incbin "programs/SM2MAIN.bin", $052f, $008
 
 tbl_smb2_main_player_palette_colors:
-    .incbin "SM2MAIN.bin", $0537, $008
+    .incbin "programs/SM2MAIN.bin", $0537, $008
 
 handler_smb2_main_prepare_background_and_player_colors:
     LDY BackgroundColorCtrl  ; check background color control
@@ -346,22 +346,22 @@ bra_smb2_main_queue_rendered_area_columns:
 
 tbl_smb2_main_game_text_packets:
 tbl_smb2_main_top_status_bar_packet:
-    .incbin "SM2MAIN.bin", $0672, $027
+    .incbin "programs/SM2MAIN.bin", $0672, $027
 
 tbl_smb2_main_world_lives_display_packet:
-    .incbin "SM2MAIN.bin", $0699, $01f
+    .incbin "programs/SM2MAIN.bin", $0699, $01f
 
 tbl_smb2_main_time_up:
-    .incbin "SM2MAIN.bin", $06b8, $00b
+    .incbin "programs/SM2MAIN.bin", $06b8, $00b
 
 tbl_smb2_main_game_over:
-    .incbin "SM2MAIN.bin", $06c3, $024
+    .incbin "programs/SM2MAIN.bin", $06c3, $024
 
 tbl_smb2_main_warp_zone:
-    .incbin "SM2MAIN.bin", $06e7, $025
+    .incbin "programs/SM2MAIN.bin", $06e7, $025
 
 tbl_smb2_main_warp_zone_number_tiles:
-    .incbin "SM2MAIN.bin", $070c, $00b
+    .incbin "programs/SM2MAIN.bin", $070c, $00b
 
 tbl_smb2_main_game_text_packet_offsets:
     .byte <(tbl_smb2_main_top_status_bar_packet-tbl_smb2_main_game_text_packets)

@@ -221,7 +221,7 @@ off_ann_disk_file_table_ptr:
     RTS
 
 off_ann_disk_error_palette_packet:
-    .incbin "NSMMAIN.bin", $6121, $008
+    .incbin "programs/NSMMAIN.bin", $6121, $008
 
 handler_show_ann_disk_prompt:
     LDA #$00
@@ -257,15 +257,15 @@ handler_reset_ann_disk_loader:
     RTS
 
 off_ann_disk_error_text_packet:
-    .incbin "NSMMAIN.bin", $615f, $003
+    .incbin "programs/NSMMAIN.bin", $615f, $003
 off_ann_disk_error_text:
-    .incbin "NSMMAIN.bin", $6162, $012
+    .incbin "programs/NSMMAIN.bin", $6162, $012
 
 tbl_ann_disk_error_text_offsets:
     .byte $07, $0f, $17, $1f
 
 tbl_ann_disk_error_text:
-    .incbin "NSMMAIN.bin", $6178, $020
+    .incbin "programs/NSMMAIN.bin", $6178, $020
 
 handler_print_ann_disk_error:
     PHA

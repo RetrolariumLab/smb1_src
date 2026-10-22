@@ -14,27 +14,24 @@ its builds and checks, the game's names and the tables the kit reads.
 
 3.1 keeps only what builds and checks the source. The earlier releases' audits,
 runtime traces, semantic evidence, analysis tools and the FCEUX tooling remain
-in the history (tags `source-reconstruction-1.0` to `3.0`). Expanded ROMs and
-hacks return with extended editing in Retrolarium in a later release; 3.0 had
-a CNROM variant and a five-lives hack.
+in the history (tags `source-reconstruction-1.0` to `3.0`).
 
 ## Quick start
 
 You need Python 3, GNU Make and Retrolarium Kit (`rltool` on `PATH`, or
-`RLTOOL=...`); the kit supplies the pinned ca65 and ld65
+`RLTOOL=...`); the kit supplies and verifies ca65 and ld65
 ([`docs/toolchain.md`](docs/toolchain.md)). Copy your
-`Super Mario Bros. (JU) [!].nes` (SHA-1
-`ea343f4e445a9050d4b4fbac2c77d0693b1d0922`) into the repository root, then:
+`Super Mario Bros. (JU) [!].nes` into the repository root, then:
 
 ```bash
-make split     # cut header, CHR, courses, music, palettes and metatiles out (once)
-make verify    # build and compare byte for byte
+make split     # cut the CHR, courses, music, palettes and metatiles out (once)
+make verify    # build JU and compare it byte for byte
 ```
 
-`make split` cuts the assets out of every ROM and disk image that is here
-(PAL, PlayChoice-10, Vs., FDS, ANN, SMB2; their names are in
-[`docs/revision_profiles.md`](docs/revision_profiles.md) and
-[`docs/platform_profiles.md`](docs/platform_profiles.md)).
+`make` alone lists the targets. `make split` cuts the assets out of every ROM
+and disk image that is here (PAL, PlayChoice-10, Vs., FDS, ANN, SMB2; see
+[`docs/revisions.md`](docs/revisions.md)); start the documentation at
+[`docs/index.md`](docs/index.md).
 `assets/manifest.json` names the images and the assets (`rltool assets`,
 Retrolarium Kit). The images and the extracted files under `assets/generated/`
 are ignored.
@@ -42,33 +39,32 @@ are ignored.
 ## Targets
 
 ```bash
-make build / verify                                 # the JU ROM
-make build-revision REVISION=<id> / verify-revision # one image (ju, pal, pc10,
-                                                    # vs_smb, fds_smb, ann_fds,
-                                                    # smb2_jp_fds)
-make verify-revisions                               # every image that is here
-make build-relocated                                # the JU ROM with its code moved
-make studio-check                                   # open and rebuild every revision
-make test / test-full / golden                      # the checks
-make play MOVIE=tas                                 # watch a movie in MAME
-make lint / format / hooks / clean / help
+make build [REVISION=<id>]    # into build/revisions/<id>/; ju, pal, pc10,
+make verify [REVISION=<id>]   # vs_smb, fds_smb, ann_fds or smb2_jp_fds
+make verify-revisions         # every image that is here, byte for byte
+make build-relocated          # the JU ROM with its code moved
+make studio-check             # open and rebuild the revisions here
+make profile-check            # the profile's table places against the builds
+make test / test-full / golden
+make play [MOVIE=tas]         # watch a movie in MAME
+make lint / format / hooks / clean
 ```
 
 ## Tests
 
-`make test` (about half a minute) runs the unit tests of the build scripts,
-verifies every image that is present byte for byte (the cartridges, the
-Vs. ROM and the three disks), builds the relocated JU ROM (a byte inserted at
-nine points, absorbed by the padding before the audio code and the synthesis
-tables) and runs the studio check.
+`make test` (about half a minute) verifies every image that is present byte
+for byte (the cartridges, the Vs. ROM and the three disks), builds the
+relocated JU ROM (a byte inserted at nine points of `src/main.asm`, absorbed by
+the padding before the audio code and the synthesis tables), checks the
+profile's table places and runs the studio check.
 
 `make test-full` (about a minute and a half) adds the any% TAS
-`movies/smb1_any_percent.fm2`, played in MAME on the relocated build. At six
-checkpoints, the last at the end of World 8-4, the game's
-state (mode, world, level, area, lives, status, coins, score) must equal what
-the original ROM gives, as `movies/smb1_any_percent.check.json` records. Name MAME once with `rltool movie mame <path>`
-(or `MAME=<path>`); `make golden` records the
-reference values again.
+`movies/tas.rlmovie`, played in MAME on the relocated build. At six
+checkpoints, the last at the end of World 8-4, the game's state (mode, world,
+level, area, lives, status, coins, score) must equal what the original ROM
+gives, as `movies/tas.check.json` records. Name MAME once with `rltool movie
+mame <path>` (or `MAME=<path>`); `make golden` records the reference values
+again.
 
 `make play MOVIE=tas` shows a movie in a MAME window at the game's
 speed, on the relocated build (or on `ROM=<image>`), and compares its cells
@@ -80,11 +76,9 @@ when the movie ends. `make play` alone plays `tas`.
 
 ```text
 src/              ca65 source: main.asm, the game, platforms, revisions
-config/           linker layouts, the relocation manifest, lint,
-                  the Retrolarium profile and names
+config/           linker layouts, lint, the Retrolarium profile, its tables
+                  and names
 assets/           manifest.json (the generated assets are ignored)
-scripts/          build and relocation scripts (scripts/run.py runs them)
-tests/            their unit tests
 movies/           the TAS, its provenance and its check
 docs/             how the game works and how the source is written
 super_mario_bros.rlj   the Retrolarium project

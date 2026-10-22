@@ -58,7 +58,10 @@ With:
 
 This allows Mario to jump unlimited times in mid-air (like in the Air hack).
 
-**Note:** You need exactly 5 `nop` instructions to match the byte count of the original code (`lda` = 3 bytes, `beq` = 2 bytes).
+**Note:** The source is relocatable, so the replacement need not keep the
+byte count; five `NOP`s keep it here only so that the rest of the program stays
+where it was. Any edit makes `make verify` fail on purpose; build with `make
+build` and play `build/revisions/ju/smb.nes`.
 
 ## Creating Reviving Goombas
 

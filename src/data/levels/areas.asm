@@ -1,7 +1,7 @@
 .if con_revision_profile = con_revision_profile_pal
-    .define con_course_area_streams_asset "../../../assets/generated/revisions/pal/source/pal_course_area_streams.bin"
+    .define con_course_area_streams_asset "revisions/pal/source/pal_course_area_streams.bin"
 .else
-    .define con_course_area_streams_asset "../../../assets/generated/source/base_course_area_streams.bin"
+    .define con_course_area_streams_asset "source/base_course_area_streams.bin"
 .endif
 
 ; AREA OBJECT DATA

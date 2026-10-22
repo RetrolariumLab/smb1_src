@@ -171,20 +171,20 @@ loc_select_secondary_vram_buffer:
 
 tbl_rotating_palette_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0bc4, $006
+    .incbin "programs/vs_prg.bin", $0bc4, $006
 .else
-    .incbin "ju_prg.bin", $09c3, $006
+    .incbin "programs/ju_prg.bin", $09c3, $006
 .endif
 
 tbl_blank_palette_packet:
-    .incbin "ju_prg.bin", $09c9, $008
+    .incbin "programs/ju_prg.bin", $09c9, $008
 
 ; used based on area type
 tbl_area_type_palette_3_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $0bd2, $010
+    .incbin "programs/vs_prg.bin", $0bd2, $010
 .else
-    .incbin "ju_prg.bin", $09d1, $010
+    .incbin "programs/ju_prg.bin", $09d1, $010
 .endif
 
 sub_color_rotation:
@@ -345,11 +345,11 @@ tbl_metatile_graphics_pointers_high:
     .byte >off_palette_0_metatiles, >off_palette_1_metatiles, >off_palette_2_metatiles, >off_palette_3_metatiles
 
 .if con_revision_profile = con_revision_profile_ann
-    .define con_metatile_graphics_asset "ann_metatile_graphics.bin"
+    .define con_metatile_graphics_asset "platforms/ann_fds/source/ann_metatile_graphics.bin"
 con_palette_1_metatiles_size = $0bc
 con_palette_2_metatiles_offset = $158
 .else
-    .define con_metatile_graphics_asset "../../assets/generated/source/base_metatile_graphics.bin"
+    .define con_metatile_graphics_asset "source/base_metatile_graphics.bin"
 con_palette_1_metatiles_size = $0b8
 con_palette_2_metatiles_offset = $154
 .endif
@@ -370,9 +370,9 @@ off_palette_3_metatiles:
 ; VRAM BUFFER DATA FOR LOCATIONS IN PRG-ROM
 
 .if con_revision_profile = con_revision_profile_vs
-    .define con_area_palette_packets_asset "../../assets/generated/platforms/vs_smb/source/vs_area_palette_packets.bin"
+    .define con_area_palette_packets_asset "platforms/vs_smb/source/vs_area_palette_packets.bin"
 .else
-    .define con_area_palette_packets_asset "../../assets/generated/source/base_area_palette_packets.bin"
+    .define con_area_palette_packets_asset "source/base_area_palette_packets.bin"
 .endif
 
 off_water_area_palette_packet:
@@ -401,69 +401,69 @@ off_bowser_palette_packet:
 
 off_mario_thanks_message:
 ; "THANK YOU MARIO!"
-    .incbin "ju_prg.bin", $0d54, $014
+    .incbin "programs/ju_prg.bin", $0d54, $014
 
 .if con_revision_profile <> con_revision_profile_ann
 off_luigi_thanks_message:
 ; "THANK YOU LUIGI!"
-    .incbin "ju_prg.bin", $0d68, $014
+    .incbin "programs/ju_prg.bin", $0d68, $014
 .endif
 
 off_mushroom_retainer_saved_message:
 ; "BUT OUR PRINCESS IS IN"
-    .incbin "ju_prg.bin", $0d7c, $02c
+    .incbin "programs/ju_prg.bin", $0d7c, $02c
 .if con_revision_profile = con_revision_profile_vs
 off_vs_victory_attributes:
-    .incbin "vs_prg.bin", $0fa9, $009
+    .incbin "programs/vs_prg.bin", $0fa9, $009
 off_vs_victory_palette_packet:
-    .incbin "vs_prg.bin", $0fb2, $014
+    .incbin "programs/vs_prg.bin", $0fb2, $014
 off_vs_mario_thanks_message:
 ; "THANK YOU MARIO!"
-    .incbin "vs_prg.bin", $0fc6, $018
+    .incbin "programs/vs_prg.bin", $0fc6, $018
 off_vs_luigi_thanks_message:
 ; "THANK YOU LUIGI!"
-    .incbin "vs_prg.bin", $0fde, $018
+    .incbin "programs/vs_prg.bin", $0fde, $018
 off_vs_peace_message:
 ; "PEACE IS PAVED"
-    .incbin "vs_prg.bin", $0ff6, $016
+    .incbin "programs/vs_prg.bin", $0ff6, $016
 off_vs_kingdom_saved_message:
 ; "WITH KINGDOM SAVED"
-    .incbin "vs_prg.bin", $100c, $016
+    .incbin "programs/vs_prg.bin", $100c, $016
 off_vs_mario_hurrah_message:
 ; "HURRAH TO  MARIO"
-    .incbin "vs_prg.bin", $1022, $014
+    .incbin "programs/vs_prg.bin", $1022, $014
 off_vs_luigi_hurrah_message:
 ; "HURRAH TO  LUIGI"
-    .incbin "vs_prg.bin", $1036, $014
+    .incbin "programs/vs_prg.bin", $1036, $014
 off_vs_only_hero_message:
 ; "OUR ONLY HERO"
-    .incbin "vs_prg.bin", $104a, $011
+    .incbin "programs/vs_prg.bin", $104a, $011
 off_vs_trip_ending_message:
 ; "THIS ENDS YOUR TRIP"
-    .incbin "vs_prg.bin", $105b, $017
+    .incbin "programs/vs_prg.bin", $105b, $017
 off_vs_friendship_message:
 ; "OF A LONG FRIENDSHIP"
-    .incbin "vs_prg.bin", $1072, $018
+    .incbin "programs/vs_prg.bin", $1072, $018
 off_vs_bonus_points_message:
 ; "100000 PTS.ADDED"
-    .incbin "vs_prg.bin", $108a, $018
+    .incbin "programs/vs_prg.bin", $108a, $018
 off_vs_players_left_message:
 ; "FOR EACH PLAYER LEFT."
-    .incbin "vs_prg.bin", $10a2, $019
+    .incbin "programs/vs_prg.bin", $10a2, $019
 .elseif con_revision_profile <> con_revision_profile_ann
 off_princess_saved_message_1:
 ; "YOUR QUEST IS OVER."
-    .incbin "ju_prg.bin", $0da8, $017
+    .incbin "programs/ju_prg.bin", $0da8, $017
 
 off_princess_saved_message_2:
 ; "WE PRESENT YOU A NEW QUEST."
-    .incbin "ju_prg.bin", $0dbf, $01f
+    .incbin "programs/ju_prg.bin", $0dbf, $01f
 
 off_world_select_message_1:
 ; "PUSH BUTTON B"
-    .incbin "ju_prg.bin", $0dde, $011
+    .incbin "programs/ju_prg.bin", $0dde, $011
 
 off_world_select_message_2:
 ; "TO SELECT A WORLD"
-    .incbin "ju_prg.bin", $0def, $015
+    .incbin "programs/ju_prg.bin", $0def, $015
 .endif

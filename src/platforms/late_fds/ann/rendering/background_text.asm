@@ -1,13 +1,13 @@
 ; ANN status, intermission, game-over, and warp text packets
 
 off_ann_game_text_packets:
-    .incbin "NSMMAIN.bin", $06ea, $075
+    .incbin "programs/NSMMAIN.bin", $06ea, $075
 
 off_ann_warp_zone_packet:
-    .incbin "NSMMAIN.bin", $075f, $02d
+    .incbin "programs/NSMMAIN.bin", $075f, $02d
 
 tbl_ann_warp_zone_number_tiles:
-    .incbin "NSMMAIN.bin", $078c, $018
+    .incbin "programs/NSMMAIN.bin", $078c, $018
 
 tbl_ann_game_text_packet_offsets:
     .byte $00, $27, $46, $51

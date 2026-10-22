@@ -49,6 +49,8 @@ handler_initialize_screen:
     JSR sub_initialize_name_tables  ; and erase both name and attribute tables
     LDA ram_oper_mode
     BEQ bra_advance_screen_task  ; if mode still 0, do not load
+; The All Night Nippon ending's background dispatch enters here
+handler_initialize_screen_step:
     LDX #$03  ; into buffer pointer
     JMP loc_store_vram_buffer_control_from_x
 
@@ -99,18 +101,18 @@ tbl_background_color_buffer_controls:
 
 tbl_background_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $07b0, $008
+    .incbin "programs/vs_prg.bin", $07b0, $008
 .else
-    .incbin "ju_prg.bin", $05cf, $008
+    .incbin "programs/ju_prg.bin", $05cf, $008
 .endif
 
 tbl_player_palette_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .incbin "vs_prg.bin", $07b8, $00c
+    .incbin "programs/vs_prg.bin", $07b8, $00c
 .elseif con_revision_profile = con_revision_profile_ann
-    .incbin "NSMMAIN.bin", $05be, $008
+    .incbin "programs/NSMMAIN.bin", $05be, $008
 .else
-    .incbin "ju_prg.bin", $05d7, $00c
+    .incbin "programs/ju_prg.bin", $05d7, $00c
 .endif
 
 handler_prepare_background_and_player_colors:
@@ -462,35 +464,35 @@ loc_advance_operation_mode_task:
 .else
 tbl_game_text_packets:
 off_top_status_bar_packet:
-    .incbin "ju_prg.bin", $0752, $027
+    .incbin "programs/ju_prg.bin", $0752, $027
 
 off_world_lives_display_packet:
-    .incbin "ju_prg.bin", $0779, $016
+    .incbin "programs/ju_prg.bin", $0779, $016
 off_time_up_clear_packet = off_world_lives_display_packet + $16
-    .incbin "ju_prg.bin", $078f, $009
+    .incbin "programs/ju_prg.bin", $078f, $009
 
 off_two_player_time_up_packet:
-    .incbin "ju_prg.bin", $0798, $008
+    .incbin "programs/ju_prg.bin", $0798, $008
 off_one_player_time_up_packet:
-    .incbin "ju_prg.bin", $07a0, $00b
+    .incbin "programs/ju_prg.bin", $07a0, $00b
 
 off_two_player_game_over_packet:
-    .incbin "ju_prg.bin", $07ab, $008
+    .incbin "programs/ju_prg.bin", $07ab, $008
 off_one_player_game_over_packet:
-    .incbin "ju_prg.bin", $07b3, $00d
+    .incbin "programs/ju_prg.bin", $07b3, $00d
 
 off_warp_zone_welcome_packet:
-    .incbin "ju_prg.bin", $07c0, $02d
+    .incbin "programs/ju_prg.bin", $07c0, $02d
 
 tbl_luigi_name_tiles:
-    .incbin "ju_prg.bin", $07ed, $005
+    .incbin "programs/ju_prg.bin", $07ed, $005
 
 tbl_warp_zone_number_tiles:
-    .incbin "ju_prg.bin", $07f2, $008
+    .incbin "programs/ju_prg.bin", $07f2, $008
     .if con_revision_profile = con_revision_profile_vs
-        .incbin "vs_prg.bin", $09f6, $004
+        .incbin "programs/vs_prg.bin", $09f6, $004
     .else
-        .incbin "ju_prg.bin", $07fa, $004
+        .incbin "programs/ju_prg.bin", $07fa, $004
     .endif
 
 tbl_game_text_packet_offsets:

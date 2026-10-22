@@ -86,13 +86,13 @@ bra_exit_vs_victory_time_tally:
     RTS
 
 off_vs_victory_palette:
-    .incbin "vs_prg.bin", $0492, $014
+    .incbin "programs/vs_prg.bin", $0492, $014
 
 tbl_vs_victory_cycle_colors:
-    .incbin "vs_prg.bin", $04a6, $004
+    .incbin "programs/vs_prg.bin", $04a6, $004
 
 off_vs_clear_parade_rows:
-    .incbin "vs_prg.bin", $04aa, $009
+    .incbin "programs/vs_prg.bin", $04aa, $009
 
 tbl_vs_parade_oam_offsets:
     .byte $50, $b0, $e0, $68, $98, $c8

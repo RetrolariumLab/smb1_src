@@ -5,8 +5,8 @@ the baseline: every supported image must keep building byte for byte.
 
 ## Local inputs
 
-Use a legally obtained ROM matching SHA-1
-`ea343f4e445a9050d4b4fbac2c77d0693b1d0922` and run `make split` once. Never add
+Use a legally obtained JU ROM (`assets/manifest.json` gives its name and
+hash) and run `make split` once. Never add
 ROMs, disk images, extracted assets or anything under `build/` to Git. The other
 revisions and platforms are optional local inputs (`make split` takes every
 image that is here).
@@ -15,8 +15,8 @@ The source holds the game's code and its engine tables, never its content: the
 course streams, music, palettes, metatiles, screens, texts and ending scenes
 come from your ROM or disk. The source names each of them with a label and
 takes its bytes with `.incbin` from a program file `make split` cuts out
-(`assets/generated/programs/`) or from a content asset of
-`assets/manifest.json`; never write them out as `.byte`.
+or from a content asset of `assets/manifest.json`, by its path under
+`assets/generated/`; never write them out as `.byte`.
 
 ## Source changes
 
@@ -32,8 +32,10 @@ make test
 ```
 
 Run `make test-full` (MAME) after changing control flow, physics or anything
-timing-sensitive. Behaviour-changing work must not weaken the default builds. Data is edited in
-Retrolarium Studio (`docs/retrolarium.md`).
+timing-sensitive. Behaviour-changing work must not weaken the default builds.
+Data is edited in Retrolarium Studio (`docs/retrolarium.md`). Write ROM
+addresses as labels, never as numbers: a pointer or call named by its address
+breaks as soon as anything before it moves.
 
 `make hooks` installs Git hooks that check commits and pushes for words that
 must not be published and run `make lint` before each commit.

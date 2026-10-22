@@ -23,12 +23,22 @@
 .include "revisions/profile_ids.inc"
 
 .ifndef con_revision_profile
-con_revision_profile = con_revision_profile_ju
+    .error "assemble a revision's entry file, src/revisions/<id>.asm"
 .endif
 
 .include "memory/hardware.inc"
 .include "memory/ram.inc"
 .include "memory/constants.inc"
+
+; The relocated build (make build-relocated, -D con_relocated) puts one
+; never-executed byte at each probe, so each part of the game moves a little
+; further than the one before; padding after the game code and in the music
+; data absorbs them
+.macro relocation_probe
+    .ifdef con_relocated
+        .byte $ea
+    .endif
+.endmacro
 
 ; -------------------------------------------------------------------------------------
 ; DIRECTIVES
@@ -42,10 +52,13 @@ con_revision_profile = con_revision_profile_ju
     .org $8000
 .endif
 
+    relocation_probe
 .include "system/boot_and_frame.asm"
+    relocation_probe
 
 .include "game/modes.asm"
 .include "rendering/screens.asm"
+    relocation_probe
 .include "rendering/background.asm"
 .include "system/hardware_io.asm"
 .include "rendering/hud/status.asm"
@@ -56,6 +69,7 @@ con_revision_profile = con_revision_profile_ju
 .include "game/level/parser.asm"
 .include "game/level/special_objects.asm"
 .include "game/level/terrain_objects.asm"
+    relocation_probe
 .if con_revision_profile = con_revision_profile_vs
     .include "platforms/vs/levels.asm"
 .elseif con_revision_profile <> con_revision_profile_ann
@@ -68,12 +82,14 @@ con_revision_profile = con_revision_profile_ju
 .include "game/objects/projectiles_and_interactions.asm"
 .include "game/objects/dynamic.asm"
 .include "game/objects/blocks.asm"
+    relocation_probe
 .include "game/physics/movement.asm"
 .include "game/enemies/stream_and_initialization.asm"
 .include "game/enemies/special_initialization.asm"
 .include "game/enemies/runtime.asm"
 .include "game/enemies/special_behaviors.asm"
 .include "game/enemies/bowser_and_goals.asm"
+    relocation_probe
 .include "game/platforms.asm"
 .include "game/collisions/projectiles.asm"
 .include "game/collisions/actors.asm"
@@ -98,7 +114,13 @@ con_revision_profile = con_revision_profile_ju
     .include "platforms/late_fds/ann/courses/primary/area_streams.asm"
     .include "platforms/late_fds/ann/ending/guest_chr_and_save.asm"
 .endif
+.ifdef con_relocated
+    .segment "AUDIO"
+.endif
+    relocation_probe
 .include "audio/sound_effects.asm"
+    relocation_probe
 .include "audio/music_engine.asm"
+    relocation_probe
 .include "audio/music_data.asm"
 .include "data/vectors.asm"

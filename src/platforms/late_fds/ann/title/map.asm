@@ -8,44 +8,44 @@ off_ann_title_map:
     .byte >$20bb, <$20bb, $c9, $4a  ; Sign right edge
 
     .byte >$20a6, <$20a6, $15
-    .incbin "NSMMAIN.bin", $65fd, $015
+    .incbin "programs/NSMMAIN.bin", $65fd, $015
 
     .byte >$20c6, <$20c6, $15
-    .incbin "NSMMAIN.bin", $6615, $015
+    .incbin "programs/NSMMAIN.bin", $6615, $015
 
     .byte >$20e6, <$20e6, $15
-    .incbin "NSMMAIN.bin", $662d, $015
+    .incbin "programs/NSMMAIN.bin", $662d, $015
 
     .byte >$2106, <$2106, $55, $26  ; Blank logo row
     .byte >$2110, <$2110, $0a
-    .incbin "NSMMAIN.bin", $6649, $00a
+    .incbin "programs/NSMMAIN.bin", $6649, $00a
 
     .byte >$2126, <$2126, $15
-    .incbin "NSMMAIN.bin", $6656, $015
+    .incbin "programs/NSMMAIN.bin", $6656, $015
 
     .byte >$2146, <$2146, $15
-    .incbin "NSMMAIN.bin", $666e, $015
+    .incbin "programs/NSMMAIN.bin", $666e, $015
 
     .byte >$2166, <$2166, $46, $db
     .byte >$216c, <$216c, $0f
-    .incbin "NSMMAIN.bin", $668a, $00f
+    .incbin "programs/NSMMAIN.bin", $668a, $00f
 
     .byte >$2186, <$2186, $15
-    .incbin "NSMMAIN.bin", $669c, $015
+    .incbin "programs/NSMMAIN.bin", $669c, $015
 
     .byte >$21a6, <$21a6, $15
-    .incbin "NSMMAIN.bin", $66b4, $015
+    .incbin "programs/NSMMAIN.bin", $66b4, $015
 
     .byte >$21c5, <$21c5, $17
-    .incbin "NSMMAIN.bin", $66cc, $017
+    .incbin "programs/NSMMAIN.bin", $66cc, $017
 
     .byte >$21ee, <$21ee, $0e
-    .incbin "NSMMAIN.bin", $66e6, $00e
+    .incbin "programs/NSMMAIN.bin", $66e6, $00e
 
     .byte >$224d, <$224d, $0a
-    .incbin "NSMMAIN.bin", $66f7, $00a
+    .incbin "programs/NSMMAIN.bin", $66f7, $00a
     .byte >$228d, <$228d, $0a
-    .incbin "NSMMAIN.bin", $6704, $00a
+    .incbin "programs/NSMMAIN.bin", $6704, $00a
     .byte >$22ed, <$22ed, $04, $1d, $18, $19, $28  ; Top score label
     .byte >$22f7, <$22f7, $01, $00  ; Initial top score
 
@@ -59,5 +59,5 @@ off_ann_title_map:
     .byte >$23e2, <$23e2, $04, $55, $aa, $aa, $aa
     .byte >$23ea, <$23ea, $05, $95, $aa, $aa, $aa, $2a  ; Attributes
 
-    .incbin "NSMMAIN.bin", $6744, $001
+    .incbin "programs/NSMMAIN.bin", $6744, $001
 off_ann_title_map_end:

@@ -204,7 +204,7 @@ tbl_smb2_main_list_pointer:
     RTS
 
 off_smb2_main_disk_screen_palette:
-    .incbin "SM2MAIN.bin", $610b, $008
+    .incbin "programs/SM2MAIN.bin", $610b, $008
 
 handler_smb2_main_disk_screen:
     LDA #$00
@@ -241,7 +241,7 @@ handler_smb2_main_reset_disk_vars:
     RTS
 
 off_smb2_main_disk_error_main_msg:
-    .incbin "SM2MAIN.bin", $6149, $015
+    .incbin "programs/SM2MAIN.bin", $6149, $015
 
 ; disk error message offsets
 ; note these actually point to the last byte
@@ -250,7 +250,7 @@ tbl_smb2_main_disk_error_msg_offsets:
 
 off_smb2_main_disk_error_msgs:
 ; "        "
-    .incbin "SM2MAIN.bin", $6162, $020
+    .incbin "programs/SM2MAIN.bin", $6162, $020
 
 loc_smb2_main_disk_error_handler:
     PHA

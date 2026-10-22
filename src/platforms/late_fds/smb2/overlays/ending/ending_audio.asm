@@ -405,9 +405,9 @@ bra_smb2_data3_write_modulation_table_nibble:
 
 tbl_smb2_data3_mod_table_data:
 tbl_smb2_data3_mod_table1:
-    .incbin "SM2DATA3.bin", $09b6, $010
+    .incbin "programs/SM2DATA3.bin", $09b6, $010
 tbl_smb2_data3_mod_table2:
-    .incbin "SM2DATA3.bin", $09c6, $010
+    .incbin "programs/SM2DATA3.bin", $09c6, $010
 
 sub_smb2_data3_length_decoder:
     TAX

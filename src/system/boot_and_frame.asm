@@ -219,10 +219,10 @@ tbl_vram_buffer_addresses_high:
 
 .if con_revision_profile = con_revision_profile_vs
 off_vs_palette_1f:
-    .incbin "vs_prg.bin", $00dc, $008
+    .incbin "programs/vs_prg.bin", $00dc, $008
 
 off_vs_palette_1e:
-    .incbin "vs_prg.bin", $00e4, $024
+    .incbin "programs/vs_prg.bin", $00e4, $024
 .endif
 
 tbl_vram_buffer_offset_addresses:
@@ -311,6 +311,9 @@ bra_select_vram_buffer_offset:
     STA PPU_CTRL_REG2
 .if con_revision_profile = con_revision_profile_ann
     CLI
+; The All Night Nippon ending points this call at its own sound engine
+off_ann_nmi_sound_handler_low = * + 1
+off_ann_nmi_sound_handler_high = * + 2
 .endif
     JSR sub_sound_engine  ; play sound
 .if con_revision_profile = con_revision_profile_vs
