@@ -60,6 +60,11 @@ def main() -> int:
     parser.add_argument("--manifest", default="config/reconstruction/smb2.json")
     parser.add_argument("--output-dir", default="build/smb2/source")
     parser.add_argument(
+        "--bin-include-dir",
+        default="assets/generated/programs",
+        help="the program files cut from the disk, whose data the source includes",
+    )
+    parser.add_argument(
         "--verify",
         action="store_true",
         help="fail unless every source-built payload matches its recorded identity",
@@ -71,6 +76,7 @@ def main() -> int:
     config = rooted(project_root, args.config)
     manifest = rooted(project_root, args.manifest)
     output_dir = rooted(project_root, args.output_dir)
+    bin_include_dir = rooted(project_root, args.bin_include_dir)
     for path, description in (
         (source, "SMB2 aggregate source"),
         (config, "SMB2 linker config"),
@@ -98,6 +104,8 @@ def main() -> int:
             str(source.parent),
             "-I",
             str(project_root / "src"),
+            "--bin-include-dir",
+            str(bin_include_dir),
             "-o",
             str(object_path),
         ],

@@ -89,7 +89,7 @@ off_vs_victory_palette:
     .incbin "vs_prg.bin", $0492, $014
 
 tbl_vs_victory_cycle_colors:
-    .byte $06, $23, $2a, $1f
+    .incbin "vs_prg.bin", $04a6, $004
 
 off_vs_clear_parade_rows:
     .incbin "vs_prg.bin", $04aa, $009

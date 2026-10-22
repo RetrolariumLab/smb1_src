@@ -303,13 +303,13 @@ handler_smb2_data3_award_extra_lives:
     JMP loc_smb2_main_award_end_area_points
 
 off_smb2_data3_blue_trans_palette:
-    .incbin "NSMDATA3.bin", $00c0, $014
+    .incbin "SM2DATA3.bin", $00d9, $014
 
 tbl_smb2_data3_blue_tints:
-    .byte $01, $02, $11, $21
+    .incbin "SM2DATA3.bin", $00ed, $004
 
 tbl_smb2_data3_two_blank_rows:
-    .incbin "NSMDATA3.bin", $00d8, $009
+    .incbin "SM2DATA3.bin", $00f1, $009
 
 handler_smb2_data3_fade_to_blue:
     INC EndControlCntr  ; increment a counter
@@ -427,16 +427,16 @@ bra_smb2_data3_go_to_world9:
     JMP loc_smb2_main_next_world  ; run world 9
 
 off_smb2_data3_flashing_mushroom_retainer_sprite_data_offsets:
-    .byte $50, $b0, $e0, $68, $98, $c8
+    .incbin "SM2DATA3.bin", $01d1, $006
 
 off_smb2_data3_mushroom_retainer_sprite_data_offsets:
-    .byte $80, $50, $68, $80, $98, $b0, $c8
+    .incbin "SM2DATA3.bin", $01d7, $007
 
 tbl_smb2_data3_mushroom_retainer_y_positions:
-    .byte $e0, $b8, $90, $70, $68, $70, $90
+    .incbin "SM2DATA3.bin", $01de, $007
 
 tbl_smb2_data3_mushroom_retainer_x_positions:
-    .byte $b8, $38, $48, $60, $80, $a0, $b8, $c8
+    .incbin "SM2DATA3.bin", $01e5, $008
 
 sub_smb2_data3_mushroom_retainers_for_w8:
     LDA MushroomRetDelay  ; wait a bit unless waiting is already done
@@ -511,7 +511,7 @@ bra_smb2_data3_advance_mushroom_retainer:
     RTS
 
 off_smb2_data3_end_player_name_data:
-    .incbin "NSMMAIN.bin", $65a6, $00a
+    .incbin "SM2DATA3.bin", $027e, $00a
 
 loc_smb2_data3_write_name_to_victory_msg:
     LDA #$00
@@ -534,59 +534,45 @@ bra_smb2_data3_write_victory_player_name_loop:
 ; -------------------------------------------------------------------------------------
 
 unused_smb2_data3_unused_attrib_data:
-    .incbin "vs_prg.bin", $0fa9, $009
+    .incbin "SM2DATA3.bin", $02a6, $009
 
 off_smb2_data3_final_room_palette:
-    .incbin "NSMDATA3.bin", $02c6, $014
+    .incbin "SM2DATA3.bin", $02af, $014
 
 off_smb2_data3_thank_you_message_final:
-    .incbin "NSMDATA3.bin", $02da, $018
-
+    .incbin "SM2DATA3.bin", $02c3, $018
 
 off_smb2_data3_peace_is_paved_msg:
-    .incbin "NSMDATA3.bin", $02f2, $016
+    .incbin "SM2DATA3.bin", $02db, $016
 
 off_smb2_data3_with_kingdom_saved_msg:
-    .incbin "NSMDATA3.bin", $0308, $016
+    .incbin "SM2DATA3.bin", $02f1, $016
 
 off_smb2_data3_hurrah_msg:
-    .incbin "NSMDATA3.bin", $031e, $014
+    .incbin "SM2DATA3.bin", $0307, $014
 
 off_smb2_data3_our_only_hero_msg:
-    .incbin "NSMDATA3.bin", $0332, $011
+    .incbin "SM2DATA3.bin", $031b, $011
 
 off_smb2_data3_this_ends_your_trip_msg:
-    .incbin "NSMDATA3.bin", $0343, $017
+    .incbin "SM2DATA3.bin", $032c, $017
 
 off_smb2_data3_of_a_long_friendship_msg:
-    .incbin "NSMDATA3.bin", $035a, $018
+    .incbin "SM2DATA3.bin", $0343, $018
 
 off_smb2_data3_points_added_msg:
-    .incbin "NSMDATA3.bin", $0372, $018
-
+    .incbin "SM2DATA3.bin", $035b, $018
 
 off_smb2_data3_for_each_player_left_msg:
-    .incbin "NSMDATA3.bin", $038a, $019
+    .incbin "SM2DATA3.bin", $0373, $019
 
 tbl_smb2_data3_princess_peachs_room:
-    .incbin "NSMDATA3.bin", $03b3, $021
+    .incbin "SM2DATA3.bin", $038c, $021
 
 off_smb2_data3_fantasy_world9_msg:
     .incbin "SM2DATA3.bin", $03ad, $043
 
-
-
 off_smb2_data3_super_player_msg:
-    .incbin "SM2DATA3.bin", $03f0, $066
-
-; -------------------------------------------------------------------------------------
-
-; unused space
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
-    .byte $ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff,$ff
+    .incbin "SM2DATA3.bin", $03f0, $0c0
 
 ; level 9-3

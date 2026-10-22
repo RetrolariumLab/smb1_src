@@ -1,7 +1,6 @@
 tbl_smb2_main_brick_and_question_block_metatiles:
     .incbin "SM2MAIN.bin", $29b4, $013
 
-
 sub_smb2_main_check_bumped_block:
     LDY #$12  ; start at end of metatile data
 bra_smb2_main_check_bumped_blocks_loop:

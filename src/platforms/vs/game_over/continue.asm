@@ -101,7 +101,7 @@ sub_initialize_vs_score_countdown:
     RTS
 ; ----------------------------------
 off_vs_blank_name_packet:
-    .byte $55, $24, $00
+    .incbin "vs_prg.bin", $1e12, $003
 
 tbl_vs_high_score_row_addresses_high:
     .byte >(PPU_NAMETABLE_0+$0E5)
@@ -241,16 +241,16 @@ off_vs_continue_prompt_tiles:
     .incbin "vs_prg.bin", $1eec, $00e
 
 off_vs_insert_coin_prompt_tiles:
-    .incbin "vs_prg.bin", $1466, $00e
+    .incbin "vs_prg.bin", $1efa, $00e
 
 off_vs_countdown_packet:
-    .byte $22, $71, $02
+    .incbin "vs_prg.bin", $1f08, $003
 
 off_vs_continue_prompt_header:
-    .byte $21, $2A, $4B, $24
+    .incbin "vs_prg.bin", $1f0b, $004
 
 off_vs_insert_coin_prompt_header:
-    .byte $20, $EA, $4B, $24
+    .incbin "vs_prg.bin", $1f0f, $004
 
 off_vs_continue_palette_packet:
     .incbin "vs_prg.bin", $1f13, $008

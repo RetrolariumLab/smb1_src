@@ -45,7 +45,7 @@ handler_vs_title_initialize:
     RTS
 
 tbl_vs_world_select_vram_template:
-    .byte $04, $20, $73, $01, $00, $00
+    .incbin "vs_prg.bin", $02bd, $006
 
 handler_vs_title_process:
     LDY #$00

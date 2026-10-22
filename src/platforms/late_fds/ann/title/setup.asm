@@ -79,7 +79,7 @@ tbl_ann_title_player_names:
     .incbin "NSMMAIN.bin", $65a6, $00a
 
 tbl_ann_title_player_palettes:
-    .incbin "ju_prg.bin", $05d7, $008
+    .incbin "NSMMAIN.bin", $65b0, $008
 
 tbl_ann_title_player_name_ends:
     .byte $04, $09

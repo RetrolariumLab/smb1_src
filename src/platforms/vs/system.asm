@@ -271,7 +271,7 @@ off_vs_push_button_packet:
     .incbin "vs_prg.bin", $1466, $00f
 
 off_vs_clear_push_button_packet:
-    .byte $20, $ea, $4b, $24, $00
+    .incbin "vs_prg.bin", $1475, $005
 
 loc_vs_title_exit = loc_vs_start_or_continue_game
 

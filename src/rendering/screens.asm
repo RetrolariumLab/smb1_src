@@ -99,11 +99,9 @@ tbl_background_color_buffer_controls:
 
 tbl_background_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .byte $1a, $1a, $14, $14  ; Vs. colors selected by area type
-    .byte $14, $1a, $14, $14  ; Vs. colors selected by background control
+    .incbin "vs_prg.bin", $07b0, $008
 .else
-    .byte $22, $22, $0f, $0f  ; used by area type if bg color ctrl not set
-    .byte $0f, $22, $0f, $0f  ; used by background color control if set
+    .incbin "ju_prg.bin", $05cf, $008
 .endif
 
 tbl_player_palette_colors:
@@ -477,7 +475,7 @@ off_one_player_time_up_packet:
     .incbin "ju_prg.bin", $07a0, $00b
 
 off_two_player_game_over_packet:
-    .incbin "ju_prg.bin", $0798, $008
+    .incbin "ju_prg.bin", $07ab, $008
 off_one_player_game_over_packet:
     .incbin "ju_prg.bin", $07b3, $00d
 
@@ -485,14 +483,14 @@ off_warp_zone_welcome_packet:
     .incbin "ju_prg.bin", $07c0, $02d
 
 tbl_luigi_name_tiles:
-    .byte $15, $1e, $12, $10, $12  ; "LUIGI", no address or length
+    .incbin "ju_prg.bin", $07ed, $005
 
 tbl_warp_zone_number_tiles:
     .incbin "ju_prg.bin", $07f2, $008
     .if con_revision_profile = con_revision_profile_vs
-        .byte $24, $06, $24, $00  ; the Vs. warp-zone layout
+        .incbin "vs_prg.bin", $09f6, $004
     .else
-        .byte $08, $07, $06, $00  ; the minus world
+        .incbin "ju_prg.bin", $07fa, $004
     .endif
 
 tbl_game_text_packet_offsets:

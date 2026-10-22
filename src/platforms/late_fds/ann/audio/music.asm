@@ -19,7 +19,7 @@ tbl_ann_fds_wave_b_data:
     .incbin "NSMDATA3.bin", $0c00, $020
 
 tbl_ann_fds_wave_b_volumes:
-    .byte $a0, $04, $18, $60
+    .incbin "NSMDATA3.bin", $0c20, $004
 
 tbl_ann_fds_wave_a_volumes:
     .incbin "NSMDATA3.bin", $0c24, $00c

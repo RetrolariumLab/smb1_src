@@ -17,12 +17,12 @@ off_ann_empty_enemy_stream:
     .byte con_ann_course_enemy_end
 
 off_ann_course_10_area_data:
-    .incbin "ju_prg.bin", $2832, $009
+    .incbin "NSMMAIN.bin", $6270, $009
 
 off_ann_course_28_area_data:
     .incbin "NSMMAIN.bin", $6279, $00c
 off_ann_course_28_area_data_end:
-    .byte $fd
+    .incbin "NSMMAIN.bin", $6285, $001
 
 sub_ann_load_course:
     JSR sub_ann_get_course_descriptor

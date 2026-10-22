@@ -106,16 +106,16 @@ handler_ann_convert_extra_lives:
     RTS
 
 tbl_ann_ending_palette:
-    .byte $3f, $00, $10
+    .incbin "NSMDATA3.bin", $00c0, $003
 
 tbl_ann_ending_palette_bytes:
     .incbin "NSMDATA3.bin", $00c3, $010
 
 tbl_ann_ending_palette_bytes_end:
-    .byte $00
+    .incbin "NSMDATA3.bin", $00d3, $001
 
 tbl_ann_ending_palette_variants:
-    .byte $01, $02, $11, $21
+    .incbin "NSMDATA3.bin", $00d4, $004
 
 tbl_ann_ending_lives_display:
     .incbin "NSMDATA3.bin", $00d8, $009
@@ -216,22 +216,22 @@ loc_ann_finish_save:
     JMP handler_run_ann_disk_loader
 
 tbl_ann_guest_sprite_offsets:
-    .byte $50, $b0, $e0, $68, $98, $c8
+    .incbin "NSMDATA3.bin", $01aa, $006
 
 tbl_ann_guest_sprite_next_offsets:
-    .byte $80, $50, $68, $80, $98, $b0, $c8
+    .incbin "NSMDATA3.bin", $01b0, $007
 
 tbl_ann_guest_sprite_y:
-    .byte $e0, $b8, $90, $70, $68, $70, $90
+    .incbin "NSMDATA3.bin", $01b7, $007
 
 tbl_ann_guest_sprite_x:
-    .byte $b8, $38, $48, $60, $80, $a0, $b8, $c8
+    .incbin "NSMDATA3.bin", $01be, $008
 
 tbl_ann_guest_sprite_tiles:
-    .byte $7a, $80, $86, $8c, $92, $98, $9e
+    .incbin "NSMDATA3.bin", $01c6, $007
 
 tbl_ann_guest_sprite_attributes:
-    .byte $02, $03, $01, $02, $03, $01, $03
+    .incbin "NSMDATA3.bin", $01cd, $007
 
 sub_ann_render_ending_guest_sprites:
     LDA ram_off_scr_hidden1_up_flag
@@ -320,7 +320,7 @@ sub_ann_render_ending_guest_sprites:
     RTS
 
 tbl_ann_ending_player_names:
-    .incbin "NSMMAIN.bin", $65a6, $00a
+    .incbin "NSMDATA3.bin", $0295, $00a
 
 handler_ann_set_ending_player_name:
     LDA #$00
@@ -339,7 +339,7 @@ handler_ann_set_ending_player_name:
     RTS
 
 tbl_ann_ending_attributes:
-    .incbin "vs_prg.bin", $0fa9, $009
+    .incbin "NSMDATA3.bin", $02bd, $009
 
 tbl_ann_ending_palette_nmi:
     .incbin "NSMDATA3.bin", $02c6, $014
@@ -360,7 +360,7 @@ tbl_ann_msg_hurrah_to:
     .incbin "NSMDATA3.bin", $031e, $00e
 
 tbl_ann_hurrah_player_name:
-    .byte $16, $0a, $1b, $12, $18, $00
+    .incbin "NSMDATA3.bin", $032c, $006
 
 tbl_ann_msg_only_hero:
     .incbin "NSMDATA3.bin", $0332, $011

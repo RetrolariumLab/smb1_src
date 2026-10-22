@@ -65,8 +65,12 @@ disk and course boundaries, absorbed by that padding, and checked that 1,860
 plays SMB2 yet.
 
 Executable payloads must be visible assembly; `.incbin` is forbidden for code.
-CHR, license data, and the save byte remain ignored private assets extracted
-from the hash-checked original disk. No raw ROM, FDS, or CHR image is tracked.
+The game's content (courses, music, palettes, metatiles, the title screen,
+texts and the ending) is not in the source: each label takes its bytes with
+`.incbin` from the program files `make split` cuts out of the disk
+(`assets/generated/programs/SM2MAIN.bin` and the three `SM2DATA` files). CHR,
+license data, and the save byte remain ignored private assets extracted from
+the hash-checked original disk. No raw ROM, FDS, or CHR image is tracked.
 
 ## Verification Reference
 

@@ -24,17 +24,14 @@ off_ann_title_map:
     .incbin "NSMMAIN.bin", $6656, $015
 
     .byte >$2146, <$2146, $15
-    .byte $db, $42, $42, $db, $e3, $db, $e3, $db
-    .byte $db, $e3, $26, $db, $e3, $db, $e3, $db
-    .byte $e3, $db, $e3, $26, $26
+    .incbin "NSMMAIN.bin", $666e, $015
 
     .byte >$2166, <$2166, $46, $db
     .byte >$216c, <$216c, $0f
     .incbin "NSMMAIN.bin", $668a, $00f
 
     .byte >$2186, <$2186, $15
-    .incbin "NSMMAIN.bin", $669c, $010
-    .byte $db, $db, $e3, $26, $26
+    .incbin "NSMMAIN.bin", $669c, $015
 
     .byte >$21a6, <$21a6, $15
     .incbin "NSMMAIN.bin", $66b4, $015
@@ -62,5 +59,5 @@ off_ann_title_map:
     .byte >$23e2, <$23e2, $04, $55, $aa, $aa, $aa
     .byte >$23ea, <$23ea, $05, $95, $aa, $aa, $aa, $2a  ; Attributes
 
-    .byte $00
+    .incbin "NSMMAIN.bin", $6744, $001
 off_ann_title_map_end:

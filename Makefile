@@ -40,6 +40,9 @@ EXTRA_pc10 := $(GENERATED)/revisions/pc10/platform.extra
 # The disks: the side from the disk image, and the disk files (by ID) each
 # built program fills.
 ANN_ASSETS := $(GENERATED)/platforms/ann_fds/source
+# The program files the source takes its texts, palettes, screens and ending
+# data from (`make split` cuts them out of the ROMs and disks).
+PROGRAMS := $(GENERATED)/programs
 ANN_DIR := build/revisions/ann_fds
 FILES_fds_smb = 3,4=$(REVISION_DIR)/smb.prg
 FILES_ann_fds = 5=$(REVISION_DIR)/smb.prg 32=$(ANN_DIR)/supplemental_courses/payload.bin \
@@ -73,7 +76,7 @@ _require-assets:
 
 build: _require-assets
 	$(RUN) build.build_native --source src/main.asm --config $(NATIVE_CFG) \
-		--output-dir $(NATIVE_DIR) --header $(GENERATED)/header/smb.hdr --chr $(GENERATED)/chr/smb.chr
+		--bin-include-dir $(PROGRAMS) --output-dir $(NATIVE_DIR) --header $(GENERATED)/header/smb.hdr --chr $(GENERATED)/chr/smb.chr
 
 verify: build
 	$(call ASSETS,verify) --image $(BASE_IMAGE) --built "$(NATIVE_DIR)/smb.nes"
@@ -84,11 +87,12 @@ build-revision: $(BEFORE_$(REVISION))
 ifneq ($(SOURCE_$(REVISION)),)
 ifeq ($(filter $(REVISION),$(FDS_REVISIONS)),)
 	$(RUN) build.build_native --source $(SOURCE_$(REVISION)) --config $(NATIVE_CFG) \
-		--output-dir $(REVISION_DIR) --header $(HEADER) --chr $(CHR) \
+		--bin-include-dir $(PROGRAMS) --output-dir $(REVISION_DIR) --header $(HEADER) --chr $(CHR) \
 		$(if $(EXTRA_$(REVISION)),--extra $(EXTRA_$(REVISION)))
 else
 	$(RUN) build.build_native --source $(SOURCE_$(REVISION)) --config $(FDS_CFG) \
-		--output-dir $(REVISION_DIR) $(if $(filter ann_fds,$(REVISION)),--bin-include-dir $(ANN_ASSETS))
+		--bin-include-dir $(PROGRAMS) --output-dir $(REVISION_DIR) \
+		$(if $(filter ann_fds,$(REVISION)),--bin-include-dir $(ANN_ASSETS))
 endif
 endif
 ifneq ($(filter $(REVISION),$(FDS_REVISIONS)),)
@@ -107,7 +111,7 @@ verify-revisions:
 
 # The All Night Nippon overlays: $(call ann_overlay,<name>)
 ann_overlay = $(RUN) build.build_asm_range --source src/revisions/ann/$(1).asm \
-	--config config/linker/ann/$(1).cfg --bin-include-dir $(ANN_ASSETS) \
+	--config config/linker/ann/$(1).cfg --bin-include-dir $(ANN_ASSETS) --bin-include-dir $(PROGRAMS) \
 	--object $(ANN_DIR)/$(1)/payload.o --output $(ANN_DIR)/$(1)/payload.bin \
 	--labels $(ANN_DIR)/$(1)/payload.lbl --map $(ANN_DIR)/$(1)/payload.map
 
@@ -118,6 +122,7 @@ build-ann-payloads:
 	$(call ann_overlay,hard_courses)
 
 build-smb2-source:
+	$(call ASSETS,check) --image smb2_jp_fds
 	$(RUN) build.build_smb2_source --output-dir build/revisions/smb2_jp_fds
 
 build-relocated: _require-assets

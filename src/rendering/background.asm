@@ -171,9 +171,9 @@ loc_select_secondary_vram_buffer:
 
 tbl_rotating_palette_colors:
 .if con_revision_profile = con_revision_profile_vs
-    .byte $39, $39, $39, $07, $22, $07
+    .incbin "vs_prg.bin", $0bc4, $006
 .else
-    .byte $27, $27, $27, $17, $07, $17
+    .incbin "ju_prg.bin", $09c3, $006
 .endif
 
 tbl_blank_palette_packet:
@@ -412,7 +412,6 @@ off_luigi_thanks_message:
 off_mushroom_retainer_saved_message:
 ; "BUT OUR PRINCESS IS IN"
     .incbin "ju_prg.bin", $0d7c, $02c
-; "ANOTHER CASTLE!"
 .if con_revision_profile = con_revision_profile_vs
 off_vs_victory_attributes:
     .incbin "vs_prg.bin", $0fa9, $009

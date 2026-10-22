@@ -37,7 +37,7 @@ bra_smb2_main_modify_player_physics_loop:
 off_smb2_main_ground_area_10_enemies:
 off_smb2_main_ground_area_21_enemies:
 off_smb2_main_e_ground_area28:
-    .byte $ff
+    .incbin "SM2MAIN.bin", $6260, $001
 
 ; exit area used in levels 1-2, 3-2, 5-2, 6-2, A-2 and B-2
 off_smb2_main_l_ground_area28:
@@ -45,7 +45,7 @@ off_smb2_main_l_ground_area28:
 
 ; pipe intro area
 off_smb2_main_ground_area_10_objects:
-    .incbin "ju_prg.bin", $2832, $009
+    .incbin "SM2MAIN.bin", $6274, $009
 
 ; warp zone area used in levels 1-2 and 5-2
 off_smb2_main_ground_area_21_objects:

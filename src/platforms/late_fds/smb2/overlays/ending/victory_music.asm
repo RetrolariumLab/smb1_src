@@ -28,7 +28,7 @@ tbl_smb2_data3_victory_part_2b_header:
     .byte $08, <off_smb2_data3_victory_m_p2_b_data, >off_smb2_data3_victory_m_p2_b_data, $3a, $10, $9e, $28, $01
 
 ; residual data, probably from an old header
-    .byte $00, $4b, $d0
+    .incbin "SM2DATA3.bin", $0a65, $003
 
 ; music data format here is the same as in sm2main file
 ; with a few exceptions: the value $00 does nothing special
@@ -37,62 +37,41 @@ tbl_smb2_data3_victory_part_2b_header:
 
 off_smb2_data3_victory_m_p1_a_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0a68, $04f
-; square 1
-; FDS sound
-; triangle
+    .incbin "SM2DATA3.bin", $0a68, $04f
 
 off_smb2_data3_victory_m_p1_b_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0ab7, $068
-; square 1
-; FDS sound
-; triangle
-; noise (also used by part 1A)
+    .incbin "SM2DATA3.bin", $0ab7, $068
 
 off_smb2_data3_victory_m_p2_a_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0b1f, $017
+    .incbin "SM2DATA3.bin", $0b1f, $017
 
 off_smb2_data3_victory_m_p2_b_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0b36, $03d
-; square 1 of part 2A
-; square 1 of part 2B
-; FDS sound of part 2A
-; FDS sound of part 2B
-; triangle of part 2A
-; triangle of part 2B
+    .incbin "SM2DATA3.bin", $0b36, $03d
 
 off_smb2_data3_victory_m_p2_c_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0b73, $068
-; square 1
-; FDS sound
-; triangle
-; noise of part 2A, 2B and 2C
+    .incbin "SM2DATA3.bin", $0b73, $068
 
 off_smb2_data3_victory_m_p2_d_data:
 ; square 2
-    .incbin "NSMDATA3.bin", $0bdb, $025
-; square 1
-; FDS sound
-; triangle
-; noise of part 2D
+    .incbin "SM2DATA3.bin", $0bdb, $025
 
 off_smb2_data3_waveform_data2:
-    .incbin "NSMDATA3.bin", $0c00, $020
+    .incbin "SM2DATA3.bin", $0c00, $020
 
 off_smb2_data3_volume_envelope_data_2:
-    .byte $a0, $04, $18, $60
+    .incbin "SM2DATA3.bin", $0c20, $004
 off_smb2_data3_volume_envelope_data_1:
-    .incbin "NSMDATA3.bin", $0c24, $00c
+    .incbin "SM2DATA3.bin", $0c24, $00c
 
 tbl_smb2_data3_fds_freq_lookup_tbl:
-    .incbin "NSMDATA3.bin", $0c30, $03c
+    .incbin "SM2DATA3.bin", $0c30, $03c
 
 off_smb2_data3_victory_music_envelope_data:
-    .incbin "NSMDATA3.bin", $0c6c, $010
+    .incbin "SM2DATA3.bin", $0c6c, $010
 
 ; header format here is as follows:
 ; 2 bytes - waveform data address
@@ -111,15 +90,15 @@ tbl_smb2_data3_waveform_1_header:
 tbl_smb2_data3_waveform_2_header:
     .byte <off_smb2_data3_waveform_data2, >off_smb2_data3_waveform_data2, $60, <off_smb2_data3_volume_envelope_data_2
     .byte >off_smb2_data3_volume_envelope_data_2, <off_smb2_data3_sweep_mod_data2, >off_smb2_data3_sweep_mod_data2, (tbl_smb2_data3_mod_table1-tbl_smb2_data3_mod_table_data) * 2
-    .byte $00
+    .incbin "SM2DATA3.bin", $0c8e, $001
 
 off_smb2_data3_waveform_data1:
-    .incbin "NSMDATA3.bin", $0c8f, $020
+    .incbin "SM2DATA3.bin", $0c8f, $020
 
 off_smb2_data3_sweep_mod_data1:
-    .incbin "NSMDATA3.bin", $0caf, $00a
+    .incbin "SM2DATA3.bin", $0caf, $00a
 off_smb2_data3_sweep_mod_data2:
-    .byte $80, $02, $80, $00, $00, $60
+    .incbin "SM2DATA3.bin", $0cb9, $006
 
 tbl_smb2_data3_music_note_lengths:
-    .incbin "NSMDATA3.bin", $0cbf, $010
+    .incbin "SM2DATA3.bin", $0cbf, $010

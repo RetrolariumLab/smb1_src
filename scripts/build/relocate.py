@@ -109,6 +109,7 @@ def build(project_root: Path, manifest: dict[str, Any], source: Path) -> Path:
         "--source", str(source),
         "--config", str(rooted(project_root, manifest["linker_config"])),
         "--output-dir", str(output_root),
+        "--bin-include-dir", str(generated / "programs"),
         "--header", str(generated / "header" / "smb.hdr"),
         "--chr", str(generated / "chr" / "smb.chr"),
     ], cwd=project_root, check=True)

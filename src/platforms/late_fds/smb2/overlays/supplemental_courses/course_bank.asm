@@ -194,7 +194,7 @@ bra_smb2_data2_store_wind_state:
     RTS
 
 ; some unused bytes
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+    .incbin "SM2DATA2.bin", $0158, $008
 
 ; -------------------------------------------------------------------------------------
 
@@ -255,7 +255,7 @@ off_smb2_data2_e_ground_area23:
     .incbin "SM2DATA2.bin", $039a, $027
 ; another unused area
 off_smb2_data2_e_ground_area24:
-    .byte $ff
+    .incbin "SM2DATA2.bin", $03c1, $001
 
 ; cloud level used with level 5-1
 off_smb2_data2_e_ground_area29:
@@ -338,7 +338,7 @@ off_smb2_data2_l_ground_area23:
     .incbin "SM2DATA2.bin", $0b46, $064
 ; another unused area
 off_smb2_data2_l_ground_area24:
-    .byte $fd
+    .incbin "SM2DATA2.bin", $0baa, $001
 
 ; cloud level used with level 5-1
 off_smb2_data2_l_ground_area29:
@@ -362,7 +362,4 @@ off_smb2_data2_l_water_area4:
 
 ; water area used in level 6-1
 off_smb2_data2_l_water_area5:
-    .incbin "SM2DATA2.bin", $0dd2, $04f
-
-; unused bytes
-    .byte $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff, $ff
+    .incbin "SM2DATA2.bin", $0dd2, $05d

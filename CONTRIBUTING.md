@@ -11,6 +11,13 @@ ROMs, disk images, extracted assets or anything under `build/` to Git. The other
 revisions and platforms are optional local inputs (`make split` takes every
 image that is here).
 
+The source holds the game's code and its engine tables, never its content: the
+course streams, music, palettes, metatiles, screens, texts and ending scenes
+come from your ROM or disk. The source names each of them with a label and
+takes its bytes with `.incbin` from a program file `make split` cuts out
+(`assets/generated/programs/`) or from a content asset of
+`assets/manifest.json`; never write them out as `.byte`.
+
 ## Source changes
 
 Keep `src/main.asm` in address order. Use the names of `docs/naming.md` and the

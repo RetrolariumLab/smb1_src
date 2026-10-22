@@ -56,6 +56,8 @@ def main() -> int:
             str(labels),
             "--mapfile",
             str(map_path),
+            "--dbgfile",
+            str(output.with_suffix(".dbg")),
         ],
         output.parent,
     )

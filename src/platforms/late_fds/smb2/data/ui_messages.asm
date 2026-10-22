@@ -1,8 +1,8 @@
 off_smb2_main_player_name_data:
-    .incbin "NSMMAIN.bin", $65a6, $00a
+    .incbin "SM2MAIN.bin", $65eb, $00a
 
 off_smb2_main_player_palette_data:
-    .incbin "ju_prg.bin", $05d7, $008
+    .incbin "SM2MAIN.bin", $65f5, $008
 
 tbl_smb2_main_player_name_offsets:
     .byte $04, $09  ; note that offsets point to last byte

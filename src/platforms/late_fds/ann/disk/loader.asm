@@ -257,7 +257,7 @@ handler_reset_ann_disk_loader:
     RTS
 
 off_ann_disk_error_text_packet:
-    .byte $21, $e6, $08
+    .incbin "NSMMAIN.bin", $615f, $003
 off_ann_disk_error_text:
     .incbin "NSMMAIN.bin", $6162, $012
 
