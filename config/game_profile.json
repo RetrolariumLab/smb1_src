@@ -619,7 +619,9 @@
               { "id": "power_up_grab", "file_offset": 29914, "size": 27, "kind": "note" },
               { "id": "power_up_reveal_and_vine", "file_offset": 29944, "size": 32, "kind": "note" },
               { "id": "brick_shatter_noise", "file_offset": 30251, "size": 16, "kind": "noise" }
-            ]
+            ],
+            "engine_file_offset": 29392,
+            "note_periods_file_offset": 32512
           }
         },
         {
@@ -1359,7 +1361,9 @@
               { "id": "power_up_grab", "file_offset": 29935, "size": 27, "kind": "note" },
               { "id": "power_up_reveal_and_vine", "file_offset": 29965, "size": 32, "kind": "note" },
               { "id": "brick_shatter_noise", "file_offset": 30272, "size": 16, "kind": "noise" }
-            ]
+            ],
+            "engine_file_offset": 29413,
+            "note_periods_file_offset": 32512
           }
         },
         {
@@ -2167,7 +2171,9 @@
               { "id": "power_up_grab", "file_offset": 29866, "size": 27, "kind": "note" },
               { "id": "power_up_reveal_and_vine", "file_offset": 29896, "size": 32, "kind": "note" },
               { "id": "brick_shatter_noise", "file_offset": 30227, "size": 16, "kind": "noise" }
-            ]
+            ],
+            "engine_file_offset": 29344,
+            "note_periods_file_offset": 32512
           }
         },
         {
